@@ -1,52 +1,77 @@
 import { MODULE_ID } from "./constants.mjs";
 
-/** Chaves das settings, para ninguém digitar string solta pelo código. */
 export const SETTINGS = Object.freeze({
   ENABLED: "enabled",
-  DEBUG: "debug"
+  DEBUG: "debug",
+  BUBBLE_LAYOUT: "bubbleLayout",
+  BUBBLE_RISE_SPEED: "bubbleRiseSpeed",
+  BUBBLE_RISE_LIMIT: "bubbleRiseLimit",
+  BUBBLE_MAX_WIDTH: "bubbleMaxWidth",
+  BUBBLE_MAX_LIFETIME: "bubbleMaxLifetime",
+  BUBBLE_SCALING: "bubbleScaling",
+  BUBBLE_PORTRAIT: "bubblePortrait",
+  AUTO_IN_CHARACTER: "autoInCharacter",
+  NARRATOR_NAME: "narratorName",
+  NARRATOR_ACTIVE: "narratorActive",
+  CHAT_THEME: "chatTheme",
+  CHAT_GROUPING: "chatGrouping"
 });
 
-/**
- * Registra as settings do módulo. Chamado uma vez no hook `init`.
- * As fases seguintes adicionam aqui as opções do motor de balões (velocidade,
- * largura, faixa), do Modo Narrador (nome do narrador) e do tema do chat.
- */
-export function registerSettings() {
-  game.settings.register(MODULE_ID, SETTINGS.ENABLED, {
-    name: "TBG.Settings.Enabled.Name",
-    hint: "TBG.Settings.Enabled.Hint",
+export const BUBBLE_LAYOUTS = Object.freeze({ FREE_FLOW: "freeflow", LINE: "line" });
+export const BUBBLE_SCALINGS = Object.freeze({ SCREEN: "screen", WORLD: "world" });
+
+const DEFINITIONS = {
+  [SETTINGS.ENABLED]: {
     scope: "world",
-    config: true,
     type: Boolean,
     default: true,
-    requiresReload: false,
-    onChange: value => Hooks.callAll("tbg.enabledChanged", value)
-  });
-
-  game.settings.register(MODULE_ID, SETTINGS.DEBUG, {
-    name: "TBG.Settings.Debug.Name",
-    hint: "TBG.Settings.Debug.Hint",
+    onChange: enabled => Hooks.callAll("tbg.enabledChanged", enabled)
+  },
+  [SETTINGS.DEBUG]: { scope: "client", type: Boolean, default: false },
+  [SETTINGS.BUBBLE_LAYOUT]: {
+    scope: "world",
+    type: String,
+    default: BUBBLE_LAYOUTS.FREE_FLOW,
+    choices: choicesFor(SETTINGS.BUBBLE_LAYOUT, BUBBLE_LAYOUTS)
+  },
+  [SETTINGS.BUBBLE_RISE_SPEED]: { scope: "world", type: Number, default: 15, range: { min: 0, max: 60, step: 1 } },
+  [SETTINGS.BUBBLE_RISE_LIMIT]: { scope: "world", type: Number, default: 320, range: { min: 100, max: 800, step: 10 } },
+  [SETTINGS.BUBBLE_MAX_WIDTH]: { scope: "world", type: Number, default: 350, range: { min: 200, max: 600, step: 10 } },
+  [SETTINGS.BUBBLE_MAX_LIFETIME]: { scope: "world", type: Number, default: 0, range: { min: 0, max: 300, step: 5 } },
+  [SETTINGS.BUBBLE_SCALING]: {
     scope: "client",
-    config: true,
-    type: Boolean,
-    default: false,
-    requiresReload: false
-  });
+    type: String,
+    default: BUBBLE_SCALINGS.SCREEN,
+    choices: choicesFor(SETTINGS.BUBBLE_SCALING, BUBBLE_SCALINGS)
+  },
+  [SETTINGS.BUBBLE_PORTRAIT]: { scope: "world", type: Boolean, default: true },
+  [SETTINGS.AUTO_IN_CHARACTER]: { scope: "world", type: Boolean, default: true },
+  [SETTINGS.NARRATOR_NAME]: { scope: "world", type: String, default: "" },
+  [SETTINGS.NARRATOR_ACTIVE]: { scope: "client", type: Boolean, default: false, config: false },
+  [SETTINGS.CHAT_THEME]: { scope: "client", type: Boolean, default: true },
+  [SETTINGS.CHAT_GROUPING]: { scope: "client", type: Boolean, default: true }
+};
+
+/** Registra todas as settings da tabela. Chamar uma vez no `init`. */
+export function registerSettings() {
+  for (const [key, definition] of Object.entries(DEFINITIONS)) {
+    game.settings.register(MODULE_ID, key, {
+      name: `TBG.Settings.${key}.name`,
+      hint: `TBG.Settings.${key}.hint`,
+      config: true,
+      ...definition
+    });
+  }
 }
 
-/**
- * Lê uma setting do módulo.
- * @param {string} key Uma das chaves em SETTINGS
- */
 export function getSetting(key) {
   return game.settings.get(MODULE_ID, key);
 }
 
-/**
- * Grava uma setting do módulo.
- * @param {string} key Uma das chaves em SETTINGS
- * @param {*} value
- */
 export function setSetting(key, value) {
   return game.settings.set(MODULE_ID, key, value);
+}
+
+function choicesFor(key, values) {
+  return Object.fromEntries(Object.values(values).map(value => [value, `TBG.Settings.${key}.choices.${value}`]));
 }

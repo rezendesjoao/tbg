@@ -1,6 +1,6 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 (11/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
@@ -8,24 +8,24 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 
 ## Fase 1 — Núcleo Habbo
 
-- [ ] **A1. Motor de balões "free flow"** — **G** — *o coração do módulo*
+- [x] **A1. Motor de balões "free flow"** — **G** — *o coração do módulo*
   Camada HTML própria dentro do HUD do canvas que substitui os balões do core (cancelados via hook `chatBubbleHTML`). Toda mensagem em personagem com token na cena vira um balão `**Nome:** texto` acima do token, com um único visual padrão (branco, rabinho para baixo, estilo Habbo clássico). Balões **empilham**: o novo nasce na base e empurra os anteriores para cima em 200 ms; um relógio sobe todos devagar; quem cruza o topo da faixa esvanece e some. Vários balões por token e por cena. Os balões **seguem o token** e acompanham pan/zoom (com opção "tamanho fixo na tela" para não virarem formiga ao afastar). Modos "free flow" (o novo só empurra quem ele sobrepõe, formando colunas por grupo de conversa) e "linha a linha" (empurra todos). Configurações do Mestre: velocidade de subida, largura máxima, altura da faixa, tempo mínimo em tela. Editar a mensagem atualiza o balão.
   Sobreposição: nenhuma mantida (o único módulo de duração morreu no v10).
 
-- [ ] **A3. Modos de fala** — **M**
+- [x] **A3. Modos de fala** — **M**
   - **Falar** (texto normal ou `/say`): balão normal.
   - **Gritar** (`/shout` ou **Shift+Enter**): negrito, balão maior, ignora qualquer filtro de sala.
   - **Sussurrar** (`/w` nativo): balão itálico cinza só para quem recebe.
-  - **Pensar** (`/think` ou `/t`): balão-nuvem visível só para o Mestre e o dono.
+  - **Pensar** (`/think` ou `/pensar`): balão-nuvem visível só para o Mestre e o dono.
   - **Ação** (`/me` nativo ou `*texto*`): balão sem "Nome:", em itálico.
   Implementação: `ChatLog.CHAT_COMMANDS` do v14 + `flags.tbg.kind` na mensagem. `/w` e `/me` já são do core; só reaproveitamos o parse.
 
-- [ ] **B1. Modo Narrador (interruptor)** — **P/M** — *pedido explícito*
-  Um **modo de mensagem "Narrador"** registrado em `CONFIG.ChatMessage.modes` (aparece no seletor nativo da sidebar, ícone 📜), mais um atalho de teclado e um botão. Enquanto ativo, o que o Mestre digita sai com alias "Narrador" (sem ator/token, portanto sem balão), estilo OTHER e `flags.tbg.kind = "narration"`, num cartão estilizado (fundo escuro, fonte serifada). Desligado, o comportamento nativo continua intocado: token selecionado fala. `/n texto` faz uma narração pontual sem trocar o modo. Nome do narrador configurável ("Sistema", "Cardinal"…).
-  Fallback se o handler do modo não permitir trocar o falante: hook `chatMessage`, como o Cautious Gamemaster's Pack faz.
+- [x] **B1. Modo Narrador (interruptor)** — **P/M** — *pedido explícito*
+  Um **interruptor "Narrador"** (setting de cliente) com botão 📜 ao lado dos modos de mensagem da sidebar e atalho Alt+N. Enquanto ativo, o que o Mestre digita sai com alias "Narrador" (sem ator/token, portanto sem balão), estilo OTHER e `flags.tbg.kind = "narration"`, num cartão estilizado (fundo escuro, fonte serifada). Desligado, o comportamento nativo continua intocado: token selecionado fala. `/n texto` faz uma narração pontual sem trocar o modo. Nome do narrador configurável ("Sistema", "Cardinal"…).
+  Implementado no hook `chatMessage`, como o Cautious Gamemaster's Pack faz; um modo custom em `CONFIG.ChatMessage.modes` foi descartado porque ficaria gravado em `core.messageMode` e quebraria o chat se o módulo fosse desativado.
   Sobreposição: Narrator Tools (`/narrate`, overlay), CGMP (`/desc`). O interruptor persistente integrado ao seletor de modo é nosso.
 
-- [ ] **C1. Retrabalho visual do chat (tema TBG)** — **M/G**
+- [x] **C1. Retrabalho visual do chat (tema TBG)** — **M/G**
   Cartões estilo mensageiro: retrato redondo do ator/token à esquerda, nome com a cor do jogador, hora só no hover, **mensagens consecutivas do mesmo falante agrupadas** (sem repetir cabeçalho), rolagens compactas, cores distintas por tipo (falar / OOC / sussurro / narração / ação). Tema alternativo **pixel/retrô** opcional. Tudo via `renderChatMessageHTML` + CSS na layer `modules` do v13+, sem brigar com o core.
   Sobreposição: Chat Portrait (parado no v13), Chat Card Backgrounds (v14, só cores), Yuuko's Chat Overhaul (v14, estilo japonês).
 

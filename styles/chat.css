@@ -1,0 +1,81 @@
+.chat-message.tbg-message {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: start;
+}
+
+.tbg-message > .tbg-portrait {
+  grid-row: 1 / span 2;
+  width: var(--tbg-portrait-size);
+  height: var(--tbg-portrait-size);
+  margin-top: 2px;
+  border: 1px solid var(--tbg-author-color, currentColor);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.tbg-message .message-sender {
+  color: var(--tbg-author-color, inherit);
+}
+
+.tbg-message.tbg-continued {
+  margin-top: -4px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.tbg-message.tbg-continued > .tbg-portrait {
+  visibility: hidden;
+}
+
+.tbg-message.tbg-continued .message-sender {
+  display: none;
+}
+
+.tbg-message.tbg-continued .message-header {
+  min-height: 0;
+}
+
+.tbg-kind-shout .message-content {
+  font-weight: 700;
+}
+
+.tbg-kind-think .message-content {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.tbg-kind-think .message-content::before {
+  content: "💭 ";
+}
+
+.tbg-kind-action .message-content {
+  font-style: italic;
+}
+
+.tbg-kind-narration {
+  background: var(--tbg-narration-bg);
+  color: var(--tbg-narration-fg);
+  border: 1px solid var(--tbg-narration-accent);
+  border-left-width: 4px;
+}
+
+.tbg-kind-narration .message-sender {
+  color: var(--tbg-narration-accent);
+}
+
+.tbg-kind-narration .message-sender::before {
+  content: "📜 ";
+}
+
+.tbg-kind-narration .message-content {
+  padding: 2px 4px;
+  font-family: var(--tbg-narration-font);
+  font-size: 1.15em;
+  line-height: 1.4;
+}
+
+.tbg-message.tbg-roll .message-content {
+  font-size: 0.9em;
+}

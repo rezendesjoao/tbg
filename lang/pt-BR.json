@@ -1,29 +1,82 @@
 {
   "TBG": {
-    "Title": "TBG",
     "Settings": {
-      "Enabled": {
-        "Name": "Ativar TBG",
-        "Hint": "Interruptor geral de todos os recursos do TBG (balões de fala, Modo Narrador, tema do chat)."
+      "enabled": {
+        "name": "Ativar TBG",
+        "hint": "Interruptor geral dos balões de fala e dos modos de fala. O Modo Narrador e o tema do chat têm interruptores próprios."
       },
-      "Debug": {
-        "Name": "Log detalhado",
-        "Hint": "Imprime logs detalhados do TBG no console do navegador. Afeta só este cliente."
+      "debug": {
+        "name": "Log detalhado",
+        "hint": "Imprime logs detalhados do TBG no console do navegador. Só neste cliente."
+      },
+      "bubbleLayout": {
+        "name": "Empilhamento dos balões",
+        "hint": "Free flow: o balão novo só empurra os balões que ele sobrepõe, então grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem.",
+        "choices": {
+          "freeflow": "Free flow (Habbo)",
+          "line": "Linha a linha"
+        }
+      },
+      "bubbleRiseSpeed": {
+        "name": "Velocidade de subida",
+        "hint": "Pixels de tela por segundo que os balões sobem. Zero deixa parados até um balão novo empurrar."
+      },
+      "bubbleRiseLimit": {
+        "name": "Limite de subida",
+        "hint": "Pixels de tela acima do token a partir dos quais o balão some."
+      },
+      "bubbleMaxWidth": {
+        "name": "Largura máxima do balão",
+        "hint": "Largura em pixels antes do texto quebrar linha. O Habbo usa 240 (fino) e 350 (normal)."
+      },
+      "bubbleMaxLifetime": {
+        "name": "Tempo máximo",
+        "hint": "Segundos até o balão sumir independentemente da posição. Zero desliga o limite."
+      },
+      "bubbleScaling": {
+        "name": "Escala dos balões",
+        "hint": "Tela: os balões ficam do mesmo tamanho em qualquer zoom. Mapa: os balões escalam junto com o mapa, como os do core.",
+        "choices": {
+          "screen": "Fixa na tela",
+          "world": "Junto com o mapa"
+        }
+      },
+      "bubblePortrait": {
+        "name": "Retrato no balão",
+        "hint": "Mostra a imagem do token dentro do balão, como a cabecinha do avatar no Habbo."
+      },
+      "autoInCharacter": {
+        "name": "Falar em personagem automaticamente",
+        "hint": "Com um token selecionado (ou personagem atribuído), texto simples sai em personagem mesmo com o modo de mensagem em Público como Usuário. Comandos e o seletor de modo continuam funcionando."
+      },
+      "narratorName": {
+        "name": "Nome do narrador",
+        "hint": "Nome exibido nas narrações. Vazio usa \"Narrador\"."
+      },
+      "narratorActive": {
+        "name": "Modo Narrador",
+        "hint": "Se este cliente está narrando agora."
+      },
+      "chatTheme": {
+        "name": "Tema do chat",
+        "hint": "Retratos, cor do autor e tipos de mensagem nos cartões do chat. Só neste cliente."
+      },
+      "chatGrouping": {
+        "name": "Agrupar mensagens consecutivas",
+        "hint": "Esconde o cabeçalho quando o mesmo falante manda outra mensagem em até cinco minutos."
       }
     },
     "Narrator": {
-      "Name": "Narrador",
-      "Mode": "Modo Narrador"
+      "name": "Narrador",
+      "button": "Modo Narrador",
+      "toggle": "Alternar Modo Narrador",
+      "toggleHint": "Texto sem comando sai como Narrador em vez do token selecionado.",
+      "on": "Modo Narrador ligado: mensagens sem comando saem como Narrador.",
+      "off": "Modo Narrador desligado: o token selecionado volta a falar."
     },
-    "Kinds": {
-      "say": "Falar",
-      "shout": "Gritar",
-      "whisper": "Sussurrar",
-      "think": "Pensar",
-      "action": "Ação",
-      "narration": "Narração",
-      "announce": "Anúncio",
-      "ooc": "Fora do personagem"
+    "Errors": {
+      "noSpeaker": "Selecione um token ou atribua um personagem antes de falar em personagem.",
+      "narratorGMOnly": "Só o Mestre pode narrar."
     }
   }
 }

@@ -1,29 +1,82 @@
 {
   "TBG": {
-    "Title": "TBG",
     "Settings": {
-      "Enabled": {
-        "Name": "Enable TBG",
-        "Hint": "Master switch for all TBG features (speech bubbles, Narrator mode, chat theme)."
+      "enabled": {
+        "name": "Enable TBG",
+        "hint": "Master switch for speech bubbles and speech modes. Narrator mode and the chat theme have their own switches."
       },
-      "Debug": {
-        "Name": "Debug logging",
-        "Hint": "Print verbose TBG logs to the browser console. Affects this client only."
+      "debug": {
+        "name": "Debug logging",
+        "hint": "Print verbose TBG logs to the browser console. This client only."
+      },
+      "bubbleLayout": {
+        "name": "Bubble stacking",
+        "hint": "Free flow: a new bubble only pushes the bubbles it overlaps, so distant groups form their own columns. Line by line: every bubble on the scene moves up.",
+        "choices": {
+          "freeflow": "Free flow (Habbo)",
+          "line": "Line by line"
+        }
+      },
+      "bubbleRiseSpeed": {
+        "name": "Rise speed",
+        "hint": "Screen pixels per second that bubbles drift upward. Zero keeps them in place until newer bubbles push them."
+      },
+      "bubbleRiseLimit": {
+        "name": "Rise limit",
+        "hint": "Screen pixels above the token after which a bubble fades out."
+      },
+      "bubbleMaxWidth": {
+        "name": "Maximum bubble width",
+        "hint": "Width in pixels before the text wraps. Habbo uses 240 (thin) and 350 (normal)."
+      },
+      "bubbleMaxLifetime": {
+        "name": "Maximum lifetime",
+        "hint": "Seconds before a bubble fades regardless of position. Zero disables the limit."
+      },
+      "bubbleScaling": {
+        "name": "Bubble scale",
+        "hint": "Screen: bubbles keep the same size at any zoom level. World: bubbles scale with the map like the core bubbles.",
+        "choices": {
+          "screen": "Fixed on screen",
+          "world": "Scale with the map"
+        }
+      },
+      "bubblePortrait": {
+        "name": "Portrait in bubbles",
+        "hint": "Show the token image inside the bubble, like the avatar head in Habbo."
+      },
+      "autoInCharacter": {
+        "name": "Speak in character automatically",
+        "hint": "With a token selected (or an assigned character), plain text is posted in character even when the message mode is Public as User. Commands and the mode picker still work as usual."
+      },
+      "narratorName": {
+        "name": "Narrator name",
+        "hint": "Name shown on narration messages. Leave empty for \"Narrator\"."
+      },
+      "narratorActive": {
+        "name": "Narrator mode",
+        "hint": "Whether this client is currently narrating."
+      },
+      "chatTheme": {
+        "name": "Chat theme",
+        "hint": "Portraits, author colors and message kinds on the chat cards. This client only."
+      },
+      "chatGrouping": {
+        "name": "Group consecutive messages",
+        "hint": "Hide the header when the same speaker posts again within five minutes."
       }
     },
     "Narrator": {
-      "Name": "Narrator",
-      "Mode": "Narrator mode"
+      "name": "Narrator",
+      "button": "Narrator mode",
+      "toggle": "Toggle Narrator mode",
+      "toggleHint": "Plain text you send is posted as the Narrator instead of the selected token.",
+      "on": "Narrator mode on: plain messages are posted as the Narrator.",
+      "off": "Narrator mode off: the selected token speaks again."
     },
-    "Kinds": {
-      "say": "Say",
-      "shout": "Shout",
-      "whisper": "Whisper",
-      "think": "Think",
-      "action": "Action",
-      "narration": "Narration",
-      "announce": "Announcement",
-      "ooc": "Out of character"
+    "Errors": {
+      "noSpeaker": "Select a token or assign a character before speaking in character.",
+      "narratorGMOnly": "Only the Gamemaster can narrate."
     }
   }
 }
