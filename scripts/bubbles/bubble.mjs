@@ -70,6 +70,11 @@ export default class Bubble {
     this.element.classList.add("tbg-bubble--visible");
   }
 
+  /** Conclui o empurrão sem esperar o relógio, que não roda com a aba oculta (requestAnimationFrame suspenso). */
+  settlePush() {
+    this.pushOffset = this.pushTarget;
+  }
+
   setContent(content) {
     this.element.querySelector(".tbg-bubble__text").innerHTML = content;
     this.measure();

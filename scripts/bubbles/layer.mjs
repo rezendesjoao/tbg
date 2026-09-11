@@ -25,6 +25,8 @@ class BubbleLayer {
     Hooks.on("updateChatMessage", (message, changed) => this.onMessageUpdated(message, changed));
     Hooks.on("deleteChatMessage", message => this.remove(message.id));
     Hooks.on("deleteToken", token => this.removeToken(token.id));
+    Hooks.on("refreshToken", token => this.#layoutToken(token));
+    Hooks.on("updateToken", token => this.#layoutToken(token));
     Hooks.on("chatBubbleHTML", (token, _html, content, options) => this.onCoreBubble(token, content, options));
     Hooks.on("tbg.enabledChanged", enabled => enabled || this.clear());
   }
@@ -65,7 +67,7 @@ class BubbleLayer {
     bubble.measure();
     this.#push(bubble);
     this.#bubbles.set(id, bubble);
-    bubble.layout(this.#scale());
+    this.#layoutAll();
     bubble.show();
     this.#start();
     return bubble;
@@ -133,6 +135,23 @@ class BubbleLayer {
 
   #scale() {
     return getSetting(SETTINGS.BUBBLE_SCALING) === BUBBLE_SCALINGS.SCREEN ? 1 / canvas.stage.scale.x : 1;
+  }
+
+  #layoutAll() {
+    const scale = this.#scale();
+    for (const bubble of this.#bubbles.values()) this.#layoutOne(bubble, scale);
+  }
+
+  #layoutToken(token) {
+    const scale = this.#scale();
+    for (const bubble of this.#bubbles.values()) {
+      if (bubble.tokenId === token.id) this.#layoutOne(bubble, scale);
+    }
+  }
+
+  #layoutOne(bubble, scale) {
+    if (document.hidden) bubble.settlePush();
+    bubble.layout(scale);
   }
 
   #start() {

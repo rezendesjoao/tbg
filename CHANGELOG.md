@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.2.1] — 2026-09-11
+
+### Corrigido
+- Os balões passam a ser reposicionados também pelo hook `refreshToken` e logo após cada empurrão, em vez de dependerem só do relógio de animação. Sem isso, a pilha e o acompanhamento do token congelavam enquanto a aba estivesse oculta, já que o navegador suspende `requestAnimationFrame` nesse estado.
+
+### Adicionado
+- Roteiro de teste manual e script de verificação automática em `docs/TESTING.md`.
+
 ## [0.2.0] — 2026-09-11
 
 ### Adicionado

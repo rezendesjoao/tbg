@@ -2,7 +2,7 @@
 
 Módulo para **Foundry VTT v14** que transforma o chat numa experiência de *RPG de Habbo*: balões de fala que empilham sobre os tokens e sobem até sumir, um **Modo Narrador** para o Mestre falar sem estar preso a um personagem, e um chat de sidebar com cara de mensageiro.
 
-> **Estado: 0.2.0 — Fase 1.** Motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.2.1 — Fase 1.** Motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
@@ -38,7 +38,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.2.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.2.1 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 

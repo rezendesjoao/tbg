@@ -11,6 +11,7 @@
 | Interface | ApplicationV2 + HandlebarsApplicationMixin; DialogV2; zero jQuery | AppV1 é removida no v16 |
 | CSS | Layer `modules` (automática); variáveis `--tbg-*` | Vence o core sem `!important` |
 | Balões | HTML dentro de `#hud` (container `#tbg-bubbles`), posicionado em coordenadas de mundo; core silenciado com `options.chatBubble = false` em `preCreateChatMessage` | Mesmo mecanismo do core; o HUD já acompanha pan e zoom |
+| Posição dos balões | Recalculada por evento (`say`, `refreshToken`, `updateToken`), não só pelo relógio de animação | O navegador suspende `requestAnimationFrame` com a aba oculta e o canvas inteiro congela junto; sem os hooks a pilha e o acompanhamento do token só se corrigiriam ao voltar para a aba |
 | Falante | Nativo intocado (`ChatMessage.getSpeaker`) | Atende "clicou no boneco, fala como ele" |
 | Modo Narrador | Interruptor interno (setting de cliente) aplicado no hook `chatMessage`, com botão em `#message-modes` e atalho Alt+N | Um modo custom em `CONFIG.ChatMessage.modes` fica gravado em `core.messageMode`; se o módulo for desativado, `ChatMessage.applyMode` quebra ao ler `cfg.handler` de um modo inexistente e nenhuma mensagem é criada |
 | Comandos | `ChatLog.CHAT_COMMANDS` | API oficial do v14; `MESSAGE_PATTERNS` some no v16 |
@@ -46,7 +47,7 @@ lang/  en.json · pt-BR.json
 
 ## Fluxos
 
-**Balão (A1).** `createChatMessage` dispara em todos os clientes → `BubbleLayer.onMessage` descarta rolagens, mensagens invisíveis e tipos sem balão → resolve o token do `speaker` na cena atual → enriquece o conteúdo com `TextEditor.enrichHTML` (segredos só para dono ou GM) → renderiza `templates/bubble.hbs`, anexa em `#tbg-bubbles`, mede → empurra os balões que sobrepõe (free flow) ou todos (linha a linha) → o relógio `requestAnimationFrame` sobe cada balão em pixels de tela, suaviza o empurrão e posiciona em coordenadas de mundo a partir de `token.center` e `token.document.y` (o core grava a posição interpolada no documento durante a animação, então o balão acompanha o movimento) → ao passar do limite de subida ou do tempo máximo, esvanece e sai.
+**Balão (A1).** `createChatMessage` dispara em todos os clientes → `BubbleLayer.onMessage` descarta rolagens, mensagens invisíveis e tipos sem balão → resolve o token do `speaker` na cena atual → enriquece o conteúdo com `TextEditor.enrichHTML` (segredos só para dono ou GM) → renderiza `templates/bubble.hbs`, anexa em `#tbg-bubbles`, mede → empurra os balões que sobrepõe (free flow) ou todos (linha a linha) → todos os balões são reposicionados na hora, e de novo a cada `refreshToken` e `updateToken` do token que fala → o relógio `requestAnimationFrame` sobe cada balão em pixels de tela, suaviza o empurrão e posiciona em coordenadas de mundo a partir de `token.center` e `token.document.y` (o core grava a posição interpolada no documento durante a animação, então o balão acompanha o movimento) → ao passar do limite de subida ou do tempo máximo, esvanece e sai.
 
 Escala: em `screen` o balão recebe `transform: scale(1/zoom)` com origem no centro inferior, ficando do mesmo tamanho na tela em qualquer zoom; em `world` ele escala com o mapa como o balão do core.
 
