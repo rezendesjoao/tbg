@@ -23,6 +23,7 @@ function decorateMessage(message, html) {
   if (getSetting(SETTINGS.CHAT_GROUPING) && continuesPrevious(message, kind)) html.classList.add("tbg-continued");
 }
 
+/** Sistemas que desenham o próprio retrato só o inserem depois deste hook, então quem esconde o nosso é o CSS. */
 function addPortrait(html, message) {
   const src = speakerImage(message);
   if (!src) return;
@@ -31,6 +32,7 @@ function addPortrait(html, message) {
   portrait.src = src;
   portrait.alt = "";
   html.prepend(portrait);
+  html.classList.add("tbg-has-portrait");
 }
 
 function continuesPrevious(message, kind) {

@@ -1,19 +1,44 @@
+import { INPUT_CHANGED } from "../constants.mjs";
+import { SETTINGS, getSetting } from "../settings.mjs";
 import { stripParagraph } from "../utils.mjs";
 
-/** Faz Shift+Enter enviar a mensagem como grito, com um plugin ProseMirror à frente dos do core no editor do chat. */
+/**
+ * Plugin ProseMirror do editor do chat: Shift+Enter grita, o limite de caracteres é aplicado
+ * e cada mudança é anunciada para o contador e o indicador de digitação.
+ */
 export function registerChatInput() {
-  Hooks.on("createProseMirrorEditor", prependInputPlugin);
+  Hooks.on("createProseMirrorEditor", prependPlugin);
 }
 
-function prependInputPlugin(_uuid, plugins) {
+function prependPlugin(_uuid, plugins) {
   if (!plugins.chatInput) return;
-  const entries = Object.entries(plugins);
+  const registered = Object.entries(plugins);
   for (const key of Object.keys(plugins)) delete plugins[key];
-  Object.assign(plugins, { tbgInput: buildPlugin() }, Object.fromEntries(entries));
+  Object.assign(plugins, { tbgInput: build() }, Object.fromEntries(registered));
 }
 
-function buildPlugin() {
-  return new foundry.prosemirror.state.Plugin({ props: { handleKeyDown: onKeyDown } });
+function build() {
+  return new foundry.prosemirror.state.Plugin({
+    props: { handleKeyDown: onKeyDown },
+    filterTransaction: withinLimit,
+    view: () => ({ update: announce })
+  });
+}
+
+function lengthOf(doc) {
+  return doc.textBetween(0, doc.content.size, "\n").length;
+}
+
+function withinLimit(transaction) {
+  const max = getSetting(SETTINGS.CHAT_MAX_LENGTH);
+  if (!max || !transaction.docChanged) return true;
+  return lengthOf(transaction.doc) <= max;
+}
+
+function announce(view, previous) {
+  const length = lengthOf(view.state.doc);
+  if (length === lengthOf(previous.doc)) return;
+  Hooks.callAll(INPUT_CHANGED, length);
 }
 
 function onKeyDown(view, event) {

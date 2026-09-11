@@ -15,12 +15,24 @@ export const KINDS = Object.freeze({
 });
 
 /** Tipos que viram balão sobre o token. */
-export const BUBBLE_KINDS = new Set([KINDS.SAY, KINDS.SHOUT, KINDS.WHISPER, KINDS.THINK, KINDS.ACTION]);
+export const BUBBLE_KINDS = new Set([KINDS.SAY, KINDS.SHOUT, KINDS.WHISPER, KINDS.THINK, KINDS.ACTION, KINDS.OOC]);
+
+/** Tipos sem cabeçalho no balão: o nome já está no texto ou não interessa. */
+export const ANONYMOUS_KINDS = new Set([KINDS.ACTION]);
 
 export const SOCKET_TYPES = Object.freeze({
-  PING: "ping"
+  PING: "ping",
+  TYPING: "typing",
+  TYPING_END: "typingEnd"
 });
 
 export const TEMPLATES = Object.freeze({
-  bubble: `modules/${MODULE_ID}/templates/bubble.hbs`
+  bubble: `modules/${MODULE_ID}/templates/bubble.hbs`,
+  typing: `modules/${MODULE_ID}/templates/typing.hbs`
 });
+
+/** Evento interno disparado a cada mudança no editor do chat. */
+export const INPUT_CHANGED = `${MODULE_ID}.chatInputChanged`;
+
+/** Evento interno disparado quando o limite de caracteres muda. */
+export const LIMIT_CHANGED = `${MODULE_ID}.chatLimitChanged`;

@@ -6,13 +6,14 @@ import Bubble from "./bubble.mjs";
 
 const CONTAINER_ID = "tbg-bubbles";
 const GAP = 6;
-const PUSH_EASING_MS = 120;
+const PUSH_TAU_MS = 55;
 const MAX_FRAME_MS = 100;
 const MAX_PUSH_ROUNDS = 500;
 
 /** Camada HTML no HUD do canvas que cria, empilha, sobe e remove balões. */
 class BubbleLayer {
   #bubbles = new Map();
+  #typing = new Map();
   #frame = null;
   #lastTick = 0;
 
@@ -25,8 +26,8 @@ class BubbleLayer {
     Hooks.on("updateChatMessage", (message, changed) => this.onMessageUpdated(message, changed));
     Hooks.on("deleteChatMessage", message => this.remove(message.id));
     Hooks.on("deleteToken", token => this.removeToken(token.id));
-    Hooks.on("refreshToken", token => this.#layoutToken(token));
-    Hooks.on("updateToken", token => this.#layoutToken(token));
+    Hooks.on("refreshToken", token => this.#layoutToken(token.id));
+    Hooks.on("updateToken", token => this.#layoutToken(token.id));
     Hooks.on("chatBubbleHTML", (token, _html, content, options) => this.onCoreBubble(token, content, options));
     Hooks.on("tbg.enabledChanged", enabled => enabled || this.clear());
   }
@@ -50,8 +51,9 @@ class BubbleLayer {
   }
 
   clear() {
-    for (const bubble of this.#bubbles.values()) bubble.element.remove();
     this.#bubbles.clear();
+    this.#typing.clear();
+    this.element?.replaceChildren();
     this.#stop();
   }
 
@@ -73,6 +75,25 @@ class BubbleLayer {
     return bubble;
   }
 
+  /** Liga ou desliga o indicador de digitação sobre um token. */
+  async setTyping(tokenId, active, label) {
+    const existing = this.#typing.get(tokenId);
+    if (!active) {
+      existing?.element.remove();
+      this.#typing.delete(tokenId);
+      return;
+    }
+    const container = this.element;
+    const token = canvas.tokens?.get(tokenId);
+    if (existing || !container || !token || !this.isActive) return;
+    const bubble = await Bubble.createTyping({ token, label });
+    container.append(bubble.element);
+    bubble.measure();
+    this.#typing.set(tokenId, bubble);
+    bubble.layout(this.#scale());
+    bubble.show();
+  }
+
   remove(id) {
     const bubble = this.#bubbles.get(id);
     if (!bubble) return;
@@ -84,6 +105,7 @@ class BubbleLayer {
     for (const bubble of this.#bubbles.values()) {
       if (bubble.tokenId === tokenId) this.remove(bubble.id);
     }
+    this.setTyping(tokenId, false);
   }
 
   async onMessage(message) {
@@ -91,6 +113,7 @@ class BubbleLayer {
     const kind = resolveKind(message);
     const token = speakerToken(message);
     if (!BUBBLE_KINDS.has(kind) || !token) return;
+    this.setTyping(token.id, false);
     await this.say({ id: message.id, token, kind, content: await enrich(message), name: message.alias });
   }
 
@@ -98,6 +121,7 @@ class BubbleLayer {
     const bubble = this.#bubbles.get(message.id);
     if (!bubble || !("content" in changed)) return;
     bubble.setContent(await enrich(message));
+    this.#layoutAll();
   }
 
   onCoreBubble(token, content, options) {
@@ -137,15 +161,19 @@ class BubbleLayer {
     return getSetting(SETTINGS.BUBBLE_SCALING) === BUBBLE_SCALINGS.SCREEN ? 1 / canvas.stage.scale.x : 1;
   }
 
-  #layoutAll() {
-    const scale = this.#scale();
-    for (const bubble of this.#bubbles.values()) this.#layoutOne(bubble, scale);
+  #all() {
+    return [...this.#bubbles.values(), ...this.#typing.values()];
   }
 
-  #layoutToken(token) {
+  #layoutAll() {
     const scale = this.#scale();
-    for (const bubble of this.#bubbles.values()) {
-      if (bubble.tokenId === token.id) this.#layoutOne(bubble, scale);
+    for (const bubble of this.#all()) this.#layoutOne(bubble, scale);
+  }
+
+  #layoutToken(tokenId) {
+    const scale = this.#scale();
+    for (const bubble of this.#all()) {
+      if (bubble.tokenId === tokenId) this.#layoutOne(bubble, scale);
     }
   }
 
@@ -168,21 +196,24 @@ class BubbleLayer {
   #tick = now => {
     this.#frame = null;
     if (!canvas.ready) return this.clear();
-    const seconds = Math.min(now - this.#lastTick, MAX_FRAME_MS) / 1000;
+    const elapsed = Math.min(now - this.#lastTick, MAX_FRAME_MS);
     this.#lastTick = now;
     const scale = this.#scale();
+    const seconds = elapsed / 1000;
+    const settling = 1 - Math.exp(-elapsed / PUSH_TAU_MS);
     const speed = getSetting(SETTINGS.BUBBLE_RISE_SPEED);
     const limit = getSetting(SETTINGS.BUBBLE_RISE_LIMIT);
     const lifetime = getSetting(SETTINGS.BUBBLE_MAX_LIFETIME) * 1000;
     for (const bubble of this.#bubbles.values()) {
       bubble.rise += speed * seconds;
-      bubble.pushOffset += (bubble.pushTarget - bubble.pushOffset) * Math.min(1, (seconds * 1000) / PUSH_EASING_MS);
+      bubble.pushOffset += (bubble.pushTarget - bubble.pushOffset) * settling;
       const expired = bubble.token.destroyed
         || bubble.targetOffset + bubble.height > limit
         || (lifetime > 0 && now - bubble.createdAt > lifetime);
       if (expired) this.#expire(bubble);
       else bubble.layout(scale);
     }
+    for (const bubble of this.#typing.values()) bubble.layout(scale);
     if (this.#bubbles.size) this.#frame = requestAnimationFrame(this.#tick);
   };
 

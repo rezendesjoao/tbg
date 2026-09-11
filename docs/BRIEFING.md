@@ -1,6 +1,6 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 (11/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
@@ -31,7 +31,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 
 ## Fase 2 — Presença e Mestre
 
-- [ ] **A5. "Digitando…" sobre o token** — **P/M**
+- [x] **A5. "Digitando…" sobre o token** — **P/M**
   Enquanto alguém digita no chat, um balãozinho com três pontinhos animados aparece sobre o token dele (e uma linha discreta na sidebar). Socket `module.tbg` com throttle de 250 ms e timeout de 5 s (técnica do CGMP, que já funciona no input ProseMirror do v14).
   Sobreposição: só versões na sidebar (Player Status, CGMP, Yuuko). Sobre o token: nenhuma.
 

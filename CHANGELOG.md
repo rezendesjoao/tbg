@@ -2,6 +2,21 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.3.0] — 2026-09-11
+
+### Adicionado
+- Contador de caracteres ao lado dos modos de mensagem, com aviso de cor perto do limite, e limite configurável que impede digitar ou colar além do máximo (`Limite de caracteres`, zero remove o limite).
+- `/ooc` passa a gerar um balão acinzentado e translúcido sobre o token de quem falou, mantendo a mensagem fora do personagem no chat.
+- A5: indicador de digitação sobre o token, com três pontinhos animados, enviado por socket e apagado ao enviar, ao apagar o texto ou após cinco segundos sem sinal.
+
+### Alterado
+- O balão passa a ter cabeçalho próprio: retrato e nome lado a lado na primeira linha, fala embaixo. O nome nunca mais desce para baixo do retrato, por mais longo que seja.
+- Movimento dos balões reescrito para `transform`, sem recalcular leiaute a cada quadro, com suavização independente da taxa de quadros. A velocidade padrão de subida subiu de 15 para 35 pixels por segundo.
+
+### Corrigido
+- Balões que expiravam podiam ficar órfãos no DOM e acabar duplicados na tela: a saída esperava a promessa de uma animação que não resolve enquanto a aba não desenha. A remoção agora é garantida por tempo.
+- Retrato duplicado nos cartões do chat em sistemas que desenham o próprio avatar, como o dnd5e. A escolha agora é feita por CSS, que independe da ordem em que os hooks rodam.
+
 ## [0.2.1] — 2026-09-11
 
 ### Corrigido

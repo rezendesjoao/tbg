@@ -1,5 +1,9 @@
 <div class="tbg-bubble tbg-bubble--{{kind}}" data-message-id="{{id}}" data-token-id="{{tokenId}}">
-    {{#if portrait}}<img class="tbg-bubble__portrait" src="{{portrait}}" alt="">{{/if}}
-    {{#if showName}}<span class="tbg-bubble__name">{{name}}:</span>{{/if}}
-    <span class="tbg-bubble__text">{{{content}}}</span>
+    {{#if showName}}
+    <div class="tbg-bubble__header">
+        {{#if portrait}}<img class="tbg-bubble__portrait" src="{{portrait}}" alt="">{{/if}}
+        <span class="tbg-bubble__name">{{name}}</span>
+    </div>
+    {{/if}}
+    <div class="tbg-bubble__text">{{{content}}}</div>
 </div>

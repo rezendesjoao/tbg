@@ -1,8 +1,12 @@
-import { KINDS, TEMPLATES } from "../constants.mjs";
+import { ANONYMOUS_KINDS, TEMPLATES } from "../constants.mjs";
 
 const MARGIN = 12;
+const FADE_MS = 250;
 
-/** Um balão ancorado a um token; deslocamentos em pixels de tela, convertidos para o mundo no layout. */
+/**
+ * Um balão ancorado a um token. Os deslocamentos são em pixels de tela e viram
+ * coordenadas de mundo no layout, que usa `transform` para não recalcular leiaute a cada quadro.
+ */
 export default class Bubble {
   rise = 0;
   pushTarget = 0;
@@ -18,18 +22,24 @@ export default class Bubble {
     this.element = element;
   }
 
-  /** Renderiza o template e devolve o balão pronto para entrar no DOM. */
+  /** Renderiza o balão de fala. */
   static async create({ id, token, kind, content, name, portrait }) {
-    const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.bubble, {
+    const element = await render(TEMPLATES.bubble, {
       id,
       tokenId: token.id,
       kind,
       content,
       name,
       portrait,
-      showName: kind !== KINDS.ACTION
+      showName: !ANONYMOUS_KINDS.has(kind)
     });
-    return new Bubble({ id, token, kind, element: foundry.utils.parseHTML(html) });
+    return new Bubble({ id, token, kind, element });
+  }
+
+  /** Renderiza o indicador de digitação, que fica parado logo acima do token. */
+  static async createTyping({ token, label }) {
+    const element = await render(TEMPLATES.typing, { tokenId: token.id, label });
+    return new Bubble({ id: `typing-${token.id}`, token, kind: "typing", element });
   }
 
   get tokenId() {
@@ -59,11 +69,10 @@ export default class Bubble {
 
   layout(scale) {
     const { x, y } = this.anchor(scale);
-    const { style } = this.element;
-    style.left = `${x - this.width / 2}px`;
-    style.top = `${y - this.offset * scale - this.height}px`;
-    style.transform = scale === 1 ? "" : `scale(${scale})`;
-    style.visibility = this.token.visible ? "" : "hidden";
+    const left = x - (this.width * scale) / 2;
+    const top = y - (this.offset + this.height) * scale;
+    this.element.style.transform = `translate3d(${left}px, ${top}px, 0) scale(${scale})`;
+    this.element.style.visibility = this.token.visible ? "" : "hidden";
   }
 
   show() {
@@ -80,12 +89,18 @@ export default class Bubble {
     this.measure();
   }
 
-  async fadeOut() {
-    await this.element.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, easing: "ease" }).finished;
-    this.element.remove();
+  /** A promessa da animação não resolve enquanto a aba não desenha, então a remoção é agendada por tempo. */
+  fadeOut() {
+    this.element.animate([{ opacity: 1 }, { opacity: 0 }], { duration: FADE_MS, easing: "ease", fill: "forwards" });
+    setTimeout(() => this.element.remove(), FADE_MS);
   }
 
   anchor(scale) {
     return { x: this.token.center.x, y: this.token.document.y - MARGIN * scale };
   }
+}
+
+async function render(template, data) {
+  const html = await foundry.applications.handlebars.renderTemplate(template, data);
+  return foundry.utils.parseHTML(html);
 }

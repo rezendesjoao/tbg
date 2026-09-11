@@ -11,13 +11,16 @@
 | Interface | ApplicationV2 + HandlebarsApplicationMixin; DialogV2; zero jQuery | AppV1 é removida no v16 |
 | CSS | Layer `modules` (automática); variáveis `--tbg-*` | Vence o core sem `!important` |
 | Balões | HTML dentro de `#hud` (container `#tbg-bubbles`), posicionado em coordenadas de mundo; core silenciado com `options.chatBubble = false` em `preCreateChatMessage` | Mesmo mecanismo do core; o HUD já acompanha pan e zoom |
-| Posição dos balões | Recalculada por evento (`say`, `refreshToken`, `updateToken`), não só pelo relógio de animação | O navegador suspende `requestAnimationFrame` com a aba oculta e o canvas inteiro congela junto; sem os hooks a pilha e o acompanhamento do token só se corrigiriam ao voltar para a aba |
+| Posição dos balões | Escrita em `transform: translate3d(...) scale(...)` com `transform-origin: 0 0`, recalculada por evento (`say`, `refreshToken`, `updateToken`) e não só pelo relógio | O navegador suspende `requestAnimationFrame` com a aba oculta e o canvas inteiro congela junto; sem os hooks a pilha e o acompanhamento do token só se corrigiriam ao voltar para a aba |
 | Falante | Nativo intocado (`ChatMessage.getSpeaker`) | Atende "clicou no boneco, fala como ele" |
 | Modo Narrador | Interruptor interno (setting de cliente) aplicado no hook `chatMessage`, com botão em `#message-modes` e atalho Alt+N | Um modo custom em `CONFIG.ChatMessage.modes` fica gravado em `core.messageMode`; se o módulo for desativado, `ChatMessage.applyMode` quebra ao ler `cfg.handler` de um modo inexistente e nenhuma mensagem é criada |
 | Comandos | `ChatLog.CHAT_COMMANDS` | API oficial do v14; `MESSAGE_PATTERNS` some no v16 |
 | Shift+Enter | Plugin ProseMirror próprio registrado no hook `createProseMirrorEditor` (o editor do chat é o único com a chave `chatInput`) e reordenado para a frente do registro | Único caminho com acesso ao `EditorView` para enviar e limpar o editor; `ProseMirrorEditor.create` faz `Object.assign({}, defaults, plugins)`, então sem reordenar o `keyMaps` do core consumiria o Shift+Enter antes |
 | Dados | `flags.tbg.*` em ChatMessage (`kind`, `speaker`) | O Foundry sincroniza flags sozinho |
 | Socket | `module.tbg` só para efêmeros | Nada persistente por socket |
+| Retrato no cartão | O TBG sempre insere o seu e o CSS o esconde com `:has(.message-header img)` quando o sistema já desenhou um | Sistemas como o dnd5e inserem o avatar em `renderChatMessageHTML` depois do nosso hook, então nenhuma checagem em JavaScript no momento do hook enxerga o avatar deles |
+| Limite de caracteres | `filterTransaction` no plugin ProseMirror do chat | Recusa a transação inteira, então vale para digitação e para colagem, sem truncar texto pelas costas do usuário |
+| Digitação | Socket `module.tbg` com reenvio a cada segundo e expiração de cinco segundos no destinatário | Nada persistente; se o cliente cair, o indicador some sozinho |
 | i18n | `lang/pt-BR.json` e `lang/en.json`, chaves `TBG.*` | pt-BR é o público principal |
 
 ## Estrutura
@@ -33,8 +36,10 @@ scripts/
   chat/
     kinds.mjs        resolveKind(message): flag, sussurro ou estilo
     speaker.mjs      speakerToken(message), speakerImage(message)
-    commands.mjs     /say /shout /think *ação* /n e o falante de sussurros
-    input.mjs        plugin ProseMirror: Shift+Enter grita
+    commands.mjs     /say /shout /think *ação* /n /ooc e o falante de sussurros
+    input.mjs        plugin ProseMirror: Shift+Enter grita, limite de caracteres, aviso de mudança
+    counter.mjs      contador de caracteres junto aos modos de mensagem
+    typing.mjs       socket e indicador de digitação sobre o token
     narrator.mjs     interruptor, botão, atalho e dados de narração
     render.mjs       tema do cartão: classes, retrato, agrupamento
   bubbles/

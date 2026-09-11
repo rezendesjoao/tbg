@@ -13,12 +13,28 @@ const COMMANDS = {
   tbgNarrate: { rgx: /^\/(?:n|narrar|narrate)\s([^]*)/i, fn: narrateCommand }
 };
 
-/** Registra os comandos de fala e o tratamento do falante em sussurros. */
+/** Registra os comandos de fala, o `/ooc` com balão e o tratamento do falante em sussurros. */
 export function registerChatCommands() {
-  Object.assign(foundry.applications.sidebar.tabs.ChatLog.CHAT_COMMANDS, COMMANDS);
+  const { CHAT_COMMANDS } = foundry.applications.sidebar.tabs.ChatLog;
+  Object.assign(CHAT_COMMANDS, COMMANDS);
+  CHAT_COMMANDS.ooc = withBubbleToken(CHAT_COMMANDS.ooc);
   Hooks.on("chatMessage", speakInCharacterByDefault);
   Hooks.on("chatMessage", keepWhisperSpeaker);
   Hooks.on("preCreateChatMessage", restoreWhisperSpeaker);
+}
+
+/** Mantém o `/ooc` do core e só guarda o token para o balão, já que o core descarta o falante. */
+function withBubbleToken(command) {
+  return {
+    ...command,
+    fn(name, match, chatData, createOptions) {
+      const { scene, token } = chatData.speaker ?? {};
+      const result = command.fn.call(this, name, match, chatData, createOptions);
+      setKind(chatData, KINDS.OOC);
+      if (token) foundry.utils.setProperty(chatData, `flags.${MODULE_ID}.bubbleToken`, { scene, token });
+      return result;
+    }
+  };
 }
 
 function speakAs(kind) {

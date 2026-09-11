@@ -1,8 +1,13 @@
-/** Token da cena atual que fala pela mensagem, ou null. */
+import { MODULE_ID } from "../constants.mjs";
+
+/**
+ * Token da cena atual que carrega o balão da mensagem, ou null.
+ * Mensagens fora do personagem não guardam falante, então o token vem da flag gravada pelo comando.
+ */
 export function speakerToken(message) {
-  const { scene, token } = message.speaker;
-  if (!canvas.ready || !token || scene !== canvas.scene.id) return null;
-  return canvas.tokens.get(token) ?? null;
+  const source = message.speaker.token ? message.speaker : message.getFlag(MODULE_ID, "bubbleToken");
+  if (!canvas.ready || !source?.token || source.scene !== canvas.scene.id) return null;
+  return canvas.tokens.get(source.token) ?? null;
 }
 
 /** Imagem de quem fala: token, depois ator, depois avatar do usuário; fora do personagem, só o avatar. */

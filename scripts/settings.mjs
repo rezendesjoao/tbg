@@ -1,4 +1,4 @@
-import { MODULE_ID } from "./constants.mjs";
+import { LIMIT_CHANGED, MODULE_ID } from "./constants.mjs";
 
 export const SETTINGS = Object.freeze({
   ENABLED: "enabled",
@@ -11,6 +11,8 @@ export const SETTINGS = Object.freeze({
   BUBBLE_SCALING: "bubbleScaling",
   BUBBLE_PORTRAIT: "bubblePortrait",
   AUTO_IN_CHARACTER: "autoInCharacter",
+  CHAT_MAX_LENGTH: "chatMaxLength",
+  TYPING_INDICATOR: "typingIndicator",
   NARRATOR_NAME: "narratorName",
   NARRATOR_ACTIVE: "narratorActive",
   CHAT_THEME: "chatTheme",
@@ -34,7 +36,7 @@ const DEFINITIONS = {
     default: BUBBLE_LAYOUTS.FREE_FLOW,
     choices: choicesFor(SETTINGS.BUBBLE_LAYOUT, BUBBLE_LAYOUTS)
   },
-  [SETTINGS.BUBBLE_RISE_SPEED]: { scope: "world", type: Number, default: 15, range: { min: 0, max: 60, step: 1 } },
+  [SETTINGS.BUBBLE_RISE_SPEED]: { scope: "world", type: Number, default: 35, range: { min: 0, max: 120, step: 5 } },
   [SETTINGS.BUBBLE_RISE_LIMIT]: { scope: "world", type: Number, default: 320, range: { min: 100, max: 800, step: 10 } },
   [SETTINGS.BUBBLE_MAX_WIDTH]: { scope: "world", type: Number, default: 350, range: { min: 200, max: 600, step: 10 } },
   [SETTINGS.BUBBLE_MAX_LIFETIME]: { scope: "world", type: Number, default: 0, range: { min: 0, max: 300, step: 5 } },
@@ -46,6 +48,14 @@ const DEFINITIONS = {
   },
   [SETTINGS.BUBBLE_PORTRAIT]: { scope: "world", type: Boolean, default: true },
   [SETTINGS.AUTO_IN_CHARACTER]: { scope: "world", type: Boolean, default: true },
+  [SETTINGS.CHAT_MAX_LENGTH]: {
+    scope: "world",
+    type: Number,
+    default: 500,
+    range: { min: 0, max: 2000, step: 50 },
+    onChange: () => Hooks.callAll(LIMIT_CHANGED)
+  },
+  [SETTINGS.TYPING_INDICATOR]: { scope: "world", type: Boolean, default: true },
   [SETTINGS.NARRATOR_NAME]: { scope: "world", type: String, default: "" },
   [SETTINGS.NARRATOR_ACTIVE]: { scope: "client", type: Boolean, default: false, config: false },
   [SETTINGS.CHAT_THEME]: { scope: "client", type: Boolean, default: true },

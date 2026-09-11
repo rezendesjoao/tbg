@@ -6,6 +6,8 @@ import { createApi } from "./api.mjs";
 import { registerBubbles } from "./bubbles/layer.mjs";
 import { registerChatCommands } from "./chat/commands.mjs";
 import { registerChatInput } from "./chat/input.mjs";
+import { registerCharacterCounter } from "./chat/counter.mjs";
+import { registerTypingIndicator } from "./chat/typing.mjs";
 import { registerNarrator } from "./chat/narrator.mjs";
 import { registerChatRender } from "./chat/render.mjs";
 
@@ -16,6 +18,8 @@ Hooks.once("init", () => {
   registerNarrator();
   registerChatCommands();
   registerChatInput();
+  registerCharacterCounter();
+  registerTypingIndicator();
   registerChatRender();
   registerBubbles();
   foundry.applications.handlebars.loadTemplates(Object.values(TEMPLATES));

@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.2.1 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.3.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -16,9 +16,10 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 ## 2. A1 — Motor de balões
 
 - [ ] **Balão simples.** Selecione um token e mande `Olá`. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
-- [ ] **Retrato.** O balão mostra a imagem do token em círculo à esquerda do nome. Desligue *Retrato no balão* nas configurações e confirme que some.
+- [ ] **Cabeçalho.** Dentro do balão, a imagem do token e o nome ficam lado a lado na primeira linha, e a fala vem embaixo. Teste com um personagem de nome longo: o nome quebra em duas linhas mas nunca desce para baixo da imagem.
+- [ ] **Retrato.** Desligue *Retrato no balão* nas configurações e confirme que a imagem some e o nome continua no lugar.
 - [ ] **Empilhamento.** Mande mais duas mensagens seguidas. Os balões antigos sobem e o novo nasce embaixo, colado no token. Nenhum deles se sobrepõe.
-- [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem devagar sozinhos e desaparecem ao passar do limite. Aumente *Velocidade de subida* para ver mais rápido.
+- [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem sozinhos e desaparecem ao passar do limite. O movimento deve ser fluido, sem tranco. Ajuste *Velocidade de subida* ao gosto da mesa.
 - [ ] **Acompanha o token.** Com balões na tela, arraste o token para o outro lado da cena. Os balões vão junto, mantendo a pilha.
 - [ ] **Zoom.** Dê zoom para dentro e para fora. Com *Escala dos balões* em "Fixa na tela", o balão mantém o mesmo tamanho de leitura em qualquer zoom. Troque para "Junto com o mapa" e confirme que passa a encolher e crescer com a cena.
 - [ ] **Colunas independentes (free flow).** Selecione o segundo token, distante, e mande uma mensagem. O balão dele aparece na coluna dele e **não** empurra os balões do primeiro token.
@@ -40,8 +41,9 @@ Sempre com um token selecionado.
 | Ação por comando | `/me ajeita o casaco` | Igual ao anterior |
 | Sussurro | `/w Nome oi` | Balão tracejado cinza, só para quem recebe |
 | Fala explícita | `/say olá` | Balão normal mesmo com outro modo de mensagem ativo |
+| Fora do personagem | `/ooc já volto` | Mensagem fora do personagem no chat e balão acinzentado e translúcido sobre o token |
 
-- [ ] Todos os oito casos acima.
+- [ ] Todos os nove casos acima.
 - [ ] **Sem token.** Deselecione tudo e mande `teste`. A mensagem sai fora de personagem, sem balão, e nada quebra.
 - [ ] **Sem token, em personagem.** Ainda sem token, tente `/think algo`. Aparece um aviso pedindo para selecionar um token.
 - [ ] **Comandos do core intactos.** `/roll 1d20` rola normalmente e **não** vira balão.
@@ -58,9 +60,19 @@ Sempre com um token selecionado.
 - [ ] **Nome.** Mude *Nome do narrador* nas configurações para algo como `Cardinal` e confirme que as narrações passam a usar esse nome.
 - [ ] **Só Mestre.** Num cliente de jogador, o botão de pergaminho não aparece e `/n` é recusado.
 
+## 4b. Contador de caracteres e digitação
+
+- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece algo como `0/500`. Ele sobe conforme você digita.
+- [ ] **Aviso.** Perto do limite o contador muda de cor; no limite fica vermelho.
+- [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
+- [ ] **Sem limite.** Ponha *Limite de caracteres* em zero e confirme que o contador mostra só o número e nada é bloqueado.
+- [ ] **Digitando.** Com dois clientes, um deles começa a escrever com o token selecionado: no outro cliente aparecem três pontinhos animados sobre aquele token.
+- [ ] **Some ao enviar.** Ao enviar a mensagem, os pontinhos somem e viram o balão da fala.
+- [ ] **Some ao apagar.** Apague tudo que digitou sem enviar: os pontinhos somem no outro cliente.
+
 ## 5. C1 — Tema do chat
 
-- [ ] **Retrato.** Cada cartão do chat tem a imagem do falante em círculo à esquerda.
+- [ ] **Retrato.** Cada cartão do chat tem a imagem do falante, uma só vez. Se o sistema de jogo já desenha um avatar (o dnd5e faz isso), o TBG não acrescenta outro.
 - [ ] **Cor.** O nome aparece na cor do jogador que escreveu.
 - [ ] **Agrupamento.** Duas mensagens seguidas do mesmo falante: a segunda não repete o cabeçalho e encosta na primeira.
 - [ ] **Quebra do agrupamento.** Uma mensagem de outro falante no meio faz o cabeçalho voltar.
@@ -80,15 +92,19 @@ O teste que mais importa, porque balão é coisa de mesa. Abra uma janela anôni
 
 ## 7. Verificação automática
 
-Cole no console (F12) do cliente do **Mestre**, com uma cena aberta. O script cria dois atores e tokens de teste, exercita tudo e imprime uma tabela de aprovado e reprovado. Ele apaga os atores, tokens e mensagens que criou.
+Cole no console (F12) do cliente do **Mestre**, com uma cena aberta. O script cria dois atores e tokens de teste, exercita tudo e imprime uma tabela de aprovado e reprovado. Ele apaga os atores, tokens e mensagens que criou, depois de uma pausa: apagar uma mensagem enquanto o Foundry ainda anima a notificação dela faz o core lançar um erro que não tem relação com o TBG.
 
 ```js
 await (async () => {
   const pause = ms => new Promise(r => setTimeout(r, ms));
   const results = [];
-  const check = (name, pass, detail = "") => results.push({ teste: name, ok: pass ? "PASSOU" : "FALHOU", detalhe: detail });
-  const bubbles = id => [...document.querySelectorAll(`#tbg-bubbles .tbg-bubble[data-token-id="${id}"]`)];
+  const check = (n, p, d = "") => results.push({ teste: n, ok: p ? "PASSOU" : "FALHOU", detalhe: d });
+  const at = el => { const m = new DOMMatrix(el.style.transform); return { x: Math.round(m.m41), y: Math.round(m.m42) }; };
+  const rect = el => { const r = el.getBoundingClientRect(); return { l: r.left, r: r.right, t: r.top, b: r.bottom }; };
+  const overlap = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+  const bubbles = id => [...document.querySelectorAll(`#tbg-bubbles .tbg-bubble[data-token-id="${id}"]:not(.tbg-bubble--typing)`)];
   const kindOf = el => [...el.classList].find(c => c.startsWith("tbg-bubble--") && !c.endsWith("visible"))?.slice(12);
+  const typing = async (tokenId, on) => { const layer = await import("/modules/tbg/scripts/bubbles/layer.mjs"); await layer.bubbleLayer.setTyping(tokenId, on, "Digitando"); await pause(200); };
   const module = game.modules.get("tbg");
 
   check("módulo ativo", module?.active === true, module?.version ?? "ausente");
@@ -97,63 +113,80 @@ await (async () => {
   check("comandos registrados", Object.keys(foundry.applications.sidebar.tabs.ChatLog.CHAT_COMMANDS).filter(k => k.startsWith("tbg")).length === 5);
   check("botão do Narrador", !!document.querySelector("#message-modes [data-tbg-narrator]"));
   check("atalho registrado", game.keybindings.actions.has("tbg.toggleNarrator"));
+  check("contador de caracteres", !!document.querySelector(".tbg-char-count"));
 
   const firstMessage = game.messages.size;
-  const actors = await Actor.createDocuments([{ name: "TBG Teste A", type: Object.keys(game.system.documentTypes.Actor)[0] },
-                                              { name: "TBG Teste B", type: Object.keys(game.system.documentTypes.Actor)[0] }]);
+  const type = Object.keys(game.system.documentTypes.Actor)[0];
+  const actors = await Actor.createDocuments([{ name: "TBG Teste A", type }, { name: "TBG Teste B", type }]);
   const docs = await Promise.all(actors.map((a, i) => a.getTokenDocument({ x: 400 + i * 1600, y: 800 })));
   const tokens = await canvas.scene.createEmbeddedDocuments("Token", docs.map(d => d.toObject()));
   await pause(800);
   const [tokenA, tokenB] = tokens.map(t => canvas.tokens.get(t.id));
+  const say = async t => { await ui.chat.processMessage(t); await pause(300); };
 
-  const say = async text => { await ui.chat.processMessage(text); await pause(300); };
   tokenA.control({ releaseOthers: true });
-  await say("Primeira.");
-  await say("Segunda.");
-  await say("Terceira.");
+  await say("Primeira."); await say("Segunda."); await say("Terceira.");
   await pause(400);
 
   const stack = bubbles(tokenA.id);
-  check("três balões simultâneos", stack.length === 3, `${stack.length} na tela`);
-  const tops = stack.map(b => parseFloat(b.style.top));
-  check("balões empilhados sem sobrepor", new Set(tops.map(Math.round)).size === 3, tops.map(Math.round).join(", "));
+  check("três balões, sem duplicata", stack.length === 3, `${stack.length} na tela`);
+  const boxes = stack.map(rect);
+  let colisoes = 0;
+  for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) if (overlap(boxes[i], boxes[j])) colisoes++;
+  check("nenhuma sobreposição", colisoes === 0, `${colisoes} colisões`);
 
-  const before = bubbles(tokenA.id).map(b => parseFloat(b.style.left));
+  const before = bubbles(tokenA.id).map(b => at(b).x);
   await tokenA.document.update({ x: tokenA.document.x + 400 }, { animate: false });
   await pause(600);
-  const after = bubbles(tokenA.id).map(b => parseFloat(b.style.left));
-  check("balões acompanham o token", after.every((v, i) => Math.abs(v - before[i] - 400) < 5), `${Math.round(before[0])} → ${Math.round(after[0])}`);
+  check("balões acompanham o token", bubbles(tokenA.id).map(b => at(b).x).every((v, i) => Math.abs(v - before[i] - 400) < 5));
 
-  const topsBefore = bubbles(tokenA.id).map(b => Math.round(parseFloat(b.style.top)));
+  const antes = bubbles(tokenA.id).map(b => at(b).y);
   tokenB.control({ releaseOthers: true });
   await say("Coluna separada.");
   await pause(400);
-  const topsAfter = bubbles(tokenA.id).map(b => Math.round(parseFloat(b.style.top)));
-  check("colunas independentes (free flow)", JSON.stringify(topsBefore) === JSON.stringify(topsAfter), "token distante não empurrou");
+  check("colunas independentes (free flow)", JSON.stringify(antes) === JSON.stringify(bubbles(tokenA.id).map(b => at(b).y)));
 
   tokenA.control({ releaseOthers: true });
-  const cases = [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"]];
-  for (const [text, expected] of cases) {
+  for (const [text, esperado] of [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"], ["/ooc fora do personagem", "ooc"]]) {
     await say(text);
     const last = game.messages.contents.at(-1);
-    const bubble = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${last.id}"]`);
-    check(`comando ${text.split(" ")[0]}`, kindOf(bubble ?? document.createElement("div")) === expected, `esperado ${expected}, veio ${bubble ? kindOf(bubble) : "nenhum balão"}`);
+    const b = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${last.id}"]`);
+    check(`comando ${text.split(" ")[0]}`, kindOf(b ?? document.createElement("div")) === esperado, b ? kindOf(b) : "nenhum balão");
   }
 
-  const think = game.messages.contents.find(m => m.getFlag("tbg", "kind") === "think");
-  check("pensamento é privado", think?.whisper.length > 0, `${think?.whisper.length ?? 0} destinatários`);
+  const ooc = game.messages.contents.at(-1);
+  check("/ooc continua fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
+  const oocCard = ui.chat.element.querySelector(`[data-message-id="${ooc.id}"]`);
+  const visiveis = [...oocCard.querySelectorAll("img")].filter(i => getComputedStyle(i).display !== "none");
+  check("sem retrato duplicado no chat", visiveis.length <= 1, `${visiveis.length} de ${oocCard.querySelectorAll("img").length}`);
+
+  const balao = bubbles(tokenA.id).find(b => b.querySelector(".tbg-bubble__portrait"));
+  if (balao) {
+    const p = rect(balao.querySelector(".tbg-bubble__portrait"));
+    const n = rect(balao.querySelector(".tbg-bubble__name"));
+    const t = rect(balao.querySelector(".tbg-bubble__text"));
+    check("nome ao lado do retrato", n.l >= p.r - 1 && n.t < p.b && n.b > p.t);
+    check("texto abaixo do cabeçalho", t.t >= p.b - 2);
+  }
 
   await say("/n A neblina desce.");
   const narration = game.messages.contents.at(-1);
   check("narração sem balão", narration.getFlag("tbg", "kind") === "narration" && !document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${narration.id}"]`), narration.alias);
-
-  const card = ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`);
-  check("tema aplicado ao cartão", card?.classList.contains("tbg-kind-narration") === true);
+  check("tema aplicado ao cartão", ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`)?.classList.contains("tbg-kind-narration") === true);
   check("balão do core silenciado", document.querySelectorAll("#chat-bubbles .chat-bubble").length === 0);
 
+  await typing(tokenA.id, true);
+  check("indicador de digitação", !!document.querySelector(`#tbg-bubbles .tbg-bubble--typing[data-token-id="${tokenA.id}"]`));
+  await typing(tokenA.id, false);
+  check("indicador some ao parar", !document.querySelector(".tbg-bubble--typing"));
+
+  await pause(1500);
   await canvas.scene.deleteEmbeddedDocuments("Token", tokens.map(t => t.id));
   await Actor.deleteDocuments(actors.map(a => a.id));
   await ChatMessage.deleteDocuments(game.messages.contents.slice(firstMessage).map(m => m.id));
+  await pause(600);
+  const orfaos = document.querySelectorAll("#tbg-bubbles .tbg-bubble").length;
+  check("nenhum balão órfão no fim", orfaos === 0, `${orfaos} restaram`);
 
   console.table(results);
   const failed = results.filter(r => r.ok === "FALHOU");
