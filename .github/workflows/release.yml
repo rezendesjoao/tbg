@@ -1,0 +1,55 @@
+# Ao publicar uma release no GitHub (tag no formato v1.2.3):
+# 1. grava a versão da tag e as URLs de manifest/download no module.json;
+# 2. gera module.zip com só o que o Foundry precisa;
+# 3. anexa module.json e module.zip à release.
+#
+# O manifesto "latest" fica sempre em:
+#   https://github.com/<owner>/<repo>/releases/latest/download/module.json
+
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preparar module.json com a versão da tag
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          VERSION="${TAG#v}"
+          MANIFEST="https://github.com/${REPO}/releases/latest/download/module.json"
+          DOWNLOAD="https://github.com/${REPO}/releases/download/${TAG}/module.zip"
+          jq --arg v "$VERSION" --arg m "$MANIFEST" --arg d "$DOWNLOAD" \
+             '.version = $v | .manifest = $m | .download = $d' \
+             module.json > module.json.tmp
+          mv module.json.tmp module.json
+          echo "Versão: $VERSION"
+          cat module.json
+
+      - name: Gerar module.zip
+        run: |
+          zip -r ./module.zip \
+            module.json README.md CHANGELOG.md LICENSE \
+            scripts/ styles/ templates/ lang/
+
+      - name: Anexar artefatos à release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          omitDraftDuringUpdate: true
+          omitPrereleaseDuringUpdate: true
+          artifacts: "./module.json, ./module.zip"
+          tag: ${{ github.event.release.tag_name }}

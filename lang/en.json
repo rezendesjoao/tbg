@@ -1,0 +1,29 @@
+{
+  "TBG": {
+    "Title": "TBG",
+    "Settings": {
+      "Enabled": {
+        "Name": "Enable TBG",
+        "Hint": "Master switch for all TBG features (speech bubbles, Narrator mode, chat theme)."
+      },
+      "Debug": {
+        "Name": "Debug logging",
+        "Hint": "Print verbose TBG logs to the browser console. Affects this client only."
+      }
+    },
+    "Narrator": {
+      "Name": "Narrator",
+      "Mode": "Narrator mode"
+    },
+    "Kinds": {
+      "say": "Say",
+      "shout": "Shout",
+      "whisper": "Whisper",
+      "think": "Think",
+      "action": "Action",
+      "narration": "Narration",
+      "announce": "Announcement",
+      "ooc": "Out of character"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "extends": "eslint:recommended",
+  "globals": {
+    "game": "readonly",
+    "canvas": "readonly",
+    "ui": "readonly",
+    "Hooks": "readonly",
+    "CONFIG": "readonly",
+    "CONST": "readonly",
+    "foundry": "readonly",
+    "ChatMessage": "readonly",
+    "Actor": "readonly",
+    "Token": "readonly",
+    "Scene": "readonly",
+    "User": "readonly",
+    "Handlebars": "readonly",
+    "PIXI": "readonly"
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "prefer-const": "warn",
+    "eqeqeq": ["error", "smart"]
+  }
+}

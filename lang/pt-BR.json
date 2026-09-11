@@ -1,0 +1,29 @@
+{
+  "TBG": {
+    "Title": "TBG",
+    "Settings": {
+      "Enabled": {
+        "Name": "Ativar TBG",
+        "Hint": "Interruptor geral de todos os recursos do TBG (balões de fala, Modo Narrador, tema do chat)."
+      },
+      "Debug": {
+        "Name": "Log detalhado",
+        "Hint": "Imprime logs detalhados do TBG no console do navegador. Afeta só este cliente."
+      }
+    },
+    "Narrator": {
+      "Name": "Narrador",
+      "Mode": "Modo Narrador"
+    },
+    "Kinds": {
+      "say": "Falar",
+      "shout": "Gritar",
+      "whisper": "Sussurrar",
+      "think": "Pensar",
+      "action": "Ação",
+      "narration": "Narração",
+      "announce": "Anúncio",
+      "ooc": "Fora do personagem"
+    }
+  }
+}
