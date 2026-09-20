@@ -49,10 +49,6 @@
         "name": "Falar em personagem automaticamente",
         "hint": "Com um token selecionado (ou personagem atribuído), texto simples sai em personagem mesmo com o modo de mensagem em Público como Usuário. Comandos e o seletor de modo continuam funcionando."
       },
-      "chatMaxLength": {
-        "name": "Limite de caracteres",
-        "hint": "Quantos caracteres cabem numa mensagem. O contador aparece ao lado dos modos de mensagem e a digitação para ao chegar no limite. Zero remove o limite."
-      },
       "typingIndicator": {
         "name": "Mostrar quem está digitando",
         "hint": "Enquanto alguém escreve, um balão de reticências aparece sobre o token dele."

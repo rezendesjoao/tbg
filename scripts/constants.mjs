@@ -34,5 +34,5 @@ export const TEMPLATES = Object.freeze({
 /** Evento interno disparado a cada mudança no editor do chat. */
 export const INPUT_CHANGED = `${MODULE_ID}.chatInputChanged`;
 
-/** Evento interno disparado quando o limite de caracteres muda. */
-export const LIMIT_CHANGED = `${MODULE_ID}.chatLimitChanged`;
+/** Teto de caracteres de uma mensagem, igual para todas as mesas e todos os jogadores. */
+export const CHAT_MAX_LENGTH = 150;

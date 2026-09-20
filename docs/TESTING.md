@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.4.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.5.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -62,11 +62,11 @@ Sempre com um token selecionado.
 
 ## 4b. Contador de caracteres e digitação
 
-- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece `0/100`. Ele sobe conforme você digita.
+- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece `0/150`. Ele sobe conforme você digita. O teto é fixo: não existe configuração para mudá-lo e ele é o mesmo em qualquer mundo.
 - [ ] **Legibilidade.** O contador é branco com contorno preto e continua legível sobre fundo claro e escuro.
 - [ ] **Aviso.** Até a metade do limite ele fica branco; da metade em diante vai ficando vermelho, chegando a vermelho pleno no limite.
 - [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
-- [ ] **Sem limite.** Ponha *Limite de caracteres* em zero e confirme que o contador mostra só o número e nada é bloqueado.
+- [ ] **Apagar sempre funciona.** Mesmo com o campo cheio, apagar letra a letra e selecionar tudo e apagar continuam funcionando.
 - [ ] **Digitando.** Com dois clientes, um deles começa a escrever com o token selecionado: no outro cliente aparecem três pontinhos animados sobre aquele token.
 - [ ] **Some ao enviar.** Ao enviar a mensagem, os pontinhos somem e viram o balão da fala.
 - [ ] **Some ao apagar.** Apague tudo que digitou sem enviar: os pontinhos somem no outro cliente.

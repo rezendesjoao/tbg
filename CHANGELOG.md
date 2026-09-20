@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.5.0] — 2026-09-20
+
+### Alterado
+- O limite de caracteres passa a ser fixo em 150, igual para toda mesa e todo jogador. A configuração `Limite de caracteres` deixou de existir: como o Foundry só aplica o padrão de uma setting quando o mundo nunca a gravou, e a tela de configurações grava todas de uma vez ao salvar, mundos que já tinham salvado ficavam presos ao valor antigo.
+
+### Corrigido
+- Com o campo já acima do limite, o editor recusava qualquer edição, inclusive apagar, e o histórico de mensagens antigas parava de funcionar em silêncio. Agora toda transação que encurta o texto é aceita.
+
 ## [0.4.0] — 2026-09-20
 
 ### Corrigido

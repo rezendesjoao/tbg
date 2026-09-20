@@ -1,6 +1,6 @@
 {
   "name": "tbg",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "Módulo Foundry VTT v14: balões de fala estilo Habbo, Modo Narrador e chat melhor.",
   "type": "module",

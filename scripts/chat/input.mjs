@@ -1,5 +1,4 @@
-import { INPUT_CHANGED } from "../constants.mjs";
-import { SETTINGS, getSetting } from "../settings.mjs";
+import { CHAT_MAX_LENGTH, INPUT_CHANGED } from "../constants.mjs";
 import { stripParagraph } from "../utils.mjs";
 
 /**
@@ -29,10 +28,11 @@ function lengthOf(doc) {
   return doc.textBetween(0, doc.content.size, "\n").length;
 }
 
-function withinLimit(transaction) {
-  const max = getSetting(SETTINGS.CHAT_MAX_LENGTH);
-  if (!max || !transaction.docChanged) return true;
-  return lengthOf(transaction.doc) <= max;
+/** Encurtar é sempre permitido, senão um texto já acima do limite trancaria o editor, sem apagar nem recuar no histórico. */
+function withinLimit(transaction, state) {
+  if (!transaction.docChanged) return true;
+  const next = lengthOf(transaction.doc);
+  return next <= CHAT_MAX_LENGTH || next < lengthOf(state.doc);
 }
 
 function announce(view, previous) {

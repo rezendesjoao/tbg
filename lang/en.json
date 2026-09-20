@@ -49,10 +49,6 @@
         "name": "Speak in character automatically",
         "hint": "With a token selected (or an assigned character), plain text is posted in character even when the message mode is Public as User. Commands and the mode picker still work as usual."
       },
-      "chatMaxLength": {
-        "name": "Character limit",
-        "hint": "How many characters fit in one message. The counter sits next to the message modes and typing stops at the limit. Zero removes the limit."
-      },
       "typingIndicator": {
         "name": "Show who is typing",
         "hint": "While someone writes, an ellipsis bubble appears above their token."

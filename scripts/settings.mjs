@@ -1,4 +1,4 @@
-import { LIMIT_CHANGED, MODULE_ID } from "./constants.mjs";
+import { MODULE_ID } from "./constants.mjs";
 
 export const SETTINGS = Object.freeze({
   ENABLED: "enabled",
@@ -11,7 +11,6 @@ export const SETTINGS = Object.freeze({
   BUBBLE_SCALING: "bubbleScaling",
   BUBBLE_PORTRAIT: "bubblePortrait",
   AUTO_IN_CHARACTER: "autoInCharacter",
-  CHAT_MAX_LENGTH: "chatMaxLength",
   TYPING_INDICATOR: "typingIndicator",
   NARRATOR_NAME: "narratorName",
   NARRATOR_ACTIVE: "narratorActive",
@@ -48,13 +47,6 @@ const DEFINITIONS = {
   },
   [SETTINGS.BUBBLE_PORTRAIT]: { scope: "world", type: Boolean, default: true },
   [SETTINGS.AUTO_IN_CHARACTER]: { scope: "world", type: Boolean, default: true },
-  [SETTINGS.CHAT_MAX_LENGTH]: {
-    scope: "world",
-    type: Number,
-    default: 100,
-    range: { min: 0, max: 1000, step: 10 },
-    onChange: () => Hooks.callAll(LIMIT_CHANGED)
-  },
   [SETTINGS.TYPING_INDICATOR]: { scope: "world", type: Boolean, default: true },
   [SETTINGS.NARRATOR_NAME]: { scope: "world", type: String, default: "" },
   [SETTINGS.NARRATOR_ACTIVE]: { scope: "client", type: Boolean, default: false, config: false },
