@@ -11,7 +11,7 @@ const expiries = new Map();
 let lastEmit = 0;
 let announcing = false;
 
-/** Mostra um balão de reticências sobre o token de quem está digitando. */
+/** Mostra um selo de reticências no canto do token de quem está digitando, inclusive para a própria pessoa. */
 export function registerTypingIndicator() {
   Hooks.on(INPUT_CHANGED, onInputChanged);
   Hooks.on("canvasTearDown", clearAll);
@@ -25,6 +25,7 @@ function onInputChanged(length) {
   else stopAnnouncing();
 }
 
+/** Quem emite não recebe o próprio pacote, então o selo local é ligado aqui. */
 function startAnnouncing() {
   const now = performance.now();
   if (announcing && now - lastEmit < EMIT_INTERVAL_MS) return;
@@ -33,13 +34,16 @@ function startAnnouncing() {
   announcing = true;
   lastEmit = now;
   emit(SOCKET_TYPES.TYPING, speaker);
+  show(speaker.sceneId, speaker.tokenId);
 }
 
 function stopAnnouncing() {
   if (!announcing) return;
   announcing = false;
   const speaker = currentSpeaker();
-  if (speaker) emit(SOCKET_TYPES.TYPING_END, speaker);
+  if (!speaker) return;
+  emit(SOCKET_TYPES.TYPING_END, speaker);
+  hide(speaker.tokenId);
 }
 
 function currentSpeaker() {

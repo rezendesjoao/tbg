@@ -3,12 +3,14 @@ import { BUBBLE_LAYOUTS, BUBBLE_SCALINGS, SETTINGS, getSetting } from "../settin
 import { resolveKind } from "../chat/kinds.mjs";
 import { speakerToken } from "../chat/speaker.mjs";
 import Bubble from "./bubble.mjs";
+import TypingIndicator from "./typing-indicator.mjs";
 
 const CONTAINER_ID = "tbg-bubbles";
 const GAP = 6;
 const PUSH_TAU_MS = 55;
 const MAX_FRAME_MS = 100;
 const MAX_PUSH_ROUNDS = 500;
+const STALE_CLOCK_MS = 150;
 
 /** Camada HTML no HUD do canvas que cria, empilha, sobe e remove balões. */
 class BubbleLayer {
@@ -75,7 +77,7 @@ class BubbleLayer {
     return bubble;
   }
 
-  /** Liga ou desliga o indicador de digitação sobre um token. */
+  /** Liga ou desliga o selo de digitação no canto do token. */
   async setTyping(tokenId, active, label) {
     const existing = this.#typing.get(tokenId);
     if (!active) {
@@ -86,12 +88,11 @@ class BubbleLayer {
     const container = this.element;
     const token = canvas.tokens?.get(tokenId);
     if (existing || !container || !token || !this.isActive) return;
-    const bubble = await Bubble.createTyping({ token, label });
-    container.append(bubble.element);
-    bubble.measure();
-    this.#typing.set(tokenId, bubble);
-    bubble.layout(this.#scale());
-    bubble.show();
+    const indicator = await TypingIndicator.create({ token, label });
+    container.append(indicator.element);
+    this.#typing.set(tokenId, indicator);
+    indicator.layout();
+    indicator.show();
   }
 
   remove(id) {
@@ -161,25 +162,28 @@ class BubbleLayer {
     return getSetting(SETTINGS.BUBBLE_SCALING) === BUBBLE_SCALINGS.SCREEN ? 1 / canvas.stage.scale.x : 1;
   }
 
-  #all() {
-    return [...this.#bubbles.values(), ...this.#typing.values()];
-  }
-
   #layoutAll() {
     const scale = this.#scale();
-    for (const bubble of this.#all()) this.#layoutOne(bubble, scale);
+    for (const bubble of this.#bubbles.values()) this.#layoutBubble(bubble, scale);
+    for (const indicator of this.#typing.values()) indicator.layout();
   }
 
   #layoutToken(tokenId) {
     const scale = this.#scale();
-    for (const bubble of this.#all()) {
-      if (bubble.tokenId === tokenId) this.#layoutOne(bubble, scale);
+    for (const bubble of this.#bubbles.values()) {
+      if (bubble.tokenId === tokenId) this.#layoutBubble(bubble, scale);
     }
+    this.#typing.get(tokenId)?.layout();
   }
 
-  #layoutOne(bubble, scale) {
-    if (document.hidden) bubble.settlePush();
+  #layoutBubble(bubble, scale) {
+    if (this.#clockStale()) bubble.settlePush();
     bubble.layout(scale);
+  }
+
+  /** Sem quadros recentes não há quem suavize o empurrão, e sem concluí-lo os balões nasceriam sobrepostos. */
+  #clockStale() {
+    return this.#frame === null || performance.now() - this.#lastTick > STALE_CLOCK_MS;
   }
 
   #start() {
@@ -213,7 +217,7 @@ class BubbleLayer {
       if (expired) this.#expire(bubble);
       else bubble.layout(scale);
     }
-    for (const bubble of this.#typing.values()) bubble.layout(scale);
+    for (const indicator of this.#typing.values()) indicator.layout();
     if (this.#bubbles.size) this.#frame = requestAnimationFrame(this.#tick);
   };
 

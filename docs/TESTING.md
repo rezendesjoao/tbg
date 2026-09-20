@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.5.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.6.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -67,9 +67,10 @@ Sempre com um token selecionado.
 - [ ] **Aviso.** Até a metade do limite ele fica branco; da metade em diante vai ficando vermelho, chegando a vermelho pleno no limite.
 - [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
 - [ ] **Apagar sempre funciona.** Mesmo com o campo cheio, apagar letra a letra e selecionar tudo e apagar continuam funcionando.
-- [ ] **Digitando.** Com dois clientes, um deles começa a escrever com o token selecionado: no outro cliente aparecem três pontinhos animados sobre aquele token.
-- [ ] **Some ao enviar.** Ao enviar a mensagem, os pontinhos somem e viram o balão da fala.
-- [ ] **Some ao apagar.** Apague tudo que digitou sem enviar: os pontinhos somem no outro cliente.
+- [ ] **Digitando.** Comece a escrever com um token selecionado: um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito, **inclusive para você mesmo**. Com dois clientes, aparece nos dois.
+- [ ] **Some ao enviar.** Ao enviar a mensagem, o selo some e vira o balão da fala.
+- [ ] **Encaixe.** Dê zoom para dentro e para fora: o selo continua dentro do token, no mesmo canto, porque acompanha a arte em vez do tamanho de tela.
+- [ ] **Some ao apagar.** Apague tudo que digitou sem enviar: o selo some nas duas telas.
 
 ## 5. C1 — Tema do chat
 
@@ -103,7 +104,7 @@ await (async () => {
   const at = el => { const m = new DOMMatrix(el.style.transform); return { x: Math.round(m.m41), y: Math.round(m.m42) }; };
   const rect = el => { const r = el.getBoundingClientRect(); return { l: r.left, r: r.right, t: r.top, b: r.bottom }; };
   const overlap = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
-  const bubbles = id => [...document.querySelectorAll(`#tbg-bubbles .tbg-bubble[data-token-id="${id}"]:not(.tbg-bubble--typing)`)];
+  const bubbles = id => [...document.querySelectorAll(`#tbg-bubbles .tbg-bubble[data-token-id="${id}"]`)];
   const kindOf = el => [...el.classList].find(c => c.startsWith("tbg-bubble--") && !c.endsWith("visible"))?.slice(12);
   const typing = async (tokenId, on) => { const layer = await import("/modules/tbg/scripts/bubbles/layer.mjs"); await layer.bubbleLayer.setTyping(tokenId, on, "Digitando"); await pause(200); };
   const module = game.modules.get("tbg");
@@ -188,9 +189,9 @@ await (async () => {
   check("balão do core silenciado", document.querySelectorAll("#chat-bubbles .chat-bubble").length === 0);
 
   await typing(tokenA.id, true);
-  check("indicador de digitação", !!document.querySelector(`#tbg-bubbles .tbg-bubble--typing[data-token-id="${tokenA.id}"]`));
+  check("indicador de digitação", !!document.querySelector(`#tbg-bubbles .tbg-typing[data-token-id="${tokenA.id}"]`));
   await typing(tokenA.id, false);
-  check("indicador some ao parar", !document.querySelector(".tbg-bubble--typing"));
+  check("indicador some ao parar", !document.querySelector(".tbg-typing"));
 
   await pause(1500);
   await canvas.scene.deleteEmbeddedDocuments("Token", tokens.map(t => t.id));

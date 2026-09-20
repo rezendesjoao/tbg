@@ -140,31 +140,47 @@
   opacity: 0.78;
 }
 
-.tbg-bubble--typing {
+.tbg-typing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 7px 10px;
-  min-width: 0;
+  justify-content: center;
+  gap: calc(var(--tbg-typing-size) * 0.13);
+  width: var(--tbg-typing-width);
+  height: var(--tbg-typing-size);
+  background: var(--tbg-bubble-bg);
+  border: max(1px, calc(var(--tbg-typing-size) * 0.07)) solid var(--tbg-bubble-border);
+  border-radius: 999px;
+  box-shadow: var(--tbg-bubble-shadow);
+  opacity: 0;
+  transition: opacity var(--tbg-transition);
+  will-change: transform;
 }
 
-.tbg-bubble--typing .tbg-typing__dot {
-  width: 6px;
-  height: 6px;
+.tbg-typing--visible {
+  opacity: 1;
+}
+
+.tbg-typing__dot {
+  width: calc(var(--tbg-typing-size) * 0.19);
+  height: calc(var(--tbg-typing-size) * 0.19);
   border-radius: 50%;
   background: var(--tbg-bubble-fg);
   animation: tbg-typing 1.2s infinite ease-in-out;
 }
 
-.tbg-bubble--typing .tbg-typing__dot:nth-child(2) {
+.tbg-typing__dot:nth-child(2) {
   animation-delay: 0.15s;
 }
 
-.tbg-bubble--typing .tbg-typing__dot:nth-child(3) {
+.tbg-typing__dot:nth-child(3) {
   animation-delay: 0.3s;
 }
 
 @keyframes tbg-typing {
-  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
-  30% { opacity: 1; transform: translateY(-3px); }
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(calc(var(--tbg-typing-size) * -0.14)); }
 }

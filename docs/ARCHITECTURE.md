@@ -20,7 +20,9 @@
 | Socket | `module.tbg` só para efêmeros | Nada persistente por socket |
 | Retrato no cartão | O TBG sempre insere o seu e o CSS o esconde com `:has(.message-header img)` quando o sistema já desenhou um | Sistemas como o dnd5e inserem o avatar em `renderChatMessageHTML` depois do nosso hook, então nenhuma checagem em JavaScript no momento do hook enxerga o avatar deles |
 | Limite de caracteres | Constante `CHAT_MAX_LENGTH` em `constants.mjs`, aplicada por `filterTransaction` no plugin ProseMirror; transações que encurtam passam sempre | Recusar a transação inteira cobre digitação e colagem sem truncar texto pelas costas do usuário. Não é setting porque o Foundry só usa o padrão de uma setting quando o mundo nunca a gravou, e a tela de configurações grava todas ao salvar: o limite acabava congelado no valor antigo de cada mundo. Sem a exceção para encurtar, um texto acima do limite trancaria o editor |
-| Digitação | Socket `module.tbg` com reenvio a cada segundo e expiração de cinco segundos no destinatário | Nada persistente; se o cliente cair, o indicador some sozinho |
+| Digitação | Socket `module.tbg` com reenvio a cada segundo e expiração de cinco segundos no destinatário, mais eco local em quem digita | Nada persistente; se o cliente cair, o selo some sozinho. O eco local é necessário porque `game.socket.emit` não devolve o pacote a quem enviou |
+| Empurrão sem relógio | `#clockStale()` conclui o empurrão quando não houve quadro recente, em vez de olhar `document.hidden` | Uma aba pode se declarar visível e mesmo assim não receber quadros de `requestAnimationFrame`; nesse estado os balões nasceriam empilhados no mesmo ponto |
+| Selo de digitação | Classe própria, posicionada em coordenadas de mundo dentro da arte do token e dimensionada como fração do token | Preso ao token, precisa encolher e crescer com o mapa; usar a escala de tela dos balões o faria transbordar o token quando afastado |
 | Nome na ação | Nem o comando `*texto*` nem o `/me` do core prefixam o nome no conteúdo; o `emote` do core é envolvido em `CHAT_COMMANDS` e tem o conteúdo devolvido ao texto limpo que ele mesmo capturou em `match[2]` | O cartão do chat já imprime o alias no cabeçalho (`templates/sidebar/chat-message.hbs`), então prefixar mostrava o nome duas vezes; e no balão, que já sai do token, o nome é ruído. Reescrever o conteúdo na origem evita procurar prefixo por texto depois |
 | Cor do contador | Branco com `-webkit-text-stroke` de 2px e `paint-order: stroke fill`, interpolando até vermelho com `color-mix` guiado pela custom property `--tbg-char-ratio` | Medido no Chromium 152 do Foundry 14.367: sem contorno o texto some no fundo claro, 3px fecha os dígitos e quatro `text-shadow` ficam irregulares |
 | i18n | `lang/pt-BR.json` e `lang/en.json`, chaves `TBG.*` | pt-BR é o público principal |
@@ -41,12 +43,13 @@ scripts/
     commands.mjs     /say /shout /think *ação* /n /ooc e o falante de sussurros
     input.mjs        plugin ProseMirror: Shift+Enter grita, limite de caracteres, aviso de mudança
     counter.mjs      contador de caracteres junto aos modos de mensagem
-    typing.mjs       socket e indicador de digitação sobre o token
+    typing.mjs       socket do indicador de digitação, com eco local para quem digita
     narrator.mjs     interruptor, botão, atalho e dados de narração
     render.mjs       tema do cartão: classes, retrato, agrupamento
   bubbles/
     bubble.mjs       um balão: elemento, medidas, geometria, layout
     layer.mjs        camada no HUD: hooks, fila, empurrão, relógio, remoção
+    typing-indicator.mjs  selo de digitação encaixado no canto superior direito do token
 styles/  tbg.css (variáveis) · bubbles.css · chat.css
 templates/  bubble.hbs
 lang/  en.json · pt-BR.json

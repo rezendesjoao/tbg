@@ -2,6 +2,15 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.6.0] — 2026-09-20
+
+### Corrigido
+- Os balões podiam nascer todos na mesma posição, sobrepostos, em clientes onde a aba se diz visível mas não desenha. A conclusão do empurrão dependia de `document.hidden`, quando a condição real é o relógio de animação não ter dado quadros recentes.
+
+### Alterado
+- O indicador de digitação virou um selo pequeno encaixado dentro da arte do token, no canto superior direito, dimensionado como fração do token e preso a ele no zoom. Antes era um balão do tamanho de uma fala, flutuando acima do token.
+- O selo passa a aparecer também para quem está digitando. O Foundry não devolve a quem envia o próprio pacote de socket, então o cliente que digita liga o selo localmente.
+
 ## [0.5.0] — 2026-09-20
 
 ### Alterado

@@ -24,7 +24,7 @@ export default class Bubble {
 
   /** Renderiza o balão de fala. */
   static async create({ id, token, kind, content, name, portrait }) {
-    const element = await render(TEMPLATES.bubble, {
+    const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.bubble, {
       id,
       tokenId: token.id,
       kind,
@@ -33,13 +33,7 @@ export default class Bubble {
       portrait,
       showName: !ANONYMOUS_KINDS.has(kind)
     });
-    return new Bubble({ id, token, kind, element });
-  }
-
-  /** Renderiza o indicador de digitação, que fica parado logo acima do token. */
-  static async createTyping({ token, label }) {
-    const element = await render(TEMPLATES.typing, { tokenId: token.id, label });
-    return new Bubble({ id: `typing-${token.id}`, token, kind: "typing", element });
+    return new Bubble({ id, token, kind, element: foundry.utils.parseHTML(html) });
   }
 
   get tokenId() {
@@ -98,9 +92,4 @@ export default class Bubble {
   anchor(scale) {
     return { x: this.token.center.x, y: this.token.document.y - MARGIN * scale };
   }
-}
-
-async function render(template, data) {
-  const html = await foundry.applications.handlebars.renderTemplate(template, data);
-  return foundry.utils.parseHTML(html);
 }
