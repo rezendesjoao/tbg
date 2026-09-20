@@ -51,8 +51,8 @@ const DEFINITIONS = {
   [SETTINGS.CHAT_MAX_LENGTH]: {
     scope: "world",
     type: Number,
-    default: 500,
-    range: { min: 0, max: 2000, step: 50 },
+    default: 100,
+    range: { min: 0, max: 1000, step: 10 },
     onChange: () => Hooks.callAll(LIMIT_CHANGED)
   },
   [SETTINGS.TYPING_INDICATOR]: { scope: "world", type: Boolean, default: true },

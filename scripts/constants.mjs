@@ -17,7 +17,7 @@ export const KINDS = Object.freeze({
 /** Tipos que viram balão sobre o token. */
 export const BUBBLE_KINDS = new Set([KINDS.SAY, KINDS.SHOUT, KINDS.WHISPER, KINDS.THINK, KINDS.ACTION, KINDS.OOC]);
 
-/** Tipos sem cabeçalho no balão: o nome já está no texto ou não interessa. */
+/** Tipos sem cabeçalho no balão: a ação se lê como narração curta, e o balão já sai do token. */
 export const ANONYMOUS_KINDS = new Set([KINDS.ACTION]);
 
 export const SOCKET_TYPES = Object.freeze({

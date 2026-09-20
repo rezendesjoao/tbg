@@ -2,7 +2,7 @@
 
 Módulo para **Foundry VTT v14** que transforma o chat numa experiência de *RPG de Habbo*: balões de fala que empilham sobre os tokens e sobem até sumir, um **Modo Narrador** para o Mestre falar sem estar preso a um personagem, e um chat de sidebar com cara de mensageiro.
 
-> **Estado: 0.3.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entrou o indicador de digitação sobre o token (A5). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.4.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entrou o indicador de digitação sobre o token (A5). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
@@ -15,7 +15,7 @@ Com um token selecionado, você fala como ele. No v14 o Foundry só faz isso no 
 | Texto normal com token selecionado | Fala: balão normal |
 | `/shout texto` ou **Shift+Enter** | Grito: negrito, balão maior |
 | `/think texto` (ou `/pensar`) | Pensamento: balão-nuvem só para o Mestre e o dono |
-| `*texto*` ou `/me texto` | Ação: balão em itálico, sem "Nome:" |
+| `*texto*` ou `/me texto` | Ação: balão em itálico, só o que foi feito, sem o nome antes |
 | `/w Nome texto` | Sussurro em personagem: balão itálico só para quem recebe |
 | `/say texto` (ou `/falar`) | Fala explícita, mesmo com outro modo ativo |
 | `/n texto` (ou `/narrar`) | Narração pontual (só Mestre) |
@@ -23,7 +23,7 @@ Com um token selecionado, você fala como ele. No v14 o Foundry só faz isso no 
 
 ### Contador de caracteres e digitação
 
-Ao lado dos modos de mensagem fica um contador que mostra quanto você já escreveu e qual o limite. Perto do limite ele muda de cor, e no limite o editor para de aceitar texto, inclusive colado. O limite é do mundo e pode ser zerado para tirar a trava.
+Ao lado dos modos de mensagem fica um contador que mostra quanto você já escreveu e qual o limite. Ele é branco com contorno preto, para se ler sobre qualquer fundo, e vai ficando vermelho da metade do limite em diante. No limite o editor para de aceitar texto, inclusive colado. O padrão são 100 caracteres; o limite é do mundo e pode ser zerado para tirar a trava.
 
 Enquanto alguém escreve, os outros veem três pontinhos animados sobre o token dessa pessoa. Somem ao enviar, ao apagar o texto ou após cinco segundos de silêncio.
 
@@ -45,7 +45,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.3.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.4.0 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 

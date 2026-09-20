@@ -13,11 +13,12 @@ const COMMANDS = {
   tbgNarrate: { rgx: /^\/(?:n|narrar|narrate)\s([^]*)/i, fn: narrateCommand }
 };
 
-/** Registra os comandos de fala, o `/ooc` com balão e o tratamento do falante em sussurros. */
+/** Registra os comandos de fala, o `/ooc` com balão, o `/me` sem nome repetido e o falante em sussurros. */
 export function registerChatCommands() {
   const { CHAT_COMMANDS } = foundry.applications.sidebar.tabs.ChatLog;
   Object.assign(CHAT_COMMANDS, COMMANDS);
   CHAT_COMMANDS.ooc = withBubbleToken(CHAT_COMMANDS.ooc);
+  CHAT_COMMANDS.emote = withoutNamePrefix(CHAT_COMMANDS.emote);
   Hooks.on("chatMessage", speakInCharacterByDefault);
   Hooks.on("chatMessage", keepWhisperSpeaker);
   Hooks.on("preCreateChatMessage", restoreWhisperSpeaker);
@@ -32,6 +33,19 @@ function withBubbleToken(command) {
       const result = command.fn.call(this, name, match, chatData, createOptions);
       setKind(chatData, KINDS.OOC);
       if (token) foundry.utils.setProperty(chatData, `flags.${MODULE_ID}.bubbleToken`, { scene, token });
+      return result;
+    }
+  };
+}
+
+/** O `/me` do core repete o nome no texto, e o cartão já o mostra no cabeçalho; devolve o texto limpo que o core capturou. */
+function withoutNamePrefix(command) {
+  return {
+    ...command,
+    fn(name, match, chatData, createOptions) {
+      const result = command.fn.call(this, name, match, chatData, createOptions);
+      chatData.content = withLineBreaks(match[2]);
+      setKind(chatData, KINDS.ACTION);
       return result;
     }
   };
@@ -62,7 +76,7 @@ function act(_command, match, chatData) {
     return speakOutOfCharacter(chatData);
   }
   chatData.style = CONST.CHAT_MESSAGE_STYLES.EMOTE;
-  chatData.content = `${chatData.speaker.alias} ${text}`;
+  chatData.content = text;
 }
 
 function narrateCommand(_command, match) {

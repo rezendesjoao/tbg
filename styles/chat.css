@@ -95,17 +95,12 @@
 .tbg-char-count {
   align-self: center;
   padding: 0 6px;
-  font-size: var(--font-size-11, 11px);
-  font-variant-numeric: tabular-nums;
-  color: var(--color-text-subtle, #999);
-  pointer-events: none;
-}
-
-.tbg-char-count--near {
-  color: var(--color-level-warning, #cc8800);
-}
-
-.tbg-char-count--full {
-  color: var(--color-level-error, #cc2861);
+  font-size: var(--tbg-char-count-size);
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--tbg-char-count-base), var(--tbg-char-count-peak) calc(var(--tbg-char-ratio, 0) * 100%));
+  -webkit-text-stroke: var(--tbg-char-count-stroke) var(--tbg-char-count-outline);
+  paint-order: stroke fill;
+  transition: color 150ms linear;
+  pointer-events: none;
 }

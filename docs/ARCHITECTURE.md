@@ -21,6 +21,8 @@
 | Retrato no cartão | O TBG sempre insere o seu e o CSS o esconde com `:has(.message-header img)` quando o sistema já desenhou um | Sistemas como o dnd5e inserem o avatar em `renderChatMessageHTML` depois do nosso hook, então nenhuma checagem em JavaScript no momento do hook enxerga o avatar deles |
 | Limite de caracteres | `filterTransaction` no plugin ProseMirror do chat | Recusa a transação inteira, então vale para digitação e para colagem, sem truncar texto pelas costas do usuário |
 | Digitação | Socket `module.tbg` com reenvio a cada segundo e expiração de cinco segundos no destinatário | Nada persistente; se o cliente cair, o indicador some sozinho |
+| Nome na ação | Nem o comando `*texto*` nem o `/me` do core prefixam o nome no conteúdo; o `emote` do core é envolvido em `CHAT_COMMANDS` e tem o conteúdo devolvido ao texto limpo que ele mesmo capturou em `match[2]` | O cartão do chat já imprime o alias no cabeçalho (`templates/sidebar/chat-message.hbs`), então prefixar mostrava o nome duas vezes; e no balão, que já sai do token, o nome é ruído. Reescrever o conteúdo na origem evita procurar prefixo por texto depois |
+| Cor do contador | Branco com `-webkit-text-stroke` de 2px e `paint-order: stroke fill`, interpolando até vermelho com `color-mix` guiado pela custom property `--tbg-char-ratio` | Medido no Chromium 152 do Foundry 14.367: sem contorno o texto some no fundo claro, 3px fecha os dígitos e quatro `text-shadow` ficam irregulares |
 | i18n | `lang/pt-BR.json` e `lang/en.json`, chaves `TBG.*` | pt-BR é o público principal |
 
 ## Estrutura

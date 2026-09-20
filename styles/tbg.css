@@ -15,4 +15,10 @@
 
   --tbg-portrait-size: 36px;
   --tbg-transition: 200ms ease;
+
+  --tbg-char-count-size: 12px;
+  --tbg-char-count-base: #ffffff;
+  --tbg-char-count-peak: #ff2020;
+  --tbg-char-count-outline: #000000;
+  --tbg-char-count-stroke: 2px;
 }

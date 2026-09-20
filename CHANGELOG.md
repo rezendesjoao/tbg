@@ -2,6 +2,16 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.4.0] — 2026-09-20
+
+### Corrigido
+- A verificação automática de colunas independentes em `docs/TESTING.md` comparava posições exatas, mas os balões sobem continuamente: ela falhava por engano sempre que a aba estivesse desenhando. Agora zera a velocidade de subida durante a checagem.
+
+### Alterado
+- O contador de caracteres passa a ser branco com contorno preto, legível sobre qualquer fundo, e vai ficando vermelho da metade do limite em diante, em vez de trocar de cor em dois degraus.
+- O limite de caracteres padrão passa de 500 para 100. Mundos que já configuraram o limite mantêm o valor escolhido: o Foundry só usa o padrão de uma setting quando o mundo nunca gravou valor para ela.
+- Ação (`*texto*`, `/me` e `/emote`) não repete mais o nome do personagem antes do texto. O nome continua aparecendo uma vez, no cabeçalho do cartão do chat, e o balão mostra só o que foi feito.
+
 ## [0.3.0] — 2026-09-11
 
 ### Adicionado

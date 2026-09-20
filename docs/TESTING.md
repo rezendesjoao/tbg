@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.3.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.4.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -37,8 +37,8 @@ Sempre com um token selecionado.
 | Grito por comando | `/shout ACORDEM` | Balão maior, texto em negrito |
 | Grito por teclado | `ACORDEM` + **Shift+Enter** | Igual ao anterior, sem digitar comando |
 | Pensar | `/think será?` | Balão pontilhado arredondado; só o Mestre e o dono veem |
-| Ação por asterisco | `*saca a espada*` | Balão em itálico, sem "Nome:", frase começando pelo nome |
-| Ação por comando | `/me ajeita o casaco` | Igual ao anterior |
+| Ação por asterisco | `*saca a espada*` | Balão em itálico com só "saca a espada", sem o nome antes |
+| Ação por comando | `/me ajeita o casaco` | Igual ao anterior, e no cartão do chat o nome aparece uma vez só, no cabeçalho |
 | Sussurro | `/w Nome oi` | Balão tracejado cinza, só para quem recebe |
 | Fala explícita | `/say olá` | Balão normal mesmo com outro modo de mensagem ativo |
 | Fora do personagem | `/ooc já volto` | Mensagem fora do personagem no chat e balão acinzentado e translúcido sobre o token |
@@ -62,8 +62,9 @@ Sempre com um token selecionado.
 
 ## 4b. Contador de caracteres e digitação
 
-- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece algo como `0/500`. Ele sobe conforme você digita.
-- [ ] **Aviso.** Perto do limite o contador muda de cor; no limite fica vermelho.
+- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece `0/100`. Ele sobe conforme você digita.
+- [ ] **Legibilidade.** O contador é branco com contorno preto e continua legível sobre fundo claro e escuro.
+- [ ] **Aviso.** Até a metade do limite ele fica branco; da metade em diante vai ficando vermelho, chegando a vermelho pleno no limite.
 - [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
 - [ ] **Sem limite.** Ponha *Limite de caracteres* em zero e confirme que o contador mostra só o número e nada é bloqueado.
 - [ ] **Digitando.** Com dois clientes, um deles começa a escrever com o token selecionado: no outro cliente aparecem três pontinhos animados sobre aquele token.
@@ -140,11 +141,14 @@ await (async () => {
   await pause(600);
   check("balões acompanham o token", bubbles(tokenA.id).map(b => at(b).x).every((v, i) => Math.abs(v - before[i] - 400) < 5));
 
+  const subida = game.settings.get("tbg", "bubbleRiseSpeed");
+  await game.settings.set("tbg", "bubbleRiseSpeed", 0);
   const antes = bubbles(tokenA.id).map(b => at(b).y);
   tokenB.control({ releaseOthers: true });
   await say("Coluna separada.");
   await pause(400);
   check("colunas independentes (free flow)", JSON.stringify(antes) === JSON.stringify(bubbles(tokenA.id).map(b => at(b).y)));
+  await game.settings.set("tbg", "bubbleRiseSpeed", subida);
 
   tokenA.control({ releaseOthers: true });
   for (const [text, esperado] of [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"], ["/ooc fora do personagem", "ooc"]]) {
@@ -153,6 +157,14 @@ await (async () => {
     const b = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${last.id}"]`);
     check(`comando ${text.split(" ")[0]}`, kindOf(b ?? document.createElement("div")) === esperado, b ? kindOf(b) : "nenhum balão");
   }
+
+  const acao = game.messages.contents.findLast(m => m.getFlag("tbg", "kind") === "action");
+  const acaoTexto = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${acao.id}"] .tbg-bubble__text`)?.textContent.trim();
+  check("ação sem o nome antes", !acao.content.startsWith(`${acao.alias} `) && !acaoTexto?.startsWith(acao.alias), acaoTexto);
+
+  const contador = document.querySelector(".tbg-char-count");
+  const contorno = getComputedStyle(contador).getPropertyValue("-webkit-text-stroke");
+  check("contador com contorno preto", contorno.includes("rgb(0, 0, 0)"), contorno);
 
   const ooc = game.messages.contents.at(-1);
   check("/ooc continua fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
