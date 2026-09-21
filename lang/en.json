@@ -51,7 +51,19 @@
       },
       "typingIndicator": {
         "name": "Show who is typing",
-        "hint": "While someone writes, an ellipsis bubble appears above their token."
+        "hint": "While someone writes, an ellipsis badge appears in the corner of their token. It disappears when the message is sent, when the input loses focus, or after three seconds without typing, even if text is left in the input."
+      },
+      "usageBubbles": {
+        "name": "Sheet action bubbles",
+        "hint": "When someone uses an item, a feature or a roll from their sheet, in any system, a beige bubble appears over the token: \"Kirito used Longsword\". Only the action's name, never the result."
+      },
+      "narrationBanner": {
+        "name": "Narration banner",
+        "hint": "Every GM narration also shows as a large banner in the middle of the screen, for everyone, rising slowly until it fades."
+      },
+      "narrationBannerDuration": {
+        "name": "Minimum banner time",
+        "hint": "Seconds the banner stays on screen. Longer texts stay longer, up to 30 seconds."
       },
       "narratorName": {
         "name": "Narrator name",
@@ -80,6 +92,11 @@
     },
     "Typing": {
       "label": "Typing"
+    },
+    "Usage": {
+      "used": "{name} used {label}",
+      "rolled": "{name} rolled {label}",
+      "initiative": "Initiative"
     },
     "Errors": {
       "noSpeaker": "Select a token or assign a character before speaking in character.",

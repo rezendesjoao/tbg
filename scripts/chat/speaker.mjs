@@ -10,6 +10,12 @@ export function speakerToken(message) {
   return canvas.tokens.get(source.token) ?? null;
 }
 
+/** O único token do ator na cena atual; com vários, nenhum, porque não há como saber qual agiu. */
+export function actorToken(actor) {
+  const tokens = actor.getActiveTokens();
+  return tokens.length === 1 ? tokens[0] : null;
+}
+
 /** Imagem de quem fala: token, depois ator, depois avatar do usuário; fora do personagem, só o avatar. */
 export function speakerImage(message) {
   if (message.style === CONST.CHAT_MESSAGE_STYLES.OOC) return message.author?.avatar ?? null;

@@ -1,12 +1,12 @@
 # Como testar o TBG
 
-Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tema do chat), mais um script de verificação automática no fim. Marque conforme for passando.
+Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tema do chat) e do que veio depois (A5 digitação, B8 letreiro de narração, A9 balão de uso da ficha), mais um script de verificação automática no fim. Marque conforme for passando.
 
 ## 1. Preparação
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.6.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.7.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -71,6 +71,35 @@ Sempre com um token selecionado.
 - [ ] **Some ao enviar.** Ao enviar a mensagem, o selo some e vira o balão da fala.
 - [ ] **Encaixe.** Dê zoom para dentro e para fora: o selo continua dentro do token, no mesmo canto, porque acompanha a arte em vez do tamanho de tela.
 - [ ] **Some ao apagar.** Apague tudo que digitou sem enviar: o selo some nas duas telas.
+- [ ] **Some ao parar.** Escreva algo e pare **sem apagar**: em cerca de três segundos o selo some nas duas telas, mesmo com o texto no campo. Volte a digitar e ele reaparece.
+- [ ] **Some ao sair do campo.** Escreva e clique no mapa: o selo some na hora.
+- [ ] **Troca de token.** Escreva com um token, selecione outro e continue: o selo passa para o novo token.
+- [ ] **Narrando.** Com o Modo Narrador ligado, escrever não mostra selo no token selecionado.
+- [ ] **Só no chat.** Abra um diário em edição, escreva mais de 150 caracteres e aperte Shift+Enter: o diário aceita o texto, nada vai para o chat, e o contador e o selo não reagem.
+
+## 4c. B8 — Letreiro de narração
+
+- [ ] **Letreiro.** Mande `/n A neblina desce.` (ou narre com o Modo Narrador): além do cartão no chat, um letreiro escuro com borda dourada aparece no meio da tela, com o nome do narrador pequeno em cima e o texto grande embaixo. Ele sobe devagar e some.
+- [ ] **Para todos.** Com dois clientes, o letreiro aparece nas duas telas.
+- [ ] **Sem cena.** Desative a cena (ou abra o mundo sem cena ativa) e narre: o letreiro aparece do mesmo jeito.
+- [ ] **Empilhamento.** Mande três `/n` seguidos: o novo nasce embaixo e empurra os anteriores, sem sobreposição. No máximo três ficam na tela.
+- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo do letreiro* ajusta o mínimo.
+- [ ] **Edição.** Edite a narração enquanto o letreiro está na tela: o texto muda. Apague a mensagem: o letreiro some.
+- [ ] **Movimento reduzido.** Com *Mostrar animações* desligado no Windows (ou *Modo fotossensível* do Foundry), o letreiro só aparece e some, sem subir.
+- [ ] **Desligar.** Desligue *Letreiro de narração*: a narração volta a ser só o cartão do chat.
+
+## 4d. A9 — Balão de uso da ficha
+
+Com o token do personagem na cena e uma arma na ficha.
+
+- [ ] **Item.** Use a arma pela ficha: um balão bege, com o ícone da arma, diz "Kirito usou Espada Longa". Só o nome, nunca o resultado.
+- [ ] **Um só.** Complete o ataque e role o dano pelos botões do cartão: continua **um** balão para o uso inteiro.
+- [ ] **Rolagem.** Role uma perícia ou salvaguarda pela ficha: "Kirito rolou Destreza (Acrobacia)", com um ícone de dado.
+- [ ] **Iniciativa.** No combate, a iniciativa de cada combatente gera "rolou Iniciativa" sobre cada token.
+- [ ] **Alvo.** Uma magia com salvaguarda rolada pelo alvo mostra "Goblin rolou …" sobre o alvo, nunca "Goblin usou <magia>".
+- [ ] **Privado.** No modo de rolagem privado, só o Mestre e quem rolou veem o balão; no cego, só o Mestre.
+- [ ] **Digitado.** `/roll 1d20` cru não gera balão; `/roll 1d20 # Ataque` gera "rolou Ataque". Uma fala com link de item (`@UUID`) continua sendo balão de fala.
+- [ ] **Desligar.** Desligue *Balão de uso da ficha*: usar itens volta a não gerar balão.
 
 ## 5. C1 — Tema do chat
 
@@ -116,6 +145,24 @@ await (async () => {
   check("botão do Narrador", !!document.querySelector("#message-modes [data-tbg-narrator]"));
   check("atalho registrado", game.keybindings.actions.has("tbg.toggleNarrator"));
   check("contador de caracteres", !!document.querySelector(".tbg-char-count"));
+  check("container do letreiro", document.getElementById("tbg-banners")?.parentElement?.id === "ui-middle");
+
+  const moldura = document.createElement("div");
+  moldura.style.cssText = "position:fixed;left:10px;top:10px;width:400px;height:200px;z-index:1000;background:#fff";
+  moldura.append(foundry.applications.elements.HTMLProseMirrorElement.create({ name: "tbgProbe", value: `<p>${"a".repeat(200)}</p>`, toggled: false }));
+  document.body.append(moldura);
+  await pause(800);
+  const vazou = [];
+  const escuta = Hooks.on("tbg.chatInputChanged", n => vazou.push(n));
+  const diario = moldura.querySelector(".ProseMirror");
+  diario.focus();
+  getSelection().selectAllChildren(diario.querySelector("p"));
+  getSelection().collapseToEnd();
+  document.execCommand("insertText", false, "XYZ");
+  await pause(300);
+  Hooks.off("tbg.chatInputChanged", escuta);
+  check("plugin só no editor do chat", diario.textContent.length === 203 && !vazou.length, `${diario.textContent.length} caracteres, ${vazou.length} eventos`);
+  moldura.remove();
 
   const firstMessage = game.messages.size;
   const type = Object.keys(game.system.documentTypes.Actor)[0];
@@ -186,6 +233,26 @@ await (async () => {
   const narration = game.messages.contents.at(-1);
   check("narração sem balão", narration.getFlag("tbg", "kind") === "narration" && !document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${narration.id}"]`), narration.alias);
   check("tema aplicado ao cartão", ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`)?.classList.contains("tbg-kind-narration") === true);
+  check("letreiro da narração", !!document.querySelector(`#tbg-banners .tbg-banner[data-message-id="${narration.id}"]`));
+
+  const bubbleOf = id => document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${id}"]`);
+  const falante = ChatMessage.getSpeaker({ token: tokenA.document });
+  const [espada] = await actors[0].createEmbeddedDocuments("Item", [{ name: "TBG Espada", type: Object.keys(game.system.documentTypes.Item)[0] }]);
+  const cartao = await ChatMessage.create({ speaker: falante, content: `<div data-item-id="${espada.id}">cartão</div>` });
+  await pause(400);
+  const usoTexto = bubbleOf(cartao.id)?.textContent.trim();
+  check("uso de item vira balão", kindOf(bubbleOf(cartao.id) ?? document.createElement("div")) === "usage" && usoTexto?.includes("TBG Espada"), usoTexto ?? "nenhum balão");
+  const dano = await ChatMessage.create({ speaker: falante, flavor: "Dano", rolls: [await new Roll("1d6").evaluate()], flags: { tbgTeste: { originatingMessage: cartao.id } } });
+  await pause(400);
+  check("rolagem ligada ao uso não repete", !bubbleOf(dano.id));
+  const percepcao = await ChatMessage.create({ speaker: falante, flavor: "Percepção", rolls: [await new Roll("1d20").evaluate()] });
+  await pause(400);
+  check("rolagem com rótulo vira balão", bubbleOf(percepcao.id)?.textContent.includes("Percepção") === true, bubbleOf(percepcao.id)?.textContent.trim() ?? "nenhum balão");
+  await say("/roll 1d20");
+  check("rolagem crua sem balão", !bubbleOf(game.messages.contents.at(-1).id));
+  const sussurrado = await ChatMessage.create({ speaker: falante, content: "<div>cartão de sistema</div>", whisper: [game.user.id] });
+  await pause(400);
+  check("cartão sussurrado sem balão", !bubbleOf(sussurrado.id));
   check("balão do core silenciado", document.querySelectorAll("#chat-bubbles .chat-bubble").length === 0);
 
   await typing(tokenA.id, true);
@@ -193,12 +260,21 @@ await (async () => {
   await typing(tokenA.id, false);
   check("indicador some ao parar", !document.querySelector(".tbg-typing"));
 
+  tokenA.control({ releaseOthers: true });
+  Hooks.callAll("tbg.chatInputChanged", 5);
+  await pause(300);
+  const seloLigou = !!document.querySelector(`#tbg-bubbles .tbg-typing[data-token-id="${tokenA.id}"]`);
+  await pause(3200);
+  const seloFicou = !!document.querySelector(".tbg-typing");
+  check("selo some com o texto parado", seloLigou && !seloFicou, seloLigou ? (seloFicou ? "continuou na tela" : "") : "não apareceu");
+  Hooks.callAll("tbg.chatInputChanged", 0);
+
   await pause(1500);
   await canvas.scene.deleteEmbeddedDocuments("Token", tokens.map(t => t.id));
   await Actor.deleteDocuments(actors.map(a => a.id));
   await ChatMessage.deleteDocuments(game.messages.contents.slice(firstMessage).map(m => m.id));
   await pause(600);
-  const orfaos = document.querySelectorAll("#tbg-bubbles .tbg-bubble").length;
+  const orfaos = document.querySelectorAll(tokens.map(t => `#tbg-bubbles .tbg-bubble[data-token-id="${t.id}"]`).join(", ")).length;
   check("nenhum balão órfão no fim", orfaos === 0, `${orfaos} restaram`);
 
   console.table(results);
@@ -208,7 +284,7 @@ await (async () => {
 })();
 ```
 
-O script não cobre o que depende de olho humano ou de um segundo cliente: aparência dos balões, subida contínua, zoom, agrupamento no chat e os testes da seção 6. Faça esses à mão.
+O script não cobre o que depende de olho humano ou de um segundo cliente: aparência dos balões e do letreiro, subida contínua, zoom, agrupamento no chat, uso de item de verdade pela ficha e os testes da seção 6. Faça esses à mão. A contagem de órfãos olha só os tokens de teste, porque balões de mensagens anteriores podem estar legitimamente na tela.
 
 ## 8. Ao reportar um problema
 

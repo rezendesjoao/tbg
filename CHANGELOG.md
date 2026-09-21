@@ -2,6 +2,21 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.7.0] — 2026-09-21
+
+### Adicionado
+- B8: letreiro de narração. Toda narração do Mestre aparece também para todos no meio da tela, num cartão escuro com borda dourada que sobe devagar e some. Narrações seguidas empilham, até três, todas na mesma velocidade para nunca se sobrepor; editar uma narração reacomoda a pilha. Funciona sem cena ativa e só aparece e some quando o sistema pede movimento reduzido. Configurações `Letreiro de narração` e `Tempo mínimo do letreiro`.
+- A9: balão de uso da ficha. Usar um item, uma característica ou uma rolagem pela ficha, em qualquer sistema, mostra sobre o token um balão bege com o ícone do item: "Kirito usou Espada Longa", ou "Kirito rolou Percepção". Só o nome da ação, nunca o resultado. Cartão, ataque e dano de um mesmo uso geram um balão só. Token que o jogador não vê não ganha balão, e um nome escolhido pelo Mestre, como o de um combatente renomeado, é respeitado. Configuração `Balão de uso da ficha`.
+
+### Corrigido
+- O plugin do chat entrava em todo editor de texto do Foundry, porque o core reserva a chave `chatInput` em todos. Em diários, biografias e descrições, texto acima de 150 caracteres não aceitava digitação, Shift+Enter mandava o texto inteiro para o chat como grito e esvaziava o editor, e digitar ligava o selo "digitando" no token selecionado. Agora o plugin só entra no campo do chat.
+- O selo "digitando" ficava na tela enquanto houvesse texto no campo, reanunciado por outros editores. Agora ele some três segundos depois da última tecla, ao sair do campo, ao trocar de token e no Modo Narrador. O selo também nasce de forma síncrona, sem a janela em que um "parou de digitar" chegava antes dele existir e o deixava órfão.
+- Cartões de sistema fora do estilo em personagem, como os sussurrados no modo de rolagem privado, e todos os que têm tipo próprio de mensagem (caso do dnd5e 6) viravam balão de sussurro ou de fala com o HTML do cartão, ou vazio. Agora não viram mais; o que for uso da ficha vira o balão de uso.
+
+### Alterado
+- Balões passam a exigir que o cliente veja o conteúdo da mensagem (`isContentVisible`), e não só a mensagem. O autor não-Mestre de uma mensagem cega deixa de ver o próprio balão, igual ao `???` que já via no chat.
+- O script de verificação de `docs/TESTING.md` cobre letreiro, uso da ficha, plugin só no chat e selo parado, e conta órfãos só nos tokens de teste.
+
 ## [0.6.0] — 2026-09-20
 
 ### Corrigido

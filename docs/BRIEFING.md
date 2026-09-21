@@ -1,6 +1,6 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
@@ -34,6 +34,14 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 - [x] **A5. "Digitando…" sobre o token** — **P/M**
   Enquanto alguém digita no chat, um balãozinho com três pontinhos animados aparece sobre o token dele (e uma linha discreta na sidebar). Socket `module.tbg` com throttle de 250 ms e timeout de 5 s (técnica do CGMP, que já funciona no input ProseMirror do v14).
   Sobreposição: só versões na sidebar (Player Status, CGMP, Yuuko). Sobre o token: nenhuma.
+
+- [x] **B8. Letreiro de narração** — **M**
+  Toda narração do Mestre (Modo Narrador ou `/n`), além do cartão no chat, aparece para todos num letreiro grande no meio da tela: cartão escuro com borda dourada, nome do narrador em cima, texto grande embaixo. Nasce abaixo do centro, sobe devagar e some; letreiros seguidos empilham, no máximo três. Funciona sem cena ativa. Diferente da B2 (`/cena`, cutscene), que segue pendente.
+  Sobreposição: Narrator Tools (overlay de narração com estado compartilhado por setting).
+
+- [x] **A9. Balão de uso da ficha** — **M**
+  Quando alguém usa um item, uma característica ou uma rolagem da ficha, em qualquer sistema, aparece sobre o token um balão bege, na cor do balão de ação, com o ícone do item: "Kirito usou Espada Longa" ou "Kirito rolou Percepção". Só o nome da ação, nunca o resultado nem a fórmula (a D2 continua vetada). Um uso que gera várias mensagens (cartão, ataque, dano) mostra um balão só; rolagens privadas e cegas seguem a visibilidade do cartão.
+  Sobreposição: Token Says e Automated Animations detectam item por sistema; aqui a detecção é genérica.
 
 - [ ] **B4. "Diretor de cena": fazer qualquer token falar** — **P/M**
   Botão direito no token → "Falar como…" abre um mini-input flutuante ao lado do token; ou `/say @Nome texto`. Inclui `/anuncio texto`: balão-megafone que aparece para todos os tokens da cena, estilo intercomunicador de hospital/polícia dos RPGs de Habbo.

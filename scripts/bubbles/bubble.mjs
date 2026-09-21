@@ -22,8 +22,8 @@ export default class Bubble {
     this.element = element;
   }
 
-  /** Renderiza o balão de fala. */
-  static async create({ id, token, kind, content, name, portrait }) {
+  /** Renderiza o balão; `icon` é uma imagem e `iconClass` um ícone Font Awesome, para o balão de uso. */
+  static async create({ id, token, kind, content, name, portrait, icon, iconClass }) {
     const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.bubble, {
       id,
       tokenId: token.id,
@@ -31,6 +31,8 @@ export default class Bubble {
       content,
       name,
       portrait,
+      icon,
+      iconClass,
       showName: !ANONYMOUS_KINDS.has(kind)
     });
     return new Bubble({ id, token, kind, element: foundry.utils.parseHTML(html) });

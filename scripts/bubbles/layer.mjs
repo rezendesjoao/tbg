@@ -1,7 +1,9 @@
-import { BUBBLE_KINDS, KINDS } from "../constants.mjs";
+import { BUBBLE_KINDS, KINDS, USAGE_KIND } from "../constants.mjs";
 import { BUBBLE_LAYOUTS, BUBBLE_SCALINGS, SETTINGS, getSetting } from "../settings.mjs";
-import { resolveKind } from "../chat/kinds.mjs";
-import { speakerToken } from "../chat/speaker.mjs";
+import { localize } from "../utils.mjs";
+import { isSpeech, resolveKind } from "../chat/kinds.mjs";
+import { actorToken, speakerToken } from "../chat/speaker.mjs";
+import { isRepeatedUsage, resolveUsage } from "../chat/usage.mjs";
 import Bubble from "./bubble.mjs";
 import TypingIndicator from "./typing-indicator.mjs";
 
@@ -11,6 +13,7 @@ const PUSH_TAU_MS = 55;
 const MAX_FRAME_MS = 100;
 const MAX_PUSH_ROUNDS = 500;
 const STALE_CLOCK_MS = 150;
+const ROLL_ICON = "fa-solid fa-dice-d20";
 
 /** Camada HTML no HUD do canvas que cria, empilha, sobe e remove balões. */
 class BubbleLayer {
@@ -60,13 +63,13 @@ class BubbleLayer {
   }
 
   /** Mostra um balão para `token`; `content` é HTML já enriquecido. */
-  async say({ id = foundry.utils.randomID(), token, kind = KINDS.SAY, content, name = token.name }) {
+  async say({ id = foundry.utils.randomID(), token, kind = KINDS.SAY, content, name = token.name, icon, iconClass }) {
     const container = this.element;
     if (!container) return null;
     this.remove(id);
     container.style.setProperty("--tbg-bubble-max-width", `${getSetting(SETTINGS.BUBBLE_MAX_WIDTH)}px`);
     const portrait = getSetting(SETTINGS.BUBBLE_PORTRAIT) ? token.document.texture.src : null;
-    const bubble = await Bubble.create({ id, token, kind, content, name, portrait });
+    const bubble = await Bubble.create({ id, token, kind, content, name, portrait, icon, iconClass });
     container.append(bubble.element);
     bubble.measure();
     this.#push(bubble);
@@ -78,7 +81,7 @@ class BubbleLayer {
   }
 
   /** Liga ou desliga o selo de digitação no canto do token. */
-  async setTyping(tokenId, active, label) {
+  setTyping(tokenId, active, label) {
     const existing = this.#typing.get(tokenId);
     if (!active) {
       existing?.element.remove();
@@ -88,7 +91,7 @@ class BubbleLayer {
     const container = this.element;
     const token = canvas.tokens?.get(tokenId);
     if (existing || !container || !token || !this.isActive) return;
-    const indicator = await TypingIndicator.create({ token, label });
+    const indicator = TypingIndicator.create({ token, label });
     container.append(indicator.element);
     this.#typing.set(tokenId, indicator);
     indicator.layout();
@@ -109,8 +112,12 @@ class BubbleLayer {
     this.setTyping(tokenId, false);
   }
 
+  /** `visible` é verdadeiro para todos num sussurro com rolagem; `isContentVisible` é o que não vaza. */
   async onMessage(message) {
-    if (!this.isActive || message.rolls.length || !message.visible) return;
+    if (!this.isActive || !message.isContentVisible) return;
+    const usage = getSetting(SETTINGS.USAGE_BUBBLES) ? resolveUsage(message) : null;
+    if (usage) return this.#announceUsage(message, usage);
+    if (!isSpeech(message)) return;
     const kind = resolveKind(message);
     const token = speakerToken(message);
     if (!BUBBLE_KINDS.has(kind) || !token) return;
@@ -118,9 +125,24 @@ class BubbleLayer {
     await this.say({ id: message.id, token, kind, content: await enrich(message), name: message.alias });
   }
 
+  /**
+   * Token que este cliente não vê não ganha balão: escondido, ainda empurraria os balões vizinhos e
+   * denunciaria onde está. Sistemas que gravam só o ator caem no único token dele na cena.
+   */
+  #announceUsage(message, usage) {
+    const token = message.speaker.token ? speakerToken(message) : actorToken(usage.actor);
+    if (!token?.visible || isRepeatedUsage(message, usage)) return;
+    const name = usageName(message, usage.actor, token);
+    const key = usage.isRoll ? "TBG.Usage.rolled" : "TBG.Usage.used";
+    const content = localize(key, { name: strong(name), label: strong(usage.label) });
+    const iconClass = usage.img ? null : ROLL_ICON;
+    return this.say({ id: message.id, token, kind: USAGE_KIND, content, name, icon: usage.img, iconClass });
+  }
+
+  /** O balão de uso é um resumo; um update do cartão não pode trocá-lo pelo HTML inteiro. */
   async onMessageUpdated(message, changed) {
     const bubble = this.#bubbles.get(message.id);
-    if (!bubble || !("content" in changed)) return;
+    if (!bubble || bubble.kind === USAGE_KIND || !("content" in changed)) return;
     bubble.setContent(await enrich(message));
     this.#layoutAll();
   }
@@ -230,6 +252,19 @@ class BubbleLayer {
 
 function overlaps(a, b) {
   return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+}
+
+/**
+ * O alias vale quando alguém o escolheu, como o nome de um combatente renomeado. Quando é só o nome do ator,
+ * que o sistema grava por padrão, vale o nome do token, para não revelar quem está por trás de um NPC disfarçado.
+ */
+function usageName(message, actor, token) {
+  const { alias } = message.speaker;
+  return alias && alias !== actor.name ? alias : token.document.name;
+}
+
+function strong(text) {
+  return `<strong>${foundry.utils.escapeHTML(text)}</strong>`;
 }
 
 function enrich(message) {

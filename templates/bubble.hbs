@@ -5,5 +5,5 @@
         <span class="tbg-bubble__name">{{name}}</span>
     </div>
     {{/if}}
-    <div class="tbg-bubble__text">{{{content}}}</div>
+    <div class="tbg-bubble__text">{{#if icon}}<img class="tbg-bubble__icon" src="{{icon}}" alt="">{{else if iconClass}}<i class="tbg-bubble__icon {{iconClass}}" inert></i>{{/if}}{{{content}}}</div>
 </div>

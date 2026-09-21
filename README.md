@@ -2,7 +2,7 @@
 
 Módulo para **Foundry VTT v14** que transforma o chat numa experiência de *RPG de Habbo*: balões de fala que empilham sobre os tokens e sobem até sumir, um **Modo Narrador** para o Mestre falar sem estar preso a um personagem, e um chat de sidebar com cara de mensageiro.
 
-> **Estado: 0.6.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entrou o indicador de digitação sobre o token (A5). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.7.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entraram o indicador de digitação sobre o token (A5), o letreiro de narração (B8) e o balão de uso da ficha (A9). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
@@ -25,15 +25,23 @@ Com um token selecionado, você fala como ele. No v14 o Foundry só faz isso no 
 
 Ao lado dos modos de mensagem fica um contador que mostra quanto você já escreveu. O teto é de **150 caracteres**, igual para toda mesa e todo jogador, sem configuração que possa divergir. O contador é branco com contorno preto, para se ler sobre qualquer fundo, e vai ficando vermelho da metade do limite em diante. No limite o editor para de aceitar texto, inclusive colado, mas apagar continua sempre possível.
 
-Enquanto alguém escreve, um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito. Ele aparece para todo mundo, inclusive para quem está digitando, e acompanha o token no zoom. Some ao enviar, ao apagar o texto ou após cinco segundos de silêncio.
+Enquanto alguém escreve, um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito. Ele aparece para todo mundo, inclusive para quem está digitando, e acompanha o token no zoom. Aparece só enquanto há digitação: some ao enviar, ao apagar o texto, ao sair do campo ou após três segundos sem digitar, mesmo com texto no campo. O limite, o Shift+Enter e o selo valem só para o campo do chat, nunca para diários ou descrições.
 
 ### Modo Narrador
 
-Botão 📜 ao lado dos modos de mensagem, ou **Alt+N**. Ligado, tudo que o Mestre digita sem comando sai como "Narrador" num cartão próprio, sem balão. Desligado, volta ao normal. O nome do narrador é configurável.
+Botão 📜 ao lado dos modos de mensagem, ou **Alt+N**. Ligado, tudo que o Mestre digita sem comando sai como "Narrador" num cartão próprio, sem balão sobre token. Desligado, volta ao normal. O nome do narrador é configurável.
+
+### Letreiro de narração
+
+Toda narração, pelo Modo Narrador ou por `/n`, aparece também para todos num letreiro grande no meio da tela: cartão escuro com borda dourada, o nome do narrador em cima e o texto embaixo. Ele nasce um pouco abaixo do centro, sobe devagar e some; textos longos ficam mais tempo. Narrações seguidas empilham, até três na tela. Funciona mesmo sem cena ativa e respeita o movimento reduzido do sistema.
+
+### Balão de uso da ficha
+
+Quando alguém usa um item, uma característica ou uma rolagem pela ficha, em qualquer sistema, aparece sobre o token um balão bege com o ícone do item: "Kirito usou Espada Longa", ou "Kirito rolou Percepção" para rolagens sem item. Só o nome da ação, nunca o resultado. Um uso que gera várias mensagens (cartão, ataque, dano) mostra um balão só, e rolagens privadas ou cegas só aparecem para quem pode ver o cartão.
 
 ### Configurações
 
-Mundo: interruptor geral, falar em personagem automaticamente, mostrar quem está digitando, layout dos balões (free flow ou linha a linha), velocidade de subida, limite de subida, largura máxima, tempo máximo, retrato no balão, nome do narrador. Cliente: escala dos balões (tamanho fixo na tela ou junto com o mapa), tema do chat, agrupamento de mensagens consecutivas, log de debug.
+Mundo: interruptor geral, falar em personagem automaticamente, mostrar quem está digitando, balão de uso da ficha, letreiro de narração e seu tempo mínimo, layout dos balões (free flow ou linha a linha), velocidade de subida, limite de subida, largura máxima, tempo máximo, retrato no balão, nome do narrador. Cliente: escala dos balões (tamanho fixo na tela ou junto com o mapa), tema do chat, agrupamento de mensagens consecutivas, log de debug.
 
 ## Instalação
 
@@ -45,7 +53,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.6.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.7.0 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 

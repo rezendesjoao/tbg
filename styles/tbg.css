@@ -13,6 +13,12 @@
   --tbg-narration-accent: #c9a75a;
   --tbg-narration-font: var(--font-h1, "Modesto Condensed", serif);
 
+  --tbg-banner-bg: rgba(20, 16, 28, 0.9);
+  --tbg-banner-radius: 14px;
+  --tbg-banner-max-width: 640px;
+  --tbg-banner-font-size: 1.6rem;
+  --tbg-banner-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 18px rgba(201, 167, 90, 0.3);
+
   --tbg-portrait-size: 36px;
   --tbg-transition: 200ms ease;
 

@@ -42,7 +42,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 
 - ApplicationV2 com HandlebarsApplicationMixin; DialogV2; zero jQuery; DOM nativo (`querySelector`, `append`, `classList`, `dataset`).
 - Handlebars em `templates/`. HTML em string JS só para um elemento trivial. Conteúdo vindo do usuário passa por `enrichHTML` ou `escapeHTML`; nunca `innerHTML` com texto cru.
-- CSS entra sozinho na layer `modules`: sem `!important`, sem seletor por id do core além dos pontos de montagem (`#hud`, `#message-modes`, `#chat-message`).
+- CSS entra sozinho na layer `modules`: sem `!important`, sem seletor por id do core além dos pontos de montagem (`#hud`, `#ui-middle`, `#message-modes`, `#chat-message`).
 - Movimento contínuo com `requestAnimationFrame`; transição pontual com `Element.animate`. Medir DOM uma vez, fora do loop.
 
 ## 7. Erros e logs
@@ -55,6 +55,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 
 - Alvo: Foundry 14 estável (`compatibility.minimum: 14`, sem `maximum`). Sem `isV13()`.
 - Agnóstico de sistema: só campos do core (`name`, `img`, `texture.src`, `color`). Nada de `actor.system.*`.
+- Exceção única: o resolvedor do balão de uso (`chat/usage-item.mjs`) lê `message.system` e as flags de outros pacotes de forma genérica, procurando ids e UUIDs de item sem conhecer nenhuma chave de sistema.
 - Coexistir com Narrator Tools, Custom Chat Tabs e CGMP: nunca desligar recurso alheio; marcar mensagens com `flags.tbg.kind` e classes `tbg-kind-*` para que eles filtrem.
 
 ## 9. Verificação e commits

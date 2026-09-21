@@ -1,70 +1,84 @@
-import { INPUT_CHANGED, SOCKET_TYPES } from "../constants.mjs";
+import { INPUT_BLURRED, INPUT_CHANGED, SOCKET_TYPES } from "../constants.mjs";
 import { SETTINGS, getSetting } from "../settings.mjs";
 import { emit, onSocket } from "../sockets.mjs";
 import { localize } from "../utils.mjs";
 import { bubbleLayer } from "../bubbles/layer.mjs";
+import { isNarratorActive } from "./narrator.mjs";
 
 const EMIT_INTERVAL_MS = 1000;
-const EXPIRY_MS = 5000;
+const IDLE_MS = 3000;
+const EXPIRY_MS = 4000;
 
-const expiries = new Map();
-let lastEmit = 0;
-let announcing = false;
+/** Anuncia quem está digitando e mostra o selo no token, só enquanto há digitação, inclusive para a própria pessoa. */
+class TypingAnnouncer {
+  #announced = null;
+  #lastEmit = 0;
+  #idle = null;
+  #expiries = new Map();
 
-/** Mostra um selo de reticências no canto do token de quem está digitando, inclusive para a própria pessoa. */
-export function registerTypingIndicator() {
-  Hooks.on(INPUT_CHANGED, onInputChanged);
-  Hooks.on("canvasTearDown", clearAll);
-  onSocket(SOCKET_TYPES.TYPING, ({ sceneId, tokenId }) => show(sceneId, tokenId));
-  onSocket(SOCKET_TYPES.TYPING_END, ({ tokenId }) => hide(tokenId));
+  activate() {
+    Hooks.on(INPUT_CHANGED, length => this.#onInputChanged(length));
+    Hooks.on(INPUT_BLURRED, () => this.#stop());
+    Hooks.on("canvasTearDown", () => this.#clearExpiries());
+    onSocket(SOCKET_TYPES.TYPING, ({ sceneId, tokenId }) => this.#show(sceneId, tokenId));
+    onSocket(SOCKET_TYPES.TYPING_END, ({ tokenId }) => this.#hide(tokenId));
+  }
+
+  /** Texto parado no campo não é digitação: sem mudança por `IDLE_MS`, o anúncio acaba. */
+  #onInputChanged(length) {
+    if (!length || !getSetting(SETTINGS.TYPING_INDICATOR)) return this.#stop();
+    this.#announce(currentSpeaker());
+    clearTimeout(this.#idle);
+    this.#idle = setTimeout(() => this.#stop(), IDLE_MS);
+  }
+
+  /** Quem emite não recebe o próprio pacote, então o selo local é ligado aqui. */
+  #announce(speaker) {
+    if (speaker?.tokenId !== this.#announced?.tokenId) this.#stop();
+    const now = performance.now();
+    if (!speaker || (this.#announced && now - this.#lastEmit < EMIT_INTERVAL_MS)) return;
+    this.#announced = speaker;
+    this.#lastEmit = now;
+    emit(SOCKET_TYPES.TYPING, speaker);
+    this.#show(speaker.sceneId, speaker.tokenId);
+  }
+
+  #stop() {
+    clearTimeout(this.#idle);
+    const speaker = this.#announced;
+    if (!speaker) return;
+    this.#announced = null;
+    emit(SOCKET_TYPES.TYPING_END, speaker);
+    this.#hide(speaker.tokenId);
+  }
+
+  #show(sceneId, tokenId) {
+    if (!getSetting(SETTINGS.TYPING_INDICATOR) || !canvas.ready || sceneId !== canvas.scene.id) return;
+    bubbleLayer.setTyping(tokenId, true, localize("TBG.Typing.label"));
+    clearTimeout(this.#expiries.get(tokenId));
+    this.#expiries.set(tokenId, setTimeout(() => this.#hide(tokenId), EXPIRY_MS));
+  }
+
+  #hide(tokenId) {
+    clearTimeout(this.#expiries.get(tokenId));
+    this.#expiries.delete(tokenId);
+    bubbleLayer.setTyping(tokenId, false);
+  }
+
+  #clearExpiries() {
+    for (const timer of this.#expiries.values()) clearTimeout(timer);
+    this.#expiries.clear();
+  }
 }
 
-function onInputChanged(length) {
-  if (!getSetting(SETTINGS.TYPING_INDICATOR)) return;
-  if (length > 0) startAnnouncing();
-  else stopAnnouncing();
-}
-
-/** Quem emite não recebe o próprio pacote, então o selo local é ligado aqui. */
-function startAnnouncing() {
-  const now = performance.now();
-  if (announcing && now - lastEmit < EMIT_INTERVAL_MS) return;
-  const speaker = currentSpeaker();
-  if (!speaker) return;
-  announcing = true;
-  lastEmit = now;
-  emit(SOCKET_TYPES.TYPING, speaker);
-  show(speaker.sceneId, speaker.tokenId);
-}
-
-function stopAnnouncing() {
-  if (!announcing) return;
-  announcing = false;
-  const speaker = currentSpeaker();
-  if (!speaker) return;
-  emit(SOCKET_TYPES.TYPING_END, speaker);
-  hide(speaker.tokenId);
-}
-
+/** Narrando, o Mestre não fala pelo token selecionado, então não há selo. */
 function currentSpeaker() {
+  if (isNarratorActive()) return null;
   const { scene, token } = ChatMessage.implementation.getSpeaker();
   return token ? { sceneId: scene, tokenId: token } : null;
 }
 
-function show(sceneId, tokenId) {
-  if (!getSetting(SETTINGS.TYPING_INDICATOR) || !canvas.ready || sceneId !== canvas.scene.id) return;
-  bubbleLayer.setTyping(tokenId, true, localize("TBG.Typing.label"));
-  clearTimeout(expiries.get(tokenId));
-  expiries.set(tokenId, setTimeout(() => hide(tokenId), EXPIRY_MS));
-}
-
-function hide(tokenId) {
-  clearTimeout(expiries.get(tokenId));
-  expiries.delete(tokenId);
-  bubbleLayer.setTyping(tokenId, false);
-}
-
-function clearAll() {
-  for (const timer of expiries.values()) clearTimeout(timer);
-  expiries.clear();
+/** Liga o indicador de digitação sobre o token. */
+export function registerTypingIndicator() {
+  new TypingAnnouncer().activate();
 }

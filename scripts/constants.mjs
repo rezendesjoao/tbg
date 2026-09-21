@@ -17,8 +17,11 @@ export const KINDS = Object.freeze({
 /** Tipos que viram balão sobre o token. */
 export const BUBBLE_KINDS = new Set([KINDS.SAY, KINDS.SHOUT, KINDS.WHISPER, KINDS.THINK, KINDS.ACTION, KINDS.OOC]);
 
-/** Tipos sem cabeçalho no balão: a ação se lê como narração curta, e o balão já sai do token. */
-export const ANONYMOUS_KINDS = new Set([KINDS.ACTION]);
+/** Variante do balão de uso da ficha; derivada da mensagem, nunca gravada em flag. */
+export const USAGE_KIND = "usage";
+
+/** Tipos sem cabeçalho no balão: a ação se lê como narração curta, e o uso já traz o nome no texto. */
+export const ANONYMOUS_KINDS = new Set([KINDS.ACTION, USAGE_KIND]);
 
 export const SOCKET_TYPES = Object.freeze({
   PING: "ping",
@@ -28,11 +31,14 @@ export const SOCKET_TYPES = Object.freeze({
 
 export const TEMPLATES = Object.freeze({
   bubble: `modules/${MODULE_ID}/templates/bubble.hbs`,
-  typing: `modules/${MODULE_ID}/templates/typing.hbs`
+  banner: `modules/${MODULE_ID}/templates/banner.hbs`
 });
 
 /** Evento interno disparado a cada mudança no editor do chat. */
 export const INPUT_CHANGED = `${MODULE_ID}.chatInputChanged`;
+
+/** Evento interno disparado quando o editor do chat perde o foco. */
+export const INPUT_BLURRED = `${MODULE_ID}.chatInputBlurred`;
 
 /** Teto de caracteres de uma mensagem, igual para todas as mesas e todos os jogadores. */
 export const CHAT_MAX_LENGTH = 150;

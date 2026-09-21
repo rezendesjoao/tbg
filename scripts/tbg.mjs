@@ -4,6 +4,7 @@ import { registerSettings } from "./settings.mjs";
 import { registerQueries, registerSocket } from "./sockets.mjs";
 import { createApi } from "./api.mjs";
 import { registerBubbles } from "./bubbles/layer.mjs";
+import { registerBanners } from "./banners/layer.mjs";
 import { registerChatCommands } from "./chat/commands.mjs";
 import { registerChatInput } from "./chat/input.mjs";
 import { registerCharacterCounter } from "./chat/counter.mjs";
@@ -22,6 +23,7 @@ Hooks.once("init", () => {
   registerTypingIndicator();
   registerChatRender();
   registerBubbles();
+  registerBanners();
   foundry.applications.handlebars.loadTemplates(Object.values(TEMPLATES));
   const module = game.modules.get(MODULE_ID);
   module.api = createApi(module);
