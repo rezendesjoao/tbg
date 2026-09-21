@@ -41,7 +41,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 ## 6. Interface e CSS
 
 - ApplicationV2 com HandlebarsApplicationMixin; DialogV2; zero jQuery; DOM nativo (`querySelector`, `append`, `classList`, `dataset`).
-- Handlebars em `templates/`. HTML em string JS só para um elemento trivial. Conteúdo vindo do usuário passa por `enrichHTML` ou `escapeHTML`; nunca `innerHTML` com texto cru.
+- Handlebars em `templates/`; as páginas do guia usam só as classes `tbg-guide__*` de `styles/guide.css` e a marcação real dos balões. HTML em string JS só para um elemento trivial. Conteúdo vindo do usuário passa por `enrichHTML` ou `escapeHTML`; nunca `innerHTML` com texto cru.
 - CSS entra sozinho na layer `modules`: sem `!important`, sem seletor por id do core além dos pontos de montagem (`#hud`, `#ui-middle`, `#message-modes`, `#chat-message`).
 - Movimento contínuo com `requestAnimationFrame`; transição pontual com `Element.animate`. Medir DOM uma vez, fora do loop.
 
@@ -50,6 +50,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 - Erro do usuário: `throw new Error(localize(...))` (o core exibe a notificação). Erro de programação: `console.error("TBG |", …)`.
 - Nunca `catch` vazio. `debug()` só com a setting de debug ligada.
 - Toda mensagem visível ao usuário vem de `lang/`, com pt-BR e en no mesmo commit.
+- Exceção decidida pelo usuário (21/09/2026): o texto do guia do jogador (`templates/guide/*.hbs`) é só pt-BR. O botão, o diálogo e os avisos do guia seguem a regra acima.
 
 ## 8. Compatibilidade
 

@@ -1,0 +1,64 @@
+<div class="tbg-guide">
+  <section class="tbg-guide__hero">
+    <h2>Modos de fala</h2>
+    <p>Falar, gritar, sussurrar, pensar, agir e sair do personagem.</p>
+  </section>
+
+  <p class="tbg-guide__lead">Nem tudo é fala. O jeito de escrever muda a cara do balão e, às vezes, quem pode vê-lo.</p>
+
+  <figure class="tbg-guide__stage">
+    <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Tem alguém aí dentro?</span></div>
+    <div class="tbg-bubble tbg-bubble--shout"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Abram o portão!</span></div>
+    <div class="tbg-bubble tbg-bubble--whisper"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Fica atrás de mim.</span></div>
+    <div class="tbg-bubble tbg-bubble--think"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Isso está quieto demais…</span></div>
+    <div class="tbg-bubble tbg-bubble--action"><span class="tbg-bubble__text">saca a espada devagar</span></div>
+    <div class="tbg-bubble tbg-bubble--ooc"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Rafa</span></span> <span class="tbg-bubble__text">posso rolar Percepção aqui?</span></div>
+    <div class="tbg-guide__token"><img src="{{portrait}}" alt=""></div>
+  </figure>
+  <p class="tbg-guide__caption">Todos os modos juntos, do mais antigo (em cima) ao mais novo. Na mesa, sussurros e pensamentos só aparecem para quem pode vê-los.</p>
+
+  <h3>Cola dos modos</h3>
+  <table class="tbg-guide__table">
+    <thead>
+      <tr><th>Modo</th><th>Como escrever</th><th>Balão</th><th>Quem vê</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Falar</td><td>Texto normal, <code>/say texto</code> ou <code>/falar texto</code></td><td>Branco, com retrato e nome</td><td>Todos</td></tr>
+      <tr><td>Gritar</td><td><kbd>Shift</kbd> + <kbd>Enter</kbd>, <code>/shout texto</code> ou <code>/gritar texto</code></td><td>Negrito, maior, borda mais grossa</td><td>Todos</td></tr>
+      <tr><td>Sussurrar</td><td><code>/w Nome texto</code></td><td>Cinza, itálico, borda tracejada</td><td>Você e quem recebe</td></tr>
+      <tr><td>Pensar</td><td><code>/think texto</code> ou <code>/pensar texto</code></td><td>Nuvem arredondada, borda pontilhada, itálico</td><td>Você e o Mestre</td></tr>
+      <tr><td>Agir</td><td><code>*texto*</code>, <code>/me texto</code> ou <code>/emote texto</code></td><td>Bege, itálico, sem nome</td><td>Todos</td></tr>
+      <tr><td>Fora do personagem</td><td><code>/ooc texto</code></td><td>Cinza e translúcido, com o seu nome de jogador</td><td>Todos</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Falar</h3>
+  <p>Texto normal, com o token selecionado, já é fala. Use <code>/say texto</code> (ou <code>/falar texto</code>) quando quiser garantir a fala em personagem mesmo com outro modo de mensagem escolhido.</p>
+
+  <h3>Gritar</h3>
+  <p>Aperte <kbd>Shift</kbd> + <kbd>Enter</kbd> no lugar do <kbd>Enter</kbd>, ou escreva <code>/shout texto</code> (ou <code>/gritar texto</code>). O balão sai em negrito, maior e com a borda mais grossa.</p>
+
+  <h3>Sussurrar</h3>
+  <p><code>/w Nome texto</code> é o sussurro do próprio Foundry. O nome pode ser o do jogador ou o do personagem dele. Para sussurrar para mais de uma pessoa, ou para um nome com espaço, use colchetes: <code>/w [Ana, Bia] texto</code>. Para falar só com o Mestre, use <code>/w GM texto</code>.</p>
+  <p>Com o seu token selecionado, o sussurro sai em personagem: um balão cinza, em itálico e com borda tracejada, que só você e quem recebe enxergam. Sem token, ele vai só pelo chat.</p>
+
+  <h3>Pensar</h3>
+  <p><code>/think texto</code> (ou <code>/pensar texto</code>) mostra o que o personagem pensa sem dizer em voz alta. O balão é redondinho como uma nuvem, tem borda pontilhada e texto em itálico, e só você e o Mestre o veem.</p>
+  <p>Para pensar, você precisa de um token selecionado ou de um personagem atribuído. Sem nenhum dos dois, o pensamento não sai e um aviso pede que você selecione um token.</p>
+
+  <h3>Agir</h3>
+  <p>Escreva a mensagem inteira entre asteriscos, como <code>*abre a porta devagar*</code>, ou use <code>/me abre a porta devagar</code> (também <code>/emote</code>). O balão é bege, em itálico e sem o nome, e se lê como um trecho de narração. No chat, o nome aparece uma vez só, no cabeçalho da mensagem.</p>
+
+  <h3>Fora do personagem</h3>
+  <p><code>/ooc texto</code> é para falar como jogador: tirar uma dúvida de regra, combinar alguma coisa com a mesa. A mensagem vai para o chat fora do personagem e, se você estiver com o token selecionado, aparece sobre ele um balão cinza e translúcido com o seu nome de jogador, para ninguém confundir com a fala do personagem.</p>
+
+  <div class="tbg-guide__callout">
+    <p><strong>Os botões de modo de mensagem do Foundry continuam funcionando.</strong> Os comandos desta página valem só para a mensagem em que você os escreve e não trocam o modo escolhido nos botões.</p>
+  </div>
+
+  <div class="tbg-guide__callout tbg-guide__callout--gm">
+    <p><strong>E o Mestre?</strong> Além de tudo isso, o Mestre narra com <code>/n texto</code>. A narração não vira balão: aparece num letreiro no meio da tela de todos. Os detalhes ficam nas páginas do Mestre, que só ele vê.</p>
+  </div>
+
+  <p class="tbg-guide__footer">Guia do TBG. Próxima página: Os balões.</p>
+</div>

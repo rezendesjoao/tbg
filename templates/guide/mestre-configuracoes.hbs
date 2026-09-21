@@ -1,0 +1,75 @@
+<div class="tbg-guide">
+  <section class="tbg-guide__hero">
+    <h2>Mestre: configurações</h2>
+    <p>Página do Mestre: todas as opções do TBG e o que conferir quando algo não aparece.</p>
+  </section>
+
+  <p class="tbg-guide__lead">As opções ficam em Configurações → TBG. As de <strong>Mundo</strong> valem para a mesa inteira, e só você, o Mestre, pode mudá-las. As de <strong>Cliente</strong> valem só para o computador de quem mexe: cada jogador ajusta as suas.</p>
+
+  <h3>Todas as opções</h3>
+  <table class="tbg-guide__table">
+    <thead>
+      <tr><th>Opção</th><th>Vale para</th><th>Padrão</th><th>O que faz</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><em>Ativar TBG</em></td><td>Mundo</td><td>Ligado</td><td>Interruptor geral dos balões do TBG, inclusive o de uso da ficha e o selo de digitação. Desligado, eles deixam de aparecer sobre os tokens, e as mensagens continuam indo para o chat. O Modo Narrador, o letreiro e o tema do chat têm interruptores próprios.</td></tr>
+      <tr><td><em>Falar em personagem automaticamente</em></td><td>Mundo</td><td>Ligado</td><td>Com um token selecionado (ou um personagem atribuído), texto simples sai em personagem mesmo com o modo de mensagem em público. Os comandos e o seletor de modo continuam valendo.</td></tr>
+      <tr><td><em>Mostrar quem está digitando</em></td><td>Mundo</td><td>Ligado</td><td>Mostra, para todos, o selo de reticências no canto do token de quem está escrevendo. Ele some ao enviar ou depois de três segundos sem digitar.</td></tr>
+      <tr><td><em>Balão de uso da ficha</em></td><td>Mundo</td><td>Ligado</td><td>Quando alguém usa um item, uma característica ou uma rolagem pela ficha, aparece um balão bege sobre o token: "Kirito usou Espada Longa". Só o nome da ação, nunca o resultado.</td></tr>
+      <tr><td><em>Letreiro de narração</em></td><td>Mundo</td><td>Ligado</td><td>Mostra cada narração num letreiro grande no meio da tela, para todos. Desligado, a narração fica só no chat.</td></tr>
+      <tr><td><em>Tempo mínimo do letreiro</em></td><td>Mundo</td><td>6 segundos</td><td>Tempo mínimo do letreiro na tela, de 3 a 30 segundos. Textos longos ficam mais, até 30.</td></tr>
+      <tr><td><em>Nome do narrador</em></td><td>Mundo</td><td>Vazio</td><td>Nome que assina as narrações. Vazio usa "Narrador". Neste mundo: {{narratorName}}.</td></tr>
+      <tr><td><em>Abas ON, OFF e ROLL</em></td><td>Mundo</td><td>Ligado</td><td>Com o Custom Chat Tabs ativo, divide o chat nas abas ON, OFF e ROLL e esconde as abas All, IC, OOC e Rolls dele. Desligado, as abas originais voltam. Ao mudar, o Foundry pede para recarregar.</td></tr>
+      <tr><td><em>Empilhamento dos balões</em></td><td>Mundo</td><td>Free flow (Habbo)</td><td>Free flow: o balão novo só empurra os que ele encosta, e grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem juntos.</td></tr>
+      <tr><td><em>Velocidade de subida</em></td><td>Mundo</td><td>35</td><td>Quantos pixels por segundo os balões sobem, de 0 a 120. Zero deixa os balões parados até um novo empurrar.</td></tr>
+      <tr><td><em>Limite de subida</em></td><td>Mundo</td><td>320</td><td>Altura acima do token, de 100 a 800 pixels, a partir da qual o balão some.</td></tr>
+      <tr><td><em>Largura máxima do balão</em></td><td>Mundo</td><td>350</td><td>Largura em pixels antes do texto quebrar linha, de 200 a 600. O Habbo usa 240 (fino) e 350 (normal).</td></tr>
+      <tr><td><em>Tempo máximo</em></td><td>Mundo</td><td>0</td><td>Segundos até o balão sumir de qualquer jeito, até 300. Zero desliga esse limite: o balão só some ao passar do <em>Limite de subida</em>.</td></tr>
+      <tr><td><em>Retrato no balão</em></td><td>Mundo</td><td>Ligado</td><td>Mostra a imagem do token dentro do balão, ao lado do nome.</td></tr>
+      <tr><td><em>Escala dos balões</em></td><td>Cliente</td><td>Fixa na tela</td><td>Fixa na tela: o balão tem o mesmo tamanho em qualquer zoom. Junto com o mapa: cresce e encolhe com o zoom.</td></tr>
+      <tr><td><em>Tema do chat</em></td><td>Cliente</td><td>Ligado</td><td>Retratos, cor do autor e um visual para cada tipo de mensagem nos cartões do chat, como o cartão escuro da narração. Desligado, volta o visual padrão do Foundry.</td></tr>
+      <tr><td><em>Agrupar mensagens consecutivas</em></td><td>Cliente</td><td>Ligado</td><td>Esconde o cabeçalho quando o mesmo falante manda outra mensagem em até cinco minutos. Só vale com o <em>Tema do chat</em> ligado.</td></tr>
+      <tr><td><em>Log detalhado</em></td><td>Cliente</td><td>Desligado</td><td>Escreve detalhes extras no console do navegador (<kbd>F12</kbd>). Só serve para investigar problemas.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Este guia</h3>
+  <p>O botão <em>Criar guia no diário</em>, em <em>Guia do jogador</em>, pede uma confirmação e cria o diário "Guia do TBG" neste mundo. Se ele já existe, as páginas são trocadas pela versão atual, e a pasta e as permissões do diário continuam como estão. Os jogadores leem todas as páginas, menos as duas do Mestre.</p>
+
+  <div class="tbg-guide__callout tbg-guide__callout--warn">
+    <p><strong>Atualizar troca todas as páginas.</strong> O que você editou nas páginas do guia volta ao texto original, e páginas que você acrescentou a este diário são apagadas. Guarde anotações próprias em outro diário.</p>
+  </div>
+
+  <h3>Outros módulos e opções do Foundry</h3>
+  <div class="tbg-guide__callout tbg-guide__callout--warn">
+    <p><strong><em>Enable Chat Bubbles</em> precisa estar ligada.</strong> É uma opção do próprio Foundry, em Configurações → Core. Ela vem ligada, mas vale por computador: cada jogador tem a sua. Desligada, aquele jogador não vê nenhum balão nem o selo de digitação.</p>
+  </div>
+
+  <p>O TBG não depende de nenhum outro módulo. Os recomendados para jogar junto são o <strong>Narrator Tools</strong>, o <strong>Custom Chat Tabs</strong> e o <strong>Cautious Gamemaster's Pack</strong>.</p>
+
+  <div class="tbg-guide__callout">
+    <p><strong>Abas ON, OFF e ROLL.</strong> Elas só aparecem com o Custom Chat Tabs ativo, a opção <em>Enable Chat Tabs</em> dele ligada (ela vem desligada) e <em>Abas ON, OFF e ROLL</em> ligada no TBG. Aí o chat abre na aba ON, e as abas All, IC, OOC e Rolls do Custom Chat Tabs ficam escondidas.</p>
+  </div>
+
+  <h3>Se algo não funcionar</h3>
+  <table class="tbg-guide__table">
+    <thead>
+      <tr><th>O que acontece</th><th>O que conferir</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Um jogador não vê nenhum balão</td><td><em>Enable Chat Bubbles</em> ligada no computador dele. É a causa mais comum. Confira também se <em>Ativar TBG</em> está ligada.</td></tr>
+      <tr><td>A fala vai para o chat, mas sem balão</td><td>Uma cena aberta, com o token do personagem nela e selecionado. Sem token, a mensagem sai fora do personagem e sem balão. Quem lê também precisa estar olhando a mesma cena.</td></tr>
+      <tr><td>Os balões ficam cortados no alto da tela</td><td>O zoom: afaste o mapa para sobrar espaço acima dos tokens.</td></tr>
+      <tr><td>Nada do TBG funciona</td><td>O módulo ativo na lista de módulos do mundo (<em>Module Management</em>). No console do navegador (<kbd>F12</kbd>) deve aparecer uma linha começando com <code>TBG |</code> e dizendo que ele está pronto, sem erros em vermelho.</td></tr>
+      <tr><td>O selo de digitação não aparece</td><td><em>Mostrar quem está digitando</em> e <em>Ativar TBG</em> ligadas, <em>Enable Chat Bubbles</em> ligada no computador de quem olha e o token selecionado na cena aberta. O selo só aparece enquanto a pessoa digita. Com o Modo Narrador ligado, ele não aparece mesmo.</td></tr>
+      <tr><td>O letreiro não aparece</td><td><em>Letreiro de narração</em> ligada. Só narração vira letreiro: Modo Narrador ou <code>/n</code>. Ele não depende de cena nem de balões.</td></tr>
+      <tr><td>As abas ON, OFF e ROLL não aparecem</td><td>Custom Chat Tabs ativo, <em>Enable Chat Tabs</em> ligada nele e <em>Abas ON, OFF e ROLL</em> ligada no TBG, com a página recarregada depois de mudar.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tbg-guide__callout tbg-guide__callout--gm">
+    <p><strong>Ainda com problema?</strong> Anote a versão do Foundry e do TBG, o sistema de jogo, os outros módulos ativos e qualquer erro em vermelho do console antes de pedir ajuda.</p>
+  </div>
+
+  <p class="tbg-guide__footer">Página do Mestre, oculta para os jogadores. Para atualizar este guia, use Configurações → TBG → Criar guia no diário.</p>
+</div>

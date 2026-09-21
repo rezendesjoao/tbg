@@ -35,6 +35,7 @@
 | Nome no uso | O alias do falante quando difere do nome do ator; senão o nome do token. Token que o cliente não vê não ganha balão | O alias escolhido de propósito (combatente renomeado, macro que fala como "???") é o que o autor quis mostrar; o alias igual ao nome do ator é só o padrão do sistema e revelaria um NPC disfarçado. Um balão escondido ainda empurraria os vizinhos e denunciaria onde o token está. Sistemas que gravam só o ator caem no único token dele na cena |
 | Letreiro de narração | Container `#tbg-banners` dentro de `#ui-middle`, montado no `ready`; subida por `Element.animate` no `transform` do cartão, na mesma velocidade para todos, e empurrão por `Element.animate` no `translate` do elemento externo; remoção por timer | `#ui-middle` é marcação estática, fica acima do canvas e do HUD (z 30) e abaixo de janelas e notificações, escala com `--ui-scale` e não depende da cena. A subida tem início e fim conhecidos, então é transição pontual, e com propriedades diferentes subida e empurrão compõem. Velocidade única porque, com distância fixa e duração por texto, um letreiro curto alcançava o longo que acabara de empurrar. Medidas vêm de `offsetHeight`, porque o `transform` do pai escala `getBoundingClientRect` |
 | Abas do chat (C2) | Com o Custom Chat Tabs, três abas registradas pela API dele no hook `custom-chat-tabs.init` (ON, OFF e ROLL), `setActiveTab` no ON e CSS com `:has([data-tab="tbg-on"])` escondendo All, IC, OOC e Rolls | O CCT fixa a aba All (`removable: false`) e sempre abre nela. Só renomear IC, OOC e Rolls deixaria sem aba, com o All escondido, tudo que não é IC, OOC nem rolagem: a narração (estilo OTHER) e os cartões de item sem rolagem. As três abas do TBG dividem toda mensagem: ON = `isSpeech` sem o `/ooc`; OFF = OOC, `/ooc` e sussurro digitado sem falante; ROLL = o resto. O `:has` só esconde enquanto as abas do TBG existem |
+| Guia do jogador (D8) | Botão de `registerMenu` que abre um `DialogV2` próprio; o guia é um `JournalEntry` marcado com a flag `guide`, gerado de `templates/guide/*.hbs` com o limite de caracteres, o nome do narrador e o atalho da mesa; páginas do Mestre com `ownership.default = NONE` | O jogo por texto precisa de um material que a mesa leia no próprio Foundry. Diário no mundo, e não compêndio, por escolha do usuário: dispensa o build de LevelDB. Recriar troca só as páginas, então pasta, permissões e links para o diário continuam. Os exemplos usam a marcação e o CSS reais dos balões, então o guia mostra o visual atual |
 | i18n | `lang/pt-BR.json` e `lang/en.json`, chaves `TBG.*` | pt-BR é o público principal |
 
 ## Estrutura
@@ -57,6 +58,9 @@ scripts/
     usage.mjs        resolveUsage(message) e isRepeatedUsage(message, usage)
     usage-item.mjs   usedItem(message, actor): o item do falante, sem chave de sistema
     tabs.mjs         abas ON, OFF e ROLL registradas no Custom Chat Tabs
+  guide/
+    guide.mjs        writeGuide(): cria ou atualiza o diário "Guia do TBG"
+    menu.mjs         botão nas configurações e diálogo de confirmação
     narrator.mjs     interruptor, botão, atalho e dados de narração
     render.mjs       tema do cartão: classes, retrato, agrupamento
   bubbles/
@@ -66,8 +70,8 @@ scripts/
   banners/
     banner.mjs       um letreiro: elemento, duração, subida, empurrão, saída
     layer.mjs        camada em #ui-middle: hooks de narração, pilha, remoção
-styles/  tbg.css (variáveis) · bubbles.css · banners.css · chat.css
-templates/  bubble.hbs · banner.hbs
+styles/  tbg.css (variáveis) · bubbles.css · banners.css · guide.css · chat.css
+templates/  bubble.hbs · banner.hbs · guide/*.hbs (uma página do guia por arquivo)
 lang/  en.json · pt-BR.json
 ```
 

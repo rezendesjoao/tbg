@@ -2,7 +2,7 @@
 
 Módulo para **Foundry VTT v14** que transforma o chat numa experiência de *RPG de Habbo*: balões de fala que empilham sobre os tokens e sobem até sumir, um **Modo Narrador** para o Mestre falar sem estar preso a um personagem, e um chat de sidebar com cara de mensageiro.
 
-> **Estado: 0.9.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entraram o indicador de digitação sobre o token (A5), o letreiro de narração (B8) e o balão de uso da ficha (A9). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.10.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entraram o indicador de digitação sobre o token (A5), o letreiro de narração (B8) e o balão de uso da ficha (A9). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
@@ -51,6 +51,10 @@ Com o [Custom Chat Tabs](https://github.com/Larkinabout/fvtt-custom-chat-tabs) a
 
 Toda mensagem cai em uma das três. As abas All, IC, OOC e Rolls do Custom Chat Tabs ficam escondidas enquanto isso estiver ligado; desligar *Abas ON, OFF e ROLL* devolve as originais.
 
+### Guia do jogador
+
+Em *Configurações → TBG → Criar guia no diário*, o Mestre cria no mundo o diário **Guia do TBG**: um tutorial ilustrado de como jogar por texto, com uma página por função do módulo e balões de exemplo com o visual real. Os jogadores veem as páginas deles; as de narração e configurações ficam só para o Mestre. Clicar de novo atualiza o guia para a versão do módulo instalada.
+
 ### Configurações
 
 Mundo: interruptor geral, falar em personagem automaticamente, mostrar quem está digitando, balão de uso da ficha, letreiro de narração e seu tempo mínimo, abas ON, OFF e ROLL, layout dos balões (free flow ou linha a linha), velocidade de subida, limite de subida, largura máxima, tempo máximo, retrato no balão, nome do narrador. Cliente: escala dos balões (tamanho fixo na tela ou junto com o mapa), tema do chat, agrupamento de mensagens consecutivas, log de debug.
@@ -65,7 +69,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.9.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.10.0 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 

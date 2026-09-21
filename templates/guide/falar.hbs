@@ -1,0 +1,65 @@
+<div class="tbg-guide">
+  <section class="tbg-guide__hero">
+    <h2>Falando pelo personagem</h2>
+    <p>Quem fala, como enviar e o tamanho de cada mensagem.</p>
+  </section>
+
+  <p class="tbg-guide__lead">No TBG você fala <strong>como o seu personagem</strong>, não como jogador. É só mostrar ao Foundry quem está falando e escrever: a fala vai para o chat e aparece num balão em cima do token.</p>
+
+  <h3>Passo a passo</h3>
+  <ol class="tbg-guide__steps">
+    <li><strong>Clique no seu token</strong> no mapa para selecioná-lo. Se o Mestre atribuiu um personagem a você, esse personagem já fala mesmo sem o clique.</li>
+    <li><strong>Escreva no campo do chat</strong>, na barra lateral.</li>
+    <li><strong>Aperte <kbd>Enter</kbd></strong>. A mensagem sai em personagem e vira um balão sobre o token.</li>
+  </ol>
+
+  <figure class="tbg-guide__stage">
+    <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Se ninguém achou a chave, a gente pula o muro dos fundos e entra pela cozinha antes da troca da guarda.</span></div>
+    <div class="tbg-guide__token"><img src="{{portrait}}" alt=""></div>
+  </figure>
+  <p class="tbg-guide__caption">Retrato, nome e fala na mesma linha. Texto longo quebra para baixo.</p>
+
+  <div class="tbg-guide__callout">
+    <p><strong>Não precisa mexer nos modos do Foundry.</strong> Com a opção <em>Falar em personagem automaticamente</em> ligada, que é o padrão, o texto simples sai em personagem mesmo no modo de mensagem público, o de sempre. Se o Mestre desligar essa opção, <code>/say texto</code> continua falando em personagem.</p>
+  </div>
+
+  <div class="tbg-guide__callout tbg-guide__callout--warn">
+    <p><strong>Sem token e sem personagem, não tem balão.</strong> Se nada estiver selecionado e você não tiver personagem atribuído, a mensagem vai para o chat fora do personagem, e nenhum balão aparece no mapa.</p>
+  </div>
+
+  <h3>O limite de {{maxLength}} caracteres</h3>
+  <p>Cada mensagem aceita até {{maxLength}} caracteres. O limite é o mesmo para todo mundo e não muda de mesa para mesa.</p>
+  <p>Ao lado dos botões de modo de mensagem do chat, um contador mostra quanto você já escreveu. Ele é branco com contorno preto, para aparecer em qualquer fundo, e vai ficando vermelho da metade do limite em diante.</p>
+
+  <table class="tbg-guide__table">
+    <thead>
+      <tr><th>Contador</th><th>O que quer dizer</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tbg-guide__counter">0/{{maxLength}}</span></td><td>Campo vazio.</td></tr>
+      <tr><td><span class="tbg-guide__counter">42/{{maxLength}}</span></td><td>Branco: ainda sobra bastante espaço.</td></tr>
+      <tr><td><span class="tbg-guide__counter tbg-guide__counter--full">{{maxLength}}/{{maxLength}}</span></td><td>Vermelho: chegou no limite.</td></tr>
+    </tbody>
+  </table>
+
+  <p>No limite, o campo não aceita mais nenhuma letra. Um texto colado que passaria do limite também não entra. Apagar sempre funciona.</p>
+
+  <div class="tbg-guide__callout tbg-guide__callout--tip">
+    <p><strong>Tem mais a dizer?</strong> Mande em duas mensagens. Cada uma vira um balão, e a segunda empurra a primeira para cima, como numa conversa de verdade.</p>
+  </div>
+
+  <h3>Mensagem editada</h3>
+  <p>Se uma mensagem for editada no chat, o balão dela muda junto. Se for apagada, o balão some.</p>
+
+  <h3>O chat também muda</h3>
+  <div class="tbg-guide__grid">
+    <div class="tbg-guide__card"><strong>Tema do chat</strong><p>Cada mensagem mostra o retrato de quem fala e o nome na cor do jogador.</p></div>
+    <div class="tbg-guide__card"><strong>Mensagens agrupadas</strong><p>Falas seguidas do mesmo personagem, com menos de cinco minutos entre uma e outra, ficam juntas, sem repetir o retrato e o nome. Se o tipo muda, como uma ação depois de uma fala, o nome volta.</p></div>
+  </div>
+
+  <div class="tbg-guide__callout tbg-guide__callout--tip">
+    <p><strong>As duas opções são suas.</strong> <em>Tema do chat</em> e <em>Agrupar mensagens consecutivas</em> valem só no seu computador: cada jogador liga ou desliga em Configurações → TBG.</p>
+  </div>
+
+  <p class="tbg-guide__footer">Guia do TBG. Próxima página: Modos de fala.</p>
+</div>

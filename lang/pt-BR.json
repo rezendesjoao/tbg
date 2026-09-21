@@ -116,6 +116,18 @@
         "hint": "Rolagens e cartões da ficha"
       }
     },
+    "Guide": {
+      "menu": {
+        "name": "Guia do jogador",
+        "label": "Criar guia no diário",
+        "hint": "Cria no diário deste mundo o \"Guia do TBG\", um tutorial de como jogar por texto com uma página por função do módulo, visível para os jogadores. As páginas do Mestre ficam ocultas para eles. Se o guia já existir, as páginas são trocadas pela versão atual."
+      },
+      "title": "Guia do TBG",
+      "confirm": "Criar ou atualizar o diário \"Guia do TBG\" neste mundo? Se ele já existir, as páginas dele serão substituídas pela versão atual do guia; pasta e permissões do diário continuam como estão.",
+      "write": "Criar guia",
+      "created": "Guia do TBG criado no diário.",
+      "updated": "Guia do TBG atualizado no diário."
+    },
     "Errors": {
       "noSpeaker": "Selecione um token ou atribua um personagem antes de falar em personagem.",
       "narratorGMOnly": "Só o Mestre pode narrar."

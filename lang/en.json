@@ -116,6 +116,18 @@
         "hint": "Rolls and sheet cards"
       }
     },
+    "Guide": {
+      "menu": {
+        "name": "Player guide",
+        "label": "Create guide journal",
+        "hint": "Creates the \"Guia do TBG\" journal in this world, a Portuguese tutorial on playing by text with one page per module feature, visible to players. The GM pages stay hidden from them. If the guide already exists, its pages are replaced with the current version."
+      },
+      "title": "TBG guide",
+      "confirm": "Create or update the \"Guia do TBG\" journal in this world? If it already exists, its pages are replaced with the current version of the guide; the journal's folder and permissions stay as they are.",
+      "write": "Create guide",
+      "created": "TBG guide created in the journal.",
+      "updated": "TBG guide updated in the journal."
+    },
     "Errors": {
       "noSpeaker": "Select a token or assign a character before speaking in character.",
       "narratorGMOnly": "Only the Gamemaster can narrate."

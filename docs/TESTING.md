@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.9.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.10.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -112,6 +112,14 @@ Com o Custom Chat Tabs ativo e *Enable Chat Tabs* ligado nele.
 - [ ] **ROLL.** `/roll`, rolagens e cartões de item da ficha aparecem no ROLL.
 - [ ] **Nada some.** Nenhuma mensagem fica fora das três abas.
 - [ ] **Desligar.** Desligue *Abas ON, OFF e ROLL* e recarregue: as abas do Custom Chat Tabs voltam como estavam.
+
+## 4f. D8 — Guia do jogador
+
+- [ ] **Botão.** Em *Configurações → TBG* existe *Guia do jogador* com o botão *Criar guia no diário*. Num cliente de jogador ele não aparece.
+- [ ] **Criar.** Clique e confirme: surge a notificação, o diário "Guia do TBG" abre com dez páginas e os balões de exemplo têm o mesmo visual dos balões do mapa.
+- [ ] **Jogador.** Num cliente de jogador o diário abre com oito páginas; "Mestre: narração" e "Mestre: configurações" não aparecem.
+- [ ] **Atualizar.** Mova o diário para uma pasta e clique de novo: a notificação diz que foi atualizado, e o diário continua na pasta, com as mesmas permissões.
+- [ ] **Valores da mesa.** Mude o *Nome do narrador* e atualize o guia: a página de narração passa a usar o nome novo.
 
 ## 5. C1 — Tema do chat
 
@@ -268,6 +276,19 @@ await (async () => {
   const sussurrado = await ChatMessage.create({ speaker: falante, content: "<div>cartão de sistema</div>", whisper: [game.user.id] });
   await pause(400);
   check("cartão sussurrado sem balão", !bubbleOf(sussurrado.id));
+
+  if (!game.journal.some(j => j.getFlag("tbg", "guide"))) {
+    const { writeGuide } = await import("/modules/tbg/scripts/guide/guide.mjs");
+    await writeGuide();
+    const guia = game.journal.find(j => j.getFlag("tbg", "guide"));
+    check("guia criado com dez páginas", guia?.pages.size === 10, `${guia?.pages.size ?? 0} páginas`);
+    const { INHERIT, NONE } = CONST.DOCUMENT_OWNERSHIP_LEVELS;
+    check("páginas do Mestre ocultas", guia?.pages.filter(p => p.ownership.default === NONE).length === 2);
+    check("páginas dos jogadores visíveis", guia?.pages.filter(p => p.ownership.default === INHERIT).length === 8);
+    check("exemplos com a marcação dos balões", guia?.pages.some(p => p.text.content.includes("tbg-bubble--say")) === true);
+    await guia?.sheet.close();
+    await guia?.delete();
+  }
 
   const cct = game.modules.get("custom-chat-tabs");
   const abas = cct?.active && game.settings.get("custom-chat-tabs", "enable") ? cct.api.getTabs() : null;

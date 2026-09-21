@@ -2,7 +2,7 @@
   "id": "tbg",
   "title": "TBG",
   "description": "Balões de fala estilo Habbo sobre os tokens, Modo Narrador para o Mestre e um chat melhor para o Foundry VTT v14. — Habbo-style speech bubbles over tokens, a Narrator mode for the GM and a better chat for Foundry VTT v14.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "authors": [
     {
@@ -16,7 +16,7 @@
   "changelog": "https://github.com/rezendesjoao/tbg/blob/main/CHANGELOG.md",
   "license": "MIT",
   "manifest": "https://github.com/rezendesjoao/tbg/releases/latest/download/module.json",
-  "download": "https://github.com/rezendesjoao/tbg/releases/download/v0.9.0/module.zip",
+  "download": "https://github.com/rezendesjoao/tbg/releases/download/v0.10.0/module.zip",
   "media": [],
   "compatibility": {
     "minimum": "14",
@@ -29,6 +29,7 @@
     "styles/tbg.css",
     "styles/bubbles.css",
     "styles/banners.css",
+    "styles/guide.css",
     "styles/chat.css"
   ],
   "languages": [
@@ -49,7 +50,7 @@
       {
         "id": "narrator-tools",
         "type": "module",
-        "reason": "Narração em tela (cutscene). O TBG delega /cena para ele quando presente."
+        "reason": "Narração em tela no estilo cutscene, que o TBG não reimplementa; o letreiro de narração do TBG convive com ele."
       },
       {
         "id": "custom-chat-tabs",

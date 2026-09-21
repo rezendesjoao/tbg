@@ -12,9 +12,11 @@ import { registerTypingIndicator } from "./chat/typing.mjs";
 import { registerNarrator } from "./chat/narrator.mjs";
 import { registerChatRender } from "./chat/render.mjs";
 import { registerChatTabs } from "./chat/tabs.mjs";
+import { registerGuide } from "./guide/menu.mjs";
 
 Hooks.once("init", () => {
   registerSettings();
+  registerGuide();
   registerQueries();
   registerSocket();
   registerNarrator();

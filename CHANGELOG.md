@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.10.0] — 2026-09-21
+
+### Adicionado
+- D8: guia do jogador no diário. Em *Configurações → TBG → Criar guia no diário*, o Mestre cria no mundo o diário "Guia do TBG", um tutorial de como jogar por texto com uma página por função: falar pelo personagem, modos de fala, balões, digitando, ações da ficha, abas ON/OFF/ROLL e boas práticas, com balões de exemplo desenhados com o visual real do módulo. As páginas de narração e configurações ficam visíveis só para o Mestre. Clicar de novo atualiza as páginas, mantendo pasta e permissões. O texto do guia é em pt-BR.
+
+### Corrigido
+- O manifesto dizia que o TBG repassa `/cena` para o Narrator Tools, o que nunca foi implementado (a B2 segue pendente). O motivo da recomendação agora descreve o que acontece de fato.
+
 ## [0.9.0] — 2026-09-21
 
 ### Adicionado

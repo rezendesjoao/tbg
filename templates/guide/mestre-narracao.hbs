@@ -1,0 +1,76 @@
+<div class="tbg-guide">
+  <section class="tbg-guide__hero">
+    <h2>Mestre: narração</h2>
+    <p>Página do Mestre: como narrar a cena sem falar por nenhum token.</p>
+  </section>
+
+  <p class="tbg-guide__lead">Os jogadores falam pelos tokens deles. Você fala pelo mundo: o vento, a porta que range, o dragão que acorda. No TBG a narração sai como <strong>{{narratorName}}</strong>, num cartão próprio no chat e num letreiro grande no meio da tela, sem balão sobre nenhum token.</p>
+
+  <h3>O Modo Narrador</h3>
+  <p>É um interruptor. Ligado, tudo o que você escreve <strong>sem comando</strong> sai como {{narratorName}}, mesmo com um token selecionado.</p>
+  <ol class="tbg-guide__steps">
+    <li><strong>Ligue o modo</strong> no botão de pergaminho 📜, ao lado dos botões de modo de mensagem, embaixo do chat. Ou use o atalho <kbd>{{narratorKey}}</kbd>.</li>
+    <li><strong>Confira o aviso.</strong> Uma notificação confirma que o modo ligou, e o botão fica pressionado enquanto ele estiver ativo.</li>
+    <li><strong>Narre.</strong> Escreva e aperte <kbd>Enter</kbd>. A mensagem vai para o chat como {{narratorName}}, num cartão escuro com letra serifada.</li>
+    <li><strong>Desligue</strong> no mesmo botão ou no mesmo atalho. Outra notificação avisa, e o token selecionado volta a falar.</li>
+  </ol>
+
+  <table class="tbg-guide__table">
+    <thead>
+      <tr><th>Com o Modo Narrador ligado, se você escrever</th><th>O que acontece</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Texto sem comando</td><td>Narração, como {{narratorName}}, sem balão</td></tr>
+      <tr><td><code>*ação*</code>, <code>/say</code>, <code>/shout</code> ou <kbd>Shift</kbd> + <kbd>Enter</kbd></td><td>Sai do token selecionado, como sempre, com balão</td></tr>
+      <tr><td><code>/w Nome texto</code></td><td>Sussurro normal</td></tr>
+      <tr><td><code>/roll 1d20</code></td><td>Rolagem normal</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tbg-guide__callout tbg-guide__callout--tip">
+    <p><strong>Um NPC fala no meio da narração?</strong> Não precisa desligar o modo: selecione o token do NPC e escreva <code>/say fala</code>. A fala vira balão sobre ele, e o texto seguinte sem comando volta a ser narração.</p>
+  </div>
+
+  <p>Com o modo ligado, o selo de digitação não aparece no token selecionado, então ninguém vê um NPC "digitando" à toa. O modo fica guardado neste computador: se você recarregar a página, ele continua como estava.</p>
+
+  <h3>Narração pontual: /n</h3>
+  <p>Para uma frase só, não precisa trocar de modo. Escreva <code>/n texto</code>, ou <code>/narrar texto</code>, ou <code>/narrate texto</code>, e ela sai como {{narratorName}}, com cartão e letreiro, igual ao Modo Narrador.</p>
+
+  <div class="tbg-guide__callout tbg-guide__callout--gm">
+    <p><strong>Só o Mestre narra.</strong> Os jogadores não têm o botão de pergaminho nem o atalho, e um <code>/n</code> mandado por eles é recusado com o aviso "Só o Mestre pode narrar."</p>
+  </div>
+
+  <h3>O nome do narrador</h3>
+  <p>Neste mundo, as narrações saem como <strong>{{narratorName}}</strong>. Para trocar, mude <em>Nome do narrador</em> nas configurações do TBG: pode ser o nome de um deus, de uma entidade ou do próprio mundo. Deixar o campo vazio volta para "Narrador".</p>
+
+  <h3>O letreiro</h3>
+  <p>Toda narração, pelo Modo Narrador ou por <code>/n</code>, aparece também para a mesa inteira como um letreiro grande no meio da tela: cartão escuro, borda dourada, o nome do narrador em cima e o texto grande embaixo.</p>
+
+  <figure class="tbg-guide__stage">
+    <div class="tbg-banner__card"><div class="tbg-banner__name">{{narratorName}}</div><div class="tbg-banner__text">A neblina desce sobre a vila, e os sinos param de tocar.</div></div>
+  </figure>
+  <p class="tbg-guide__caption">O letreiro que todos veem ao mesmo tempo.</p>
+
+  <div class="tbg-guide__grid">
+    <div class="tbg-guide__card"><strong>Sobe e some</strong><p>Nasce um pouco abaixo do centro da tela, sobe devagar e desaparece aos poucos.</p></div>
+    <div class="tbg-guide__card"><strong>Empilha</strong><p>Narrações seguidas se empilham: a nova nasce embaixo e empurra as anteriores. Cabem até três na tela, todas subindo na mesma velocidade.</p></div>
+    <div class="tbg-guide__card"><strong>Tempo de leitura</strong><p>Textos longos ficam mais tempo, até 30 segundos. O mínimo é o <em>Tempo mínimo do letreiro</em>: de 3 a 30 segundos, 6 por padrão.</p></div>
+    <div class="tbg-guide__card"><strong>Sem cena</strong><p>Aparece mesmo sem nenhuma cena ativa, porque não depende do mapa.</p></div>
+    <div class="tbg-guide__card"><strong>Editar e apagar</strong><p>Editar a narração no chat atualiza o letreiro na tela. Apagar a mensagem tira o letreiro.</p></div>
+    <div class="tbg-guide__card"><strong>Menos movimento</strong><p>Para quem pediu menos animação nas configurações do computador, ou ligou o <em>Photosensitivity Mode</em> do Foundry, o letreiro só aparece e some, sem subir.</p></div>
+  </div>
+
+  <div class="tbg-guide__callout">
+    <p><strong>Prefere só o chat?</strong> Desligue <em>Letreiro de narração</em> nas configurações. A narração continua saindo como cartão no chat, só sem o letreiro.</p>
+  </div>
+
+  <h3>Dicas para narrar por texto</h3>
+  <div class="tbg-guide__grid">
+    <div class="tbg-guide__card"><strong>Parágrafos curtos</strong><p>O limite de {{maxLength}} caracteres vale para você também. Divida uma descrição longa em duas ou três narrações: cada uma vira um letreiro que se lê de relance.</p></div>
+    <div class="tbg-guide__card"><strong>Um acontecimento por vez</strong><p>Uma coisa por mensagem: a porta se abre; depois, o que há do outro lado. A mesa acompanha o ritmo e tem espaço para reagir.</p></div>
+    <div class="tbg-guide__card"><strong>/n entre as falas</strong><p>Para responder à ação de um jogador, um <code>/n</code> curto resolve sem trocar de modo e sem soltar o token que você tem selecionado.</p></div>
+    <div class="tbg-guide__card"><strong>Letreiro nas viradas</strong><p>Toda narração vira letreiro, então guarde as frases mais marcantes para quando a cena muda: um lugar novo, a noite que cai, um salto no tempo. É aí que o letreiro no meio da tela faz mais efeito.</p></div>
+  </div>
+
+  <p class="tbg-guide__footer">Página do Mestre, oculta para os jogadores. Trocou o nome do narrador ou o atalho? Gere o guia de novo em Configurações → TBG → Criar guia no diário para esta página mostrar os valores novos.</p>
+</div>
