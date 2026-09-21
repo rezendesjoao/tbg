@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.8.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.9.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -17,6 +17,7 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 
 - [ ] **Balão simples.** Selecione um token e mande `Olá`. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
 - [ ] **Em linha.** Dentro do balão, a imagem do token, o nome em negrito com dois-pontos e a fala ficam na mesma linha. Uma fala curta cabe numa linha só; uma longa quebra e continua por baixo, a partir da margem esquerda do balão.
+- [ ] **Compacto.** A borda é fina e o texto fica colado nela, como no Habbo; o retrato aparece num quadradinho escuro encostado na borda esquerda.
 - [ ] **Retrato.** Desligue *Retrato no balão* nas configurações e confirme que a imagem some e o nome continua no lugar.
 - [ ] **Empilhamento.** Mande mais duas mensagens seguidas. Os balões antigos sobem e o novo nasce embaixo, colado no token. Nenhum deles se sobrepõe.
 - [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem sozinhos e desaparecem ao passar do limite. O movimento deve ser fluido, sem tranco. Ajuste *Velocidade de subida* ao gosto da mesa.
@@ -100,6 +101,17 @@ Com o token do personagem na cena e uma arma na ficha.
 - [ ] **Privado.** No modo de rolagem privado, só o Mestre e quem rolou veem o balão; no cego, só o Mestre.
 - [ ] **Digitado.** `/roll 1d20` cru não gera balão; `/roll 1d20 # Ataque` gera "rolou Ataque". Uma fala com link de item (`@UUID`) continua sendo balão de fala.
 - [ ] **Desligar.** Desligue *Balão de uso da ficha*: usar itens volta a não gerar balão.
+
+## 4e. C2 — Abas ON, OFF e ROLL
+
+Com o Custom Chat Tabs ativo e *Enable Chat Tabs* ligado nele.
+
+- [ ] **Abas.** O topo do chat mostra só ON, OFF e ROLL, com o ON selecionado ao abrir o mundo. All, IC, OOC e Rolls não aparecem.
+- [ ] **ON.** Falas, `/shout`, `*ação*`, `/me`, `/think`, `/w` com token e narração aparecem no ON.
+- [ ] **OFF.** `/ooc`, texto sem token selecionado e `/w` sem token aparecem no OFF.
+- [ ] **ROLL.** `/roll`, rolagens e cartões de item da ficha aparecem no ROLL.
+- [ ] **Nada some.** Nenhuma mensagem fica fora das três abas.
+- [ ] **Desligar.** Desligue *Abas ON, OFF e ROLL* e recarregue: as abas do Custom Chat Tabs voltam como estavam.
 
 ## 5. C1 — Tema do chat
 
@@ -256,6 +268,19 @@ await (async () => {
   const sussurrado = await ChatMessage.create({ speaker: falante, content: "<div>cartão de sistema</div>", whisper: [game.user.id] });
   await pause(400);
   check("cartão sussurrado sem balão", !bubbleOf(sussurrado.id));
+
+  const cct = game.modules.get("custom-chat-tabs");
+  const abas = cct?.active && game.settings.get("custom-chat-tabs", "enable") ? cct.api.getTabs() : null;
+  if (abas) {
+    const abaDe = m => ["tbg-on", "tbg-off", "tbg-roll"].filter(k => abas.get(k)?.filter(m));
+    const todas = document.querySelector('.custom-chat-tabs-tab[data-tab="all"]');
+    check("aba All escondida", !!todas && getComputedStyle(todas).display === "none");
+    check("narração no ON", abaDe(narration).join() === "tbg-on", abaDe(narration).join());
+    check("/ooc no OFF", abaDe(ooc).join() === "tbg-off", abaDe(ooc).join());
+    check("rolagem no ROLL", abaDe(percepcao).join() === "tbg-roll", abaDe(percepcao).join());
+    const foraDeUma = game.messages.contents.slice(firstMessage).filter(m => abaDe(m).length !== 1).length;
+    check("toda mensagem em uma aba só", !foraDeUma, `${foraDeUma} fora`);
+  }
   check("balão do core silenciado", document.querySelectorAll("#chat-bubbles .chat-bubble").length === 0);
 
   await typing(tokenA.id, true);

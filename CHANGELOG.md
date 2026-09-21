@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.9.0] — 2026-09-21
+
+### Adicionado
+- C2: abas ON, OFF e ROLL no Custom Chat Tabs. Com o módulo ativo, o TBG registra as três pela API dele, abre o chat no ON e esconde as abas All, IC, OOC e Rolls. ON reúne falas, ações, pensamentos, sussurros em personagem e narração; OFF, o que é fora do personagem; ROLL, rolagens e cartões da ficha. Toda mensagem cai em uma das três, então nada some sem a aba All. Configuração `Abas ON, OFF e ROLL`.
+
+### Alterado
+- Balão mais compacto, como o do Habbo: texto de 16 px, borda de 1 px, cantos de 6 px e preenchimento de 2 px por 7 px, com o texto colado na moldura. O retrato fica num quadradinho escuro encostado na borda esquerda, e o rabinho e o balão de pensamento acompanharam a borda fina.
+
 ## [0.8.0] — 2026-09-21
 
 ### Alterado

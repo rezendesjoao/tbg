@@ -57,6 +57,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 - Agnóstico de sistema: só campos do core (`name`, `img`, `texture.src`, `color`). Nada de `actor.system.*`.
 - Exceção única: o resolvedor do balão de uso (`chat/usage-item.mjs`) lê `message.system` e as flags de outros pacotes de forma genérica, procurando ids e UUIDs de item sem conhecer nenhuma chave de sistema.
 - Coexistir com Narrator Tools, Custom Chat Tabs e CGMP: nunca desligar recurso alheio; marcar mensagens com `flags.tbg.kind` e classes `tbg-kind-*` para que eles filtrem.
+- Exceção decidida pelo usuário (21/09/2026): com a setting `chatTabs` ligada, o TBG esconde as abas All, IC, OOC e Rolls do Custom Chat Tabs, substituídas pelas ON, OFF e ROLL que ele registra pela API do módulo.
 
 ## 9. Verificação e commits
 

@@ -1,6 +1,6 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
@@ -95,8 +95,8 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   `/cena texto` mostra o texto grande centralizado sobre o canvas para todos, com fade, opcionalmente escurecendo a cena e pausando balões.
   **Recomendação:** o Narrator Tools já faz isso e está ativo no v14. Se instalado, `/cena` delega a ele; versão própria só se o visual precisar ser diferente.
 
-- [ ] **C2. Abas IC / OOC / Rolagens / Sussurros** — **M**
-  **Recomendação:** não reimplementar. O Custom Chat Tabs (v14, ativo) resolve; o TBG garante que suas `flags` e classes CSS sejam filtráveis por ele.
+- [x] **C2. Abas ON / OFF / ROLL** — **M**
+  Sem reimplementar abas: com o Custom Chat Tabs ativo, o TBG registra pela API dele as abas **ON** (em personagem e narração), **OFF** (fora do personagem) e **ROLL** (rolagens e cartões da ficha), que juntas cobrem toda mensagem, abre o chat no ON e esconde as abas All, IC, OOC e Rolls dele (pedido do usuário). Setting `chatTabs` desliga e devolve as abas originais.
 
 ---
 

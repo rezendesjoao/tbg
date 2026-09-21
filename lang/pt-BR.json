@@ -80,6 +80,10 @@
       "chatGrouping": {
         "name": "Agrupar mensagens consecutivas",
         "hint": "Esconde o cabeçalho quando o mesmo falante manda outra mensagem em até cinco minutos."
+      },
+      "chatTabs": {
+        "name": "Abas ON, OFF e ROLL",
+        "hint": "Com o Custom Chat Tabs ativo, o chat ganha as abas ON (em personagem e narração), OFF (fora do personagem) e ROLL (rolagens e cartões da ficha), abre no ON e esconde as abas All, IC, OOC e Rolls dele. Toda mensagem cai numa das três."
       }
     },
     "Narrator": {
@@ -97,6 +101,20 @@
       "used": "{name} usou {label}",
       "rolled": "{name} rolou {label}",
       "initiative": "Iniciativa"
+    },
+    "Tabs": {
+      "on": {
+        "label": "ON",
+        "hint": "Em personagem (IC): falas, ações, pensamentos, sussurros em personagem e narração"
+      },
+      "off": {
+        "label": "OFF",
+        "hint": "Fora do personagem (OOC)"
+      },
+      "roll": {
+        "label": "ROLL",
+        "hint": "Rolagens e cartões da ficha"
+      }
     },
     "Errors": {
       "noSpeaker": "Selecione um token ou atribua um personagem antes de falar em personagem.",

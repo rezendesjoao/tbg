@@ -18,7 +18,8 @@ export const SETTINGS = Object.freeze({
   NARRATOR_NAME: "narratorName",
   NARRATOR_ACTIVE: "narratorActive",
   CHAT_THEME: "chatTheme",
-  CHAT_GROUPING: "chatGrouping"
+  CHAT_GROUPING: "chatGrouping",
+  CHAT_TABS: "chatTabs"
 });
 
 export const BUBBLE_LAYOUTS = Object.freeze({ FREE_FLOW: "freeflow", LINE: "line" });
@@ -57,7 +58,8 @@ const DEFINITIONS = {
   [SETTINGS.NARRATOR_NAME]: { scope: "world", type: String, default: "" },
   [SETTINGS.NARRATOR_ACTIVE]: { scope: "client", type: Boolean, default: false, config: false },
   [SETTINGS.CHAT_THEME]: { scope: "client", type: Boolean, default: true },
-  [SETTINGS.CHAT_GROUPING]: { scope: "client", type: Boolean, default: true }
+  [SETTINGS.CHAT_GROUPING]: { scope: "client", type: Boolean, default: true },
+  [SETTINGS.CHAT_TABS]: { scope: "world", type: Boolean, default: true, requiresReload: true }
 };
 
 /** Registra todas as settings da tabela. Chamar uma vez no `init`. */

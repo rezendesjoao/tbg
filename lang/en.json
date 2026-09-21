@@ -80,6 +80,10 @@
       "chatGrouping": {
         "name": "Group consecutive messages",
         "hint": "Hide the header when the same speaker posts again within five minutes."
+      },
+      "chatTabs": {
+        "name": "ON, OFF and ROLL tabs",
+        "hint": "With Custom Chat Tabs active, the chat gets ON (in character and narration), OFF (out of character) and ROLL (rolls and sheet cards) tabs, opens on ON and hides its All, IC, OOC and Rolls tabs. Every message lands in one of the three."
       }
     },
     "Narrator": {
@@ -97,6 +101,20 @@
       "used": "{name} used {label}",
       "rolled": "{name} rolled {label}",
       "initiative": "Initiative"
+    },
+    "Tabs": {
+      "on": {
+        "label": "ON",
+        "hint": "In character (IC): speech, actions, thoughts, in-character whispers and narration"
+      },
+      "off": {
+        "label": "OFF",
+        "hint": "Out of character (OOC)"
+      },
+      "roll": {
+        "label": "ROLL",
+        "hint": "Rolls and sheet cards"
+      }
     },
     "Errors": {
       "noSpeaker": "Select a token or assign a character before speaking in character.",

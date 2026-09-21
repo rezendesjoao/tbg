@@ -11,6 +11,7 @@ import { registerCharacterCounter } from "./chat/counter.mjs";
 import { registerTypingIndicator } from "./chat/typing.mjs";
 import { registerNarrator } from "./chat/narrator.mjs";
 import { registerChatRender } from "./chat/render.mjs";
+import { registerChatTabs } from "./chat/tabs.mjs";
 
 Hooks.once("init", () => {
   registerSettings();
@@ -22,6 +23,7 @@ Hooks.once("init", () => {
   registerCharacterCounter();
   registerTypingIndicator();
   registerChatRender();
+  registerChatTabs();
   registerBubbles();
   registerBanners();
   foundry.applications.handlebars.loadTemplates(Object.values(TEMPLATES));

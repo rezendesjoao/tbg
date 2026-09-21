@@ -88,6 +88,10 @@
   line-height: 1.4;
 }
 
+.custom-chat-tabs-bar:has([data-tab="tbg-on"]) :is([data-tab="all"], [data-tab="ic"], [data-tab="ooc"], [data-tab="rolls"]) {
+  display: none;
+}
+
 .tbg-message.tbg-roll .message-content {
   font-size: 0.9em;
 }
