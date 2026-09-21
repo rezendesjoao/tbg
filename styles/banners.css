@@ -14,40 +14,6 @@
   padding: 0 16px;
 }
 
-.tbg-banner__card {
-  box-sizing: border-box;
-  max-width: min(var(--tbg-banner-max-width), 100%);
-  padding: 0.75rem 1.5rem 0.9rem;
-  background: var(--tbg-banner-bg);
-  color: var(--tbg-narration-fg);
-  border: 1px solid var(--tbg-narration-accent);
-  border-radius: var(--tbg-banner-radius);
-  box-shadow: var(--tbg-banner-shadow);
-  backdrop-filter: blur(3px);
-  text-align: center;
-  opacity: 0;
-}
-
-.tbg-banner__name {
-  margin-bottom: 0.3rem;
-  color: var(--tbg-narration-accent);
-  font-size: 0.8rem;
-  font-variant: small-caps;
-  letter-spacing: 0.12em;
-}
-
-.tbg-banner__name::before {
-  content: "📜 ";
-}
-
-.tbg-banner__text {
-  font-family: var(--tbg-narration-font);
-  font-size: var(--tbg-banner-font-size);
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-}
-
-.tbg-banner__text p {
-  margin: 0;
+.tbg-banner .tbg-bubble {
+  position: relative;
 }

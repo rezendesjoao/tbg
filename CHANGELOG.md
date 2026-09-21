@@ -2,6 +2,17 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.11.0] — 2026-09-21
+
+### Adicionado
+- `= texto =`: uma mensagem que começa e termina com sinal de igual sai como narração, igual ao `/n`. Só o Mestre pode narrar; para jogadores o texto é recusado com aviso.
+- `/off texto` é o comando de fora do personagem, no lugar do `/ooc`: mensagem fora do personagem no chat e balão cinza e translúcido sobre o token. O `/ooc` do Foundry continua funcionando do mesmo jeito.
+
+### Alterado
+- O balão do narrador no meio da tela passa a ter o mesmo formato e tamanho dos balões dos jogadores: ícone de pergaminho no lugar do retrato, "Nome:" e texto na mesma linha, borda fina e rabinho, mas com fundo preto e letras brancas. A largura segue a *Largura máxima do balão*. Antes era um cartão escuro com borda dourada e letra grande. As configurações passam a se chamar *Balão do narrador* e *Tempo mínimo do balão do narrador*.
+- O cartão da narração no chat fica igual ao das mensagens dos jogadores, com retrato e fonte normal, só com o fundo um pouco mais escuro para destacar. Saíram a fonte serifada, a borda dourada e o pergaminho antes do nome.
+- O módulo não faz mais nenhuma referência a outros jogos: textos das configurações, guia, manifesto e documentação foram reescritos. A opção de empilhamento se chama só "Free flow".
+
 ## [0.10.0] — 2026-09-21
 
 ### Adicionado
@@ -16,12 +27,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). 
 - C2: abas ON, OFF e ROLL no Custom Chat Tabs. Com o módulo ativo, o TBG registra as três pela API dele, abre o chat no ON e esconde as abas All, IC, OOC e Rolls. ON reúne falas, ações, pensamentos, sussurros em personagem e narração; OFF, o que é fora do personagem; ROLL, rolagens e cartões da ficha. Toda mensagem cai em uma das três, então nada some sem a aba All. Configuração `Abas ON, OFF e ROLL`.
 
 ### Alterado
-- Balão mais compacto, como o do Habbo: texto de 16 px, borda de 1 px, cantos de 6 px e preenchimento de 2 px por 7 px, com o texto colado na moldura. O retrato fica num quadradinho escuro encostado na borda esquerda, e o rabinho e o balão de pensamento acompanharam a borda fina.
+- Balão mais compacto: texto de 16 px, borda de 1 px, cantos de 6 px e preenchimento de 2 px por 7 px, com o texto colado na moldura. O retrato fica num quadradinho escuro encostado na borda esquerda, e o rabinho e o balão de pensamento acompanharam a borda fina.
 
 ## [0.8.0] — 2026-09-21
 
 ### Alterado
-- O retrato e o nome do balão passam a ficar na mesma linha da fala, no formato "Nome: texto" do Habbo, em vez de um cabeçalho em cima. A fala quebra linha por baixo conforme precisa, e uma fala curta cabe numa linha só, deixando o balão mais compacto. O retrato e o ícone do balão de uso encolheram para a altura da linha.
+- O retrato e o nome do balão passam a ficar na mesma linha da fala, no formato "Nome: texto", em vez de um cabeçalho em cima. A fala quebra linha por baixo conforme precisa, e uma fala curta cabe numa linha só, deixando o balão mais compacto. O retrato e o ícone do balão de uso encolheram para a altura da linha.
 
 ## [0.7.0] — 2026-09-21
 

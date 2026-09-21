@@ -13,7 +13,7 @@
         "name": "Bubble stacking",
         "hint": "Free flow: a new bubble only pushes the bubbles it overlaps, so distant groups form their own columns. Line by line: every bubble on the scene moves up.",
         "choices": {
-          "freeflow": "Free flow (Habbo)",
+          "freeflow": "Free flow",
           "line": "Line by line"
         }
       },
@@ -27,7 +27,7 @@
       },
       "bubbleMaxWidth": {
         "name": "Maximum bubble width",
-        "hint": "Width in pixels before the text wraps. Habbo uses 240 (thin) and 350 (normal)."
+        "hint": "Width in pixels before the text wraps. Also applies to the narrator bubble."
       },
       "bubbleMaxLifetime": {
         "name": "Maximum lifetime",
@@ -43,7 +43,7 @@
       },
       "bubblePortrait": {
         "name": "Portrait in bubbles",
-        "hint": "Show the token image inside the bubble, next to the name, like the avatar head in Habbo."
+        "hint": "Show the token image inside the bubble, next to the name."
       },
       "autoInCharacter": {
         "name": "Speak in character automatically",
@@ -58,12 +58,12 @@
         "hint": "When someone uses an item, a feature or a roll from their sheet, in any system, a beige bubble appears over the token: \"Kirito used Longsword\". Only the action's name, never the result."
       },
       "narrationBanner": {
-        "name": "Narration banner",
-        "hint": "Every GM narration also shows as a large banner in the middle of the screen, for everyone, rising slowly until it fades."
+        "name": "Narrator bubble",
+        "hint": "Every GM narration also shows, for everyone, as a black bubble with white text in the middle of the screen, in the same format as the players' bubbles, rising slowly until it fades."
       },
       "narrationBannerDuration": {
-        "name": "Minimum banner time",
-        "hint": "Seconds the banner stays on screen. Longer texts stay longer, up to 30 seconds."
+        "name": "Minimum narrator bubble time",
+        "hint": "Seconds the narrator bubble stays on screen. Longer texts stay longer, up to 30 seconds."
       },
       "narratorName": {
         "name": "Narrator name",

@@ -67,25 +67,7 @@
 }
 
 .tbg-kind-narration {
-  background: var(--tbg-narration-bg);
-  color: var(--tbg-narration-fg);
-  border: 1px solid var(--tbg-narration-accent);
-  border-left-width: 4px;
-}
-
-.tbg-kind-narration .message-sender {
-  color: var(--tbg-narration-accent);
-}
-
-.tbg-kind-narration .message-sender::before {
-  content: "📜 ";
-}
-
-.tbg-kind-narration .message-content {
-  padding: 2px 4px;
-  font-family: var(--tbg-narration-font);
-  font-size: 1.15em;
-  line-height: 1.4;
+  background: linear-gradient(var(--tbg-narration-shade), var(--tbg-narration-shade)), var(--chat-message-background);
 }
 
 .custom-chat-tabs-bar:has([data-tab="tbg-on"]) :is([data-tab="all"], [data-tab="ic"], [data-tab="ooc"], [data-tab="rolls"]) {

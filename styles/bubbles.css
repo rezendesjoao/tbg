@@ -71,6 +71,12 @@
   background: var(--tbg-bubble-portrait-bg);
 }
 
+i.tbg-bubble__portrait {
+  color: #ffffff;
+  line-height: var(--tbg-bubble-inline-image);
+  text-align: center;
+}
+
 .tbg-bubble__name {
   font-weight: 700;
 }
@@ -150,6 +156,11 @@
 
 i.tbg-bubble__icon {
   border: 0;
+}
+
+.tbg-bubble--narration {
+  --tbg-bubble-bg: #000000;
+  --tbg-bubble-fg: #ffffff;
 }
 
 .tbg-bubble--ooc {

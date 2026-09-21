@@ -9,7 +9,7 @@ const GAP = 12;
 const MAX_BANNERS = 3;
 
 /**
- * Letreiros de narração no meio da tela, para todos. Vivem em `#ui-middle`, que é estático e fica entre as
+ * Balões do narrador no meio da tela, para todos. Vivem em `#ui-middle`, que é estático e fica entre as
  * colunas da interface: acima do canvas e do HUD, abaixo de janelas e notificações, sem depender da cena.
  */
 class BannerLayer {
@@ -39,7 +39,7 @@ class BannerLayer {
     await this.show({ id: message.id, name: message.alias, content: await enrich(message) });
   }
 
-  /** O texto editado muda a altura; os letreiros mais antigos, que estão acima, andam junto para não sobrepor. */
+  /** O texto editado muda a altura; os balões mais antigos, que estão acima, andam junto para não sobrepor. */
   async onMessageUpdated(message, changed) {
     if (!("content" in changed) || !this.#banners.has(message.id)) return;
     const content = await enrich(message);
@@ -53,11 +53,12 @@ class BannerLayer {
     }
   }
 
-  /** O novo nasce na base e empurra os que estão na tela, como os balões no modo linha a linha. */
+  /** O novo nasce na base e empurra os que estão na tela, como os balões no modo linha a linha, e usa a mesma largura. */
   async show({ id, name, content }) {
     const container = this.element;
     if (!container) return;
     this.remove(id);
+    container.style.setProperty("--tbg-bubble-max-width", `${getSetting(SETTINGS.BUBBLE_MAX_WIDTH)}px`);
     const minimumSeconds = getSetting(SETTINGS.NARRATION_BANNER_DURATION);
     const banner = await Banner.create({ id, name, content, minimumSeconds });
     container.append(banner.element);
@@ -99,7 +100,7 @@ function enrich(message) {
   return foundry.applications.ux.TextEditor.implementation.enrichHTML(message.content, { secrets: game.user.isGM });
 }
 
-/** Ativa os letreiros de narração. */
+/** Ativa os balões do narrador no meio da tela. */
 export function registerBanners() {
   new BannerLayer().activate();
 }

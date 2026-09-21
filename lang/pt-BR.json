@@ -13,7 +13,7 @@
         "name": "Empilhamento dos balões",
         "hint": "Free flow: o balão novo só empurra os balões que ele sobrepõe, então grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem.",
         "choices": {
-          "freeflow": "Free flow (Habbo)",
+          "freeflow": "Free flow",
           "line": "Linha a linha"
         }
       },
@@ -27,7 +27,7 @@
       },
       "bubbleMaxWidth": {
         "name": "Largura máxima do balão",
-        "hint": "Largura em pixels antes do texto quebrar linha. O Habbo usa 240 (fino) e 350 (normal)."
+        "hint": "Largura em pixels antes do texto quebrar linha. Vale também para o balão do narrador."
       },
       "bubbleMaxLifetime": {
         "name": "Tempo máximo",
@@ -43,7 +43,7 @@
       },
       "bubblePortrait": {
         "name": "Retrato no balão",
-        "hint": "Mostra a imagem do token dentro do balão, ao lado do nome, como a cabecinha do avatar no Habbo."
+        "hint": "Mostra a imagem do token dentro do balão, ao lado do nome."
       },
       "autoInCharacter": {
         "name": "Falar em personagem automaticamente",
@@ -58,12 +58,12 @@
         "hint": "Quando alguém usa um item, uma característica ou uma rolagem da ficha, em qualquer sistema, aparece um balão bege sobre o token: \"Kirito usou Espada Longa\". Só o nome da ação, nunca o resultado."
       },
       "narrationBanner": {
-        "name": "Letreiro de narração",
-        "hint": "Toda narração do Mestre aparece também como um letreiro grande no meio da tela, para todos, que sobe devagar e some."
+        "name": "Balão do narrador",
+        "hint": "Toda narração do Mestre aparece também, para todos, num balão preto de letras brancas no meio da tela, no mesmo formato dos balões dos jogadores, que sobe devagar e some."
       },
       "narrationBannerDuration": {
-        "name": "Tempo mínimo do letreiro",
-        "hint": "Segundos que o letreiro fica na tela. Textos longos ficam mais tempo, até 30 segundos."
+        "name": "Tempo mínimo do balão do narrador",
+        "hint": "Segundos que o balão do narrador fica na tela. Textos longos ficam mais tempo, até 30 segundos."
       },
       "narratorName": {
         "name": "Nome do narrador",

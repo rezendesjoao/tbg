@@ -27,7 +27,7 @@ function addTabs() {
   api.setActiveTab(TABS[0].key, ui.chat.element);
 }
 
-/** Fala, ação, pensamento, sussurro em personagem e narração; o `/ooc` do TBG também é fala, mas fica no OFF. */
+/** Fala, ação, pensamento, sussurro em personagem e narração; o `/off` do TBG também é fala, mas fica no OFF. */
 function isInCharacter(message) {
   return isSpeech(message) && message.getFlag(MODULE_ID, "kind") !== KINDS.OOC;
 }

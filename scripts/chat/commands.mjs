@@ -10,21 +10,29 @@ const COMMANDS = {
   tbgShout: { rgx: /^\/(?:shout|gritar)\s([^]*)/i, fn: speakAs(KINDS.SHOUT) },
   tbgThink: { rgx: /^\/(?:think|pensar)\s([^]*)/i, fn: think },
   tbgAction: { rgx: /^\*([^*]+)\*$/, fn: act },
-  tbgNarrate: { rgx: /^\/(?:n|narrar|narrate)\s([^]*)/i, fn: narrateCommand }
+  tbgNarrate: { rgx: /^\/(?:n|narrar|narrate)\s([^]*)/i, fn: narrateCommand },
+  tbgNarrateMarks: { rgx: /^=\s*([^=][^]*?)\s*=$/, fn: narrateCommand }
 };
 
-/** Registra os comandos de fala, o `/ooc` com balão, o `/me` sem nome repetido e o falante em sussurros. */
+/** `/off` é o fora do personagem da mesa; o `/ooc` do core continua valendo pelo mesmo caminho. */
+const OFF_PATTERN = /^(\/off )([^]*)/i;
+
+/**
+ * Registra os comandos de fala, o `/off` e o `/ooc` com balão, a narração por `/n` e por `= texto =`,
+ * o `/me` sem nome repetido e o falante em sussurros.
+ */
 export function registerChatCommands() {
   const { CHAT_COMMANDS } = foundry.applications.sidebar.tabs.ChatLog;
   Object.assign(CHAT_COMMANDS, COMMANDS);
   CHAT_COMMANDS.ooc = withBubbleToken(CHAT_COMMANDS.ooc);
+  CHAT_COMMANDS.tbgOff = { ...CHAT_COMMANDS.ooc, rgx: OFF_PATTERN };
   CHAT_COMMANDS.emote = withoutNamePrefix(CHAT_COMMANDS.emote);
   Hooks.on("chatMessage", speakInCharacterByDefault);
   Hooks.on("chatMessage", keepWhisperSpeaker);
   Hooks.on("preCreateChatMessage", restoreWhisperSpeaker);
 }
 
-/** Mantém o `/ooc` do core e só guarda o token para o balão, já que o core descarta o falante. */
+/** Mantém o fora do personagem do core e só guarda o token para o balão, já que o core descarta o falante. */
 function withBubbleToken(command) {
   return {
     ...command,

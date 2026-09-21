@@ -1,6 +1,6 @@
 # Como testar o TBG
 
-Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tema do chat) e do que veio depois (A5 digitação, B8 letreiro de narração, A9 balão de uso da ficha), mais um script de verificação automática no fim. Marque conforme for passando.
+Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tema do chat) e do que veio depois (A5 digitação, B8 balão do narrador, A9 balão de uso da ficha), mais um script de verificação automática no fim. Marque conforme for passando.
 
 ## 1. Preparação
 
@@ -17,7 +17,7 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 
 - [ ] **Balão simples.** Selecione um token e mande `Olá`. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
 - [ ] **Em linha.** Dentro do balão, a imagem do token, o nome em negrito com dois-pontos e a fala ficam na mesma linha. Uma fala curta cabe numa linha só; uma longa quebra e continua por baixo, a partir da margem esquerda do balão.
-- [ ] **Compacto.** A borda é fina e o texto fica colado nela, como no Habbo; o retrato aparece num quadradinho escuro encostado na borda esquerda.
+- [ ] **Compacto.** A borda é fina e o texto fica colado nela; o retrato aparece num quadradinho escuro encostado na borda esquerda.
 - [ ] **Retrato.** Desligue *Retrato no balão* nas configurações e confirme que a imagem some e o nome continua no lugar.
 - [ ] **Empilhamento.** Mande mais duas mensagens seguidas. Os balões antigos sobem e o novo nasce embaixo, colado no token. Nenhum deles se sobrepõe.
 - [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem sozinhos e desaparecem ao passar do limite. O movimento deve ser fluido, sem tranco. Ajuste *Velocidade de subida* ao gosto da mesa.
@@ -42,7 +42,8 @@ Sempre com um token selecionado.
 | Ação por comando | `/me ajeita o casaco` | Igual ao anterior, e no cartão do chat o nome aparece uma vez só, no cabeçalho |
 | Sussurro | `/w Nome oi` | Balão tracejado cinza, só para quem recebe |
 | Fala explícita | `/say olá` | Balão normal mesmo com outro modo de mensagem ativo |
-| Fora do personagem | `/ooc já volto` | Mensagem fora do personagem no chat e balão acinzentado e translúcido sobre o token |
+| Fora do personagem | `/off já volto` | Mensagem fora do personagem no chat e balão acinzentado e translúcido sobre o token |
+| Fora do personagem (Foundry) | `/ooc já volto` | Igual ao `/off`: o comando do Foundry continua valendo |
 
 - [ ] Todos os nove casos acima.
 - [ ] **Sem token.** Deselecione tudo e mande `teste`. A mensagem sai fora de personagem, sem balão, e nada quebra.
@@ -53,11 +54,12 @@ Sempre com um token selecionado.
 
 - [ ] **Botão.** Ao lado dos ícones de modo de mensagem (embaixo do chat) existe um botão de pergaminho.
 - [ ] **Ligar.** Clique nele. Aparece a notificação "Modo Narrador ligado" e o botão fica marcado como pressionado.
-- [ ] **Narrar.** Com um token ainda selecionado, digite `O vento uiva na floresta`. A mensagem sai como **Narrador**, num cartão escuro com fonte serifada, e **não** gera balão, mesmo com o token selecionado.
+- [ ] **Narrar.** Com um token ainda selecionado, digite `O vento uiva na floresta`. A mensagem sai como **Narrador**, num cartão igual ao dos jogadores com o fundo um pouco mais escuro, e **não** gera balão sobre o token, mesmo com o token selecionado.
 - [ ] **Comandos passam.** Ainda em Modo Narrador, `/roll 1d20` continua rolando dado normalmente.
 - [ ] **Desligar.** Clique de novo. Notificação "Modo Narrador desligado" e o token volta a falar.
 - [ ] **Atalho.** Repita ligando e desligando com **Alt+N**.
 - [ ] **Narração pontual.** Com o modo desligado, mande `/n A porta range`. Sai como Narrador sem trocar o modo.
+- [ ] **Narração com `=`.** Com o modo desligado, mande `= O sino toca ao longe =`. Sai como Narrador, sem os sinais de igual. Num cliente de jogador, o mesmo texto é recusado com o aviso "Só o Mestre pode narrar."
 - [ ] **Nome.** Mude *Nome do narrador* nas configurações para algo como `Cardinal` e confirme que as narrações passam a usar esse nome.
 - [ ] **Só Mestre.** Num cliente de jogador, o botão de pergaminho não aparece e `/n` é recusado.
 
@@ -78,16 +80,16 @@ Sempre com um token selecionado.
 - [ ] **Narrando.** Com o Modo Narrador ligado, escrever não mostra selo no token selecionado.
 - [ ] **Só no chat.** Abra um diário em edição, escreva mais de 150 caracteres e aperte Shift+Enter: o diário aceita o texto, nada vai para o chat, e o contador e o selo não reagem.
 
-## 4c. B8 — Letreiro de narração
+## 4c. B8 — Balão do narrador
 
-- [ ] **Letreiro.** Mande `/n A neblina desce.` (ou narre com o Modo Narrador): além do cartão no chat, um letreiro escuro com borda dourada aparece no meio da tela, com o nome do narrador pequeno em cima e o texto grande embaixo. Ele sobe devagar e some.
-- [ ] **Para todos.** Com dois clientes, o letreiro aparece nas duas telas.
-- [ ] **Sem cena.** Desative a cena (ou abra o mundo sem cena ativa) e narre: o letreiro aparece do mesmo jeito.
+- [ ] **Balão.** Mande `/n A neblina desce.` (ou `= A neblina desce. =`, ou narre com o Modo Narrador): além do cartão no chat, um balão aparece no meio da tela, no mesmo formato e tamanho dos balões dos jogadores (ícone de pergaminho no lugar do retrato, "Nome:" e texto na mesma linha), mas preto com letras brancas. Ele sobe devagar e some.
+- [ ] **Para todos.** Com dois clientes, o balão do narrador aparece nas duas telas.
+- [ ] **Sem cena.** Desative a cena (ou abra o mundo sem cena ativa) e narre: o balão aparece do mesmo jeito.
 - [ ] **Empilhamento.** Mande três `/n` seguidos: o novo nasce embaixo e empurra os anteriores, sem sobreposição. No máximo três ficam na tela.
-- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo do letreiro* ajusta o mínimo.
-- [ ] **Edição.** Edite a narração enquanto o letreiro está na tela: o texto muda. Apague a mensagem: o letreiro some.
-- [ ] **Movimento reduzido.** Com *Mostrar animações* desligado no Windows (ou *Modo fotossensível* do Foundry), o letreiro só aparece e some, sem subir.
-- [ ] **Desligar.** Desligue *Letreiro de narração*: a narração volta a ser só o cartão do chat.
+- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo do balão do narrador* ajusta o mínimo, e *Largura máxima do balão* vale para ele também.
+- [ ] **Edição.** Edite a narração enquanto o balão está na tela: o texto muda. Apague a mensagem: o balão some.
+- [ ] **Movimento reduzido.** Com *Mostrar animações* desligado no Windows (ou *Modo fotossensível* do Foundry), o balão do narrador só aparece e some, sem subir.
+- [ ] **Desligar.** Desligue *Balão do narrador*: a narração volta a ser só o cartão do chat.
 
 ## 4d. A9 — Balão de uso da ficha
 
@@ -108,7 +110,7 @@ Com o Custom Chat Tabs ativo e *Enable Chat Tabs* ligado nele.
 
 - [ ] **Abas.** O topo do chat mostra só ON, OFF e ROLL, com o ON selecionado ao abrir o mundo. All, IC, OOC e Rolls não aparecem.
 - [ ] **ON.** Falas, `/shout`, `*ação*`, `/me`, `/think`, `/w` com token e narração aparecem no ON.
-- [ ] **OFF.** `/ooc`, texto sem token selecionado e `/w` sem token aparecem no OFF.
+- [ ] **OFF.** `/off`, texto sem token selecionado e `/w` sem token aparecem no OFF.
 - [ ] **ROLL.** `/roll`, rolagens e cartões de item da ficha aparecem no ROLL.
 - [ ] **Nada some.** Nenhuma mensagem fica fora das três abas.
 - [ ] **Desligar.** Desligue *Abas ON, OFF e ROLL* e recarregue: as abas do Custom Chat Tabs voltam como estavam.
@@ -127,7 +129,7 @@ Com o Custom Chat Tabs ativo e *Enable Chat Tabs* ligado nele.
 - [ ] **Cor.** O nome aparece na cor do jogador que escreveu.
 - [ ] **Agrupamento.** Duas mensagens seguidas do mesmo falante: a segunda não repete o cabeçalho e encosta na primeira.
 - [ ] **Quebra do agrupamento.** Uma mensagem de outro falante no meio faz o cabeçalho voltar.
-- [ ] **Tipos distintos.** Grito em negrito, pensamento em itálico com balãozinho, ação em itálico, narração no cartão escuro.
+- [ ] **Tipos distintos.** Grito em negrito, pensamento em itálico com balãozinho, ação em itálico, narração no cartão igual ao dos jogadores, com o fundo um pouco mais escuro.
 - [ ] **Desligar.** Desligue *Tema do chat* e confirme que os cartões voltam ao visual padrão do Foundry, sem quebrar nada.
 
 ## 6. Com mais de um cliente
@@ -161,11 +163,11 @@ await (async () => {
   check("módulo ativo", module?.active === true, module?.version ?? "ausente");
   check("opção do core Enable Chat Bubbles", game.settings.get("core", "chatBubbles") === true);
   check("container no HUD", !!document.getElementById("tbg-bubbles"));
-  check("comandos registrados", Object.keys(foundry.applications.sidebar.tabs.ChatLog.CHAT_COMMANDS).filter(k => k.startsWith("tbg")).length === 5);
+  check("comandos registrados", Object.keys(foundry.applications.sidebar.tabs.ChatLog.CHAT_COMMANDS).filter(k => k.startsWith("tbg")).length === 7);
   check("botão do Narrador", !!document.querySelector("#message-modes [data-tbg-narrator]"));
   check("atalho registrado", game.keybindings.actions.has("tbg.toggleNarrator"));
   check("contador de caracteres", !!document.querySelector(".tbg-char-count"));
-  check("container do letreiro", document.getElementById("tbg-banners")?.parentElement?.id === "ui-middle");
+  check("container do balão do narrador", document.getElementById("tbg-banners")?.parentElement?.id === "ui-middle");
 
   const moldura = document.createElement("div");
   moldura.style.cssText = "position:fixed;left:10px;top:10px;width:400px;height:200px;z-index:1000;background:#fff";
@@ -219,7 +221,7 @@ await (async () => {
   await game.settings.set("tbg", "bubbleRiseSpeed", subida);
 
   tokenA.control({ releaseOthers: true });
-  for (const [text, esperado] of [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"], ["/ooc fora do personagem", "ooc"]]) {
+  for (const [text, esperado] of [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"], ["/ooc do Foundry", "ooc"], ["/off fora do personagem", "ooc"]]) {
     await say(text);
     const last = game.messages.contents.at(-1);
     const b = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${last.id}"]`);
@@ -235,7 +237,7 @@ await (async () => {
   check("contador com contorno preto", contorno.includes("rgb(0, 0, 0)"), contorno);
 
   const ooc = game.messages.contents.at(-1);
-  check("/ooc continua fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
+  check("/off sai fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
   const oocCard = ui.chat.element.querySelector(`[data-message-id="${ooc.id}"]`);
   const visiveis = [...oocCard.querySelectorAll("img")].filter(i => getComputedStyle(i).display !== "none");
   check("sem retrato duplicado no chat", visiveis.length <= 1, `${visiveis.length} de ${oocCard.querySelectorAll("img").length}`);
@@ -256,7 +258,18 @@ await (async () => {
   const narration = game.messages.contents.at(-1);
   check("narração sem balão", narration.getFlag("tbg", "kind") === "narration" && !document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${narration.id}"]`), narration.alias);
   check("tema aplicado ao cartão", ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`)?.classList.contains("tbg-kind-narration") === true);
-  check("letreiro da narração", !!document.querySelector(`#tbg-banners .tbg-banner[data-message-id="${narration.id}"]`));
+  const narrador = document.querySelector(`#tbg-banners .tbg-banner[data-message-id="${narration.id}"] .tbg-bubble--narration`);
+  const fala = bubbles(tokenA.id).find(b => b.classList.contains("tbg-bubble--say"));
+  const estilo = el => el ? getComputedStyle(el) : {};
+  check("balão do narrador no meio da tela", !!narrador);
+  check("balão do narrador preto com letra branca", estilo(narrador).backgroundColor === "rgb(0, 0, 0)" && estilo(narrador).color === "rgb(255, 255, 255)");
+  check("balão do narrador no formato do jogador", ["fontSize", "padding", "borderRadius", "borderTopWidth"].every(p => estilo(narrador)[p] === estilo(fala)[p]), `${estilo(narrador).fontSize} / ${estilo(fala).fontSize}`);
+  const cartaoNarracao = ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`);
+  check("cartão da narração um pouco mais escuro", estilo(cartaoNarracao).backgroundImage?.includes("linear-gradient") === true);
+
+  await say("= O sino toca ao longe. =");
+  const marcada = game.messages.contents.at(-1);
+  check("= texto = vira narração", marcada.getFlag("tbg", "kind") === "narration" && marcada.content === "O sino toca ao longe.", marcada.content);
 
   const bubbleOf = id => document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${id}"]`);
   const falante = ChatMessage.getSpeaker({ token: tokenA.document });
@@ -297,7 +310,7 @@ await (async () => {
     const todas = document.querySelector('.custom-chat-tabs-tab[data-tab="all"]');
     check("aba All escondida", !!todas && getComputedStyle(todas).display === "none");
     check("narração no ON", abaDe(narration).join() === "tbg-on", abaDe(narration).join());
-    check("/ooc no OFF", abaDe(ooc).join() === "tbg-off", abaDe(ooc).join());
+    check("/off no OFF", abaDe(ooc).join() === "tbg-off", abaDe(ooc).join());
     check("rolagem no ROLL", abaDe(percepcao).join() === "tbg-roll", abaDe(percepcao).join());
     const foraDeUma = game.messages.contents.slice(firstMessage).filter(m => abaDe(m).length !== 1).length;
     check("toda mensagem em uma aba só", !foraDeUma, `${foraDeUma} fora`);
@@ -333,7 +346,7 @@ await (async () => {
 })();
 ```
 
-O script não cobre o que depende de olho humano ou de um segundo cliente: aparência dos balões e do letreiro, subida contínua, zoom, agrupamento no chat, uso de item de verdade pela ficha e os testes da seção 6. Faça esses à mão. A contagem de órfãos olha só os tokens de teste, porque balões de mensagens anteriores podem estar legitimamente na tela.
+O script não cobre o que depende de olho humano ou de um segundo cliente: aparência dos balões e do balão do narrador, subida contínua, zoom, agrupamento no chat, uso de item de verdade pela ficha e os testes da seção 6. Faça esses à mão. A contagem de órfãos olha só os tokens de teste, porque balões de mensagens anteriores podem estar legitimamente na tela.
 
 ## 8. Ao reportar um problema
 

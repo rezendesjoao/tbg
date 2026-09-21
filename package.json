@@ -1,8 +1,8 @@
 {
   "name": "tbg",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
-  "description": "Módulo Foundry VTT v14: balões de fala estilo Habbo, Modo Narrador e chat melhor.",
+  "description": "Módulo Foundry VTT v14: balões de fala sobre os tokens, Modo Narrador e chat melhor para jogar por texto.",
   "type": "module",
   "scripts": {
     "lint": "eslint \"scripts/**/*.mjs\"",

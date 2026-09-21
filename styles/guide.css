@@ -1,5 +1,7 @@
 .tbg-guide {
-  --tbg-guide-accent: var(--tbg-narration-accent);
+  --tbg-guide-accent: #c9a75a;
+  --tbg-guide-hero-fg: #f1e9d2;
+  --tbg-guide-title-font: var(--font-h1, "Modesto Condensed", serif);
   --tbg-guide-tip: #3f9d6a;
   --tbg-guide-info: #4a7fc1;
   --tbg-guide-warn: #c0504d;
@@ -24,7 +26,7 @@
   margin-bottom: 1em;
   padding: 1em 1.3em;
   background: linear-gradient(135deg, #1d1826, #33283f);
-  color: var(--tbg-narration-fg);
+  color: var(--tbg-guide-hero-fg);
   border: 1px solid var(--tbg-guide-accent);
   border-radius: 12px;
   box-shadow: 0 0 14px rgba(201, 167, 90, 0.25);
@@ -34,7 +36,7 @@
   margin: 0;
   border: 0;
   color: var(--tbg-guide-accent);
-  font-family: var(--tbg-narration-font);
+  font-family: var(--tbg-guide-title-font);
   font-size: 2em;
   line-height: 1.1;
 }
@@ -228,10 +230,6 @@
   right: -4px;
   --tbg-typing-size: 18px;
   --tbg-typing-width: 29px;
-}
-
-.tbg-guide__stage .tbg-banner__card {
-  opacity: 1;
 }
 
 .tbg-guide__tabs {

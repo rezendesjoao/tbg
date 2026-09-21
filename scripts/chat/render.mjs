@@ -1,4 +1,3 @@
-import { KINDS } from "../constants.mjs";
 import { SETTINGS, getSetting } from "../settings.mjs";
 import { resolveKind } from "./kinds.mjs";
 import { speakerImage } from "./speaker.mjs";
@@ -19,7 +18,7 @@ function decorateMessage(message, html) {
   if (message.isRoll) html.classList.add("tbg-roll");
   const color = message.author?.color?.css;
   if (color) html.style.setProperty("--tbg-author-color", color);
-  if (kind !== KINDS.NARRATION) addPortrait(html, message);
+  addPortrait(html, message);
   if (getSetting(SETTINGS.CHAT_GROUPING) && continuesPrevious(message, kind)) html.classList.add("tbg-continued");
 }
 

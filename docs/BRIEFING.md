@@ -1,15 +1,15 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. D8 aprovada e entregue na 0.10.0 (21/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. D8 aprovada e entregue na 0.10.0 (21/09/2026). Refinamentos de A3 (`/off`), B1 (`= texto =` e cartão de narração) e B8 (balão do narrador) aprovados e entregues na 0.11.0 (21/09/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
 ---
 
-## Fase 1 — Núcleo Habbo
+## Fase 1 — Núcleo de balões e chat
 
 - [x] **A1. Motor de balões "free flow"** — **G** — *o coração do módulo*
-  Camada HTML própria dentro do HUD do canvas que substitui os balões do core (cancelados via hook `chatBubbleHTML`). Toda mensagem em personagem com token na cena vira um balão `**Nome:** texto` acima do token, com um único visual padrão (branco, rabinho para baixo, estilo Habbo clássico). Balões **empilham**: o novo nasce na base e empurra os anteriores para cima em 200 ms; um relógio sobe todos devagar; quem cruza o topo da faixa esvanece e some. Vários balões por token e por cena. Os balões **seguem o token** e acompanham pan/zoom (com opção "tamanho fixo na tela" para não virarem formiga ao afastar). Modos "free flow" (o novo só empurra quem ele sobrepõe, formando colunas por grupo de conversa) e "linha a linha" (empurra todos). Configurações do Mestre: velocidade de subida, largura máxima, altura da faixa, tempo mínimo em tela. Editar a mensagem atualiza o balão.
+  Camada HTML própria dentro do HUD do canvas que substitui os balões do core (cancelados via hook `chatBubbleHTML`). Toda mensagem em personagem com token na cena vira um balão `**Nome:** texto` acima do token, com um único visual padrão (branco, rabinho para baixo). Balões **empilham**: o novo nasce na base e empurra os anteriores para cima em 200 ms; um relógio sobe todos devagar; quem cruza o topo da faixa esvanece e some. Vários balões por token e por cena. Os balões **seguem o token** e acompanham pan/zoom (com opção "tamanho fixo na tela" para não virarem formiga ao afastar). Modos "free flow" (o novo só empurra quem ele sobrepõe, formando colunas por grupo de conversa) e "linha a linha" (empurra todos). Configurações do Mestre: velocidade de subida, largura máxima, altura da faixa, tempo mínimo em tela. Editar a mensagem atualiza o balão.
   Sobreposição: nenhuma mantida (o único módulo de duração morreu no v10).
 
 - [x] **A3. Modos de fala** — **M**
@@ -19,9 +19,11 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   - **Pensar** (`/think` ou `/pensar`): balão-nuvem visível só para o Mestre e o dono.
   - **Ação** (`/me` nativo ou `*texto*`): balão sem "Nome:", em itálico.
   Implementação: `ChatLog.CHAT_COMMANDS` do v14 + `flags.tbg.kind` na mensagem. `/w` e `/me` já são do core; só reaproveitamos o parse.
+  Fora do personagem: `/off texto` substitui o `/ooc` como comando da mesa, com o mesmo balão acinzentado (aprovado em 21/09/2026, entregue na 0.11.0).
 
 - [x] **B1. Modo Narrador (interruptor)** — **P/M** — *pedido explícito*
-  Um **interruptor "Narrador"** (setting de cliente) com botão 📜 ao lado dos modos de mensagem da sidebar e atalho Alt+N. Enquanto ativo, o que o Mestre digita sai com alias "Narrador" (sem ator/token, portanto sem balão), estilo OTHER e `flags.tbg.kind = "narration"`, num cartão estilizado (fundo escuro, fonte serifada). Desligado, o comportamento nativo continua intocado: token selecionado fala. `/n texto` faz uma narração pontual sem trocar o modo. Nome do narrador configurável ("Sistema", "Cardinal"…).
+  Um **interruptor "Narrador"** (setting de cliente) com botão 📜 ao lado dos modos de mensagem da sidebar e atalho Alt+N. Enquanto ativo, o que o Mestre digita sai com alias "Narrador" (sem ator/token, portanto sem balão), estilo OTHER e `flags.tbg.kind = "narration"`, num cartão com a cara de uma mensagem de jogador (avatar do Mestre, nome na cor dele, fonte normal) e fundo levemente mais escuro. Desligado, o comportamento nativo continua intocado: token selecionado fala. `/n texto` faz uma narração pontual sem trocar o modo. Nome do narrador configurável ("Sistema", "Cardinal"…).
+  `= texto =`: mensagem que começa e termina com `=` sai como narração, só para o Mestre, como o `/n`. Aprovado em 21/09/2026 e entregue na 0.11.0, junto com o cartão atual, que até então tinha fundo escuro e fonte serifada.
   Implementado no hook `chatMessage`, como o Cautious Gamemaster's Pack faz; um modo custom em `CONFIG.ChatMessage.modes` foi descartado porque ficaria gravado em `core.messageMode` e quebraria o chat se o módulo fosse desativado.
   Sobreposição: Narrator Tools (`/narrate`, overlay), CGMP (`/desc`). O interruptor persistente integrado ao seletor de modo é nosso.
 
@@ -35,8 +37,8 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   Enquanto alguém digita no chat, um balãozinho com três pontinhos animados aparece sobre o token dele (e uma linha discreta na sidebar). Socket `module.tbg` com throttle de 250 ms e timeout de 5 s (técnica do CGMP, que já funciona no input ProseMirror do v14).
   Sobreposição: só versões na sidebar (Player Status, CGMP, Yuuko). Sobre o token: nenhuma.
 
-- [x] **B8. Letreiro de narração** — **M**
-  Toda narração do Mestre (Modo Narrador ou `/n`), além do cartão no chat, aparece para todos num letreiro grande no meio da tela: cartão escuro com borda dourada, nome do narrador em cima, texto grande embaixo. Nasce abaixo do centro, sobe devagar e some; letreiros seguidos empilham, no máximo três. Funciona sem cena ativa. Diferente da B2 (`/cena`, cutscene), que segue pendente.
+- [x] **B8. Balão do narrador** — **M**
+  Toda narração do Mestre (Modo Narrador, `/n` ou `= texto =`), além do cartão no chat, aparece para todos num balão no meio da tela, com o mesmo formato e tamanho dos balões dos jogadores (quadradinho do retrato, `**Nome:** texto` na mesma linha, borda fina, rabinho), mas com fundo preto, letras brancas e um pergaminho branco no quadradinho do retrato. Nasce abaixo do centro, sobe devagar e some; balões seguidos empilham, no máximo três, e a largura segue a largura máxima dos balões. Funciona sem cena ativa. Diferente da B2 (`/cena`, cutscene), que segue pendente. Até a 0.10.0 era um letreiro grande, com cartão escuro e borda dourada; o visual de balão foi aprovado em 21/09/2026 e entregue na 0.11.0.
   Sobreposição: Narrator Tools (overlay de narração com estado compartilhado por setting).
 
 - [x] **A9. Balão de uso da ficha** — **M**
@@ -44,7 +46,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   Sobreposição: Token Says e Automated Animations detectam item por sistema; aqui a detecção é genérica.
 
 - [ ] **B4. "Diretor de cena": fazer qualquer token falar** — **P/M**
-  Botão direito no token → "Falar como…" abre um mini-input flutuante ao lado do token; ou `/say @Nome texto`. Inclui `/anuncio texto`: balão-megafone que aparece para todos os tokens da cena, estilo intercomunicador de hospital/polícia dos RPGs de Habbo.
+  Botão direito no token → "Falar como…" abre um mini-input flutuante ao lado do token; ou `/say @Nome texto`. Inclui `/anuncio texto`: balão-megafone que aparece para todos os tokens da cena, estilo intercomunicador de hospital ou de delegacia.
   Sobreposição: nenhuma direta.
 
 - [ ] **B3. Paleta de falantes do Mestre** — **M**
@@ -62,7 +64,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 ## Fase 3 — Conforto
 
 - [ ] **A8. Histórico de balões da cena** — **M**
-  Painel lateral (botão `>`, como no Habbo) com tudo que foi "dito" na cena atual: retrato, filtro por token e por modo, busca. Clicar numa linha centra o canvas no token e re-mostra o balão por alguns segundos. Opcional: "replay" acelerado dos últimos minutos, para recapitular.
+  Painel lateral (aberto por um botão `>`) com tudo que foi "dito" na cena atual: retrato, filtro por token e por modo, busca. Clicar numa linha centra o canvas no token e re-mostra o balão por alguns segundos. Opcional: "replay" acelerado dos últimos minutos, para recapitular.
   Sobreposição: Scene Specific Messages (v12, só filtro).
 
 - [ ] **C7. Responder / citar** — **P/M**
@@ -74,7 +76,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   Sobreposição: Yuuko (busca).
 
 - [ ] **D7. Modo "sem chat aberto"** — **P/M**
-  Para quem joga com a sidebar recolhida: um input flutuante minimalista embaixo do canvas (Enter abre) para falar sem abrir a sidebar. O jogo vira "só canvas + balões", como no Habbo.
+  Para quem joga com a sidebar recolhida: um input flutuante minimalista embaixo do canvas (Enter abre) para falar sem abrir a sidebar. O jogo vira "só canvas + balões".
   Sobreposição: Sleek Chat (v13, parcial).
 
 - [ ] **C10. Exportar a sessão como "diário"** — **P/M**
@@ -112,7 +114,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 | A6 | Máquina de escrever + "voz" (blips) |
 | A7 | Emotes, placas e "zzz" |
 | B5 | Falas ambientais automáticas (bots) |
-| B6 | Gatilhos de fala ("Wired") |
+| B6 | Gatilhos de fala (falas disparadas por eventos) |
 | C3 | Reações com emoji nas mensagens |
 | C5 | Emoji picker + `:shortcode:` |
 | C8 | Sons de chat por tipo |
@@ -121,13 +123,3 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 | D4 | Foco do Mestre ("olhem aqui") |
 | D5 | Compatibilidade com Polyglot nos balões |
 | D6 | Status AFK sobre o token |
-
-## Como o Habbo faz (referência rápida)
-
-Fonte: cliente open-source Nitro, reimplementação fiel do cliente oficial.
-
-- O balão **não some por timer**: nasce na base de uma faixa da tela, centralizado no avatar, e é empurrado para cima quando chega mensagem nova (`transition: top 0.2s ease`). Um relógio sobe todos devagar (rápido/normal/lento, escolhido pelo dono da sala). Some ao sair pelo topo. Tempo de vida = ritmo da conversa.
-- **Free Flow Chat**: o balão novo só empurra os que ele sobrepõe geometricamente; grupos distantes formam colunas independentes. Largura máxima: larga / normal (350 px) / fina (240 px).
-- Formato `**Nome:** texto`, miniatura da cabeça do avatar dentro do balão, rabinho para baixo.
-- Modos: falar (normal), gritar (`:shout` ou Shift+Enter, negrito, sala toda), sussurrar (`:whisper nome`, itálico cinza, só o alvo vê).
-- Histórico da sala (botão `>`): balões e histórico são duas visões do mesmo fluxo.

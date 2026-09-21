@@ -12,22 +12,22 @@
       <tr><th>Opção</th><th>Vale para</th><th>Padrão</th><th>O que faz</th></tr>
     </thead>
     <tbody>
-      <tr><td><em>Ativar TBG</em></td><td>Mundo</td><td>Ligado</td><td>Interruptor geral dos balões do TBG, inclusive o de uso da ficha e o selo de digitação. Desligado, eles deixam de aparecer sobre os tokens, e as mensagens continuam indo para o chat. O Modo Narrador, o letreiro e o tema do chat têm interruptores próprios.</td></tr>
+      <tr><td><em>Ativar TBG</em></td><td>Mundo</td><td>Ligado</td><td>Interruptor geral dos balões do TBG, inclusive o de uso da ficha e o selo de digitação. Desligado, eles deixam de aparecer sobre os tokens, e as mensagens continuam indo para o chat. O Modo Narrador, o balão do narrador e o tema do chat têm interruptores próprios.</td></tr>
       <tr><td><em>Falar em personagem automaticamente</em></td><td>Mundo</td><td>Ligado</td><td>Com um token selecionado (ou um personagem atribuído), texto simples sai em personagem mesmo com o modo de mensagem em público. Os comandos e o seletor de modo continuam valendo.</td></tr>
       <tr><td><em>Mostrar quem está digitando</em></td><td>Mundo</td><td>Ligado</td><td>Mostra, para todos, o selo de reticências no canto do token de quem está escrevendo. Ele some ao enviar ou depois de três segundos sem digitar.</td></tr>
       <tr><td><em>Balão de uso da ficha</em></td><td>Mundo</td><td>Ligado</td><td>Quando alguém usa um item, uma característica ou uma rolagem pela ficha, aparece um balão bege sobre o token: "Kirito usou Espada Longa". Só o nome da ação, nunca o resultado.</td></tr>
-      <tr><td><em>Letreiro de narração</em></td><td>Mundo</td><td>Ligado</td><td>Mostra cada narração num letreiro grande no meio da tela, para todos. Desligado, a narração fica só no chat.</td></tr>
-      <tr><td><em>Tempo mínimo do letreiro</em></td><td>Mundo</td><td>6 segundos</td><td>Tempo mínimo do letreiro na tela, de 3 a 30 segundos. Textos longos ficam mais, até 30.</td></tr>
+      <tr><td><em>Balão do narrador</em></td><td>Mundo</td><td>Ligado</td><td>Mostra cada narração, para todos, num balão preto de letras brancas no meio da tela, no mesmo formato dos balões dos jogadores. Desligado, a narração fica só no chat.</td></tr>
+      <tr><td><em>Tempo mínimo do balão do narrador</em></td><td>Mundo</td><td>6 segundos</td><td>Tempo mínimo do balão do narrador na tela, de 3 a 30 segundos. Textos longos ficam mais, até 30.</td></tr>
       <tr><td><em>Nome do narrador</em></td><td>Mundo</td><td>Vazio</td><td>Nome que assina as narrações. Vazio usa "Narrador". Neste mundo: {{narratorName}}.</td></tr>
       <tr><td><em>Abas ON, OFF e ROLL</em></td><td>Mundo</td><td>Ligado</td><td>Com o Custom Chat Tabs ativo, divide o chat nas abas ON, OFF e ROLL e esconde as abas All, IC, OOC e Rolls dele. Desligado, as abas originais voltam. Ao mudar, o Foundry pede para recarregar.</td></tr>
-      <tr><td><em>Empilhamento dos balões</em></td><td>Mundo</td><td>Free flow (Habbo)</td><td>Free flow: o balão novo só empurra os que ele encosta, e grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem juntos.</td></tr>
+      <tr><td><em>Empilhamento dos balões</em></td><td>Mundo</td><td>Free flow</td><td>Free flow: o balão novo só empurra os que ele encosta, e grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem juntos.</td></tr>
       <tr><td><em>Velocidade de subida</em></td><td>Mundo</td><td>35</td><td>Quantos pixels por segundo os balões sobem, de 0 a 120. Zero deixa os balões parados até um novo empurrar.</td></tr>
       <tr><td><em>Limite de subida</em></td><td>Mundo</td><td>320</td><td>Altura acima do token, de 100 a 800 pixels, a partir da qual o balão some.</td></tr>
-      <tr><td><em>Largura máxima do balão</em></td><td>Mundo</td><td>350</td><td>Largura em pixels antes do texto quebrar linha, de 200 a 600. O Habbo usa 240 (fino) e 350 (normal).</td></tr>
+      <tr><td><em>Largura máxima do balão</em></td><td>Mundo</td><td>350</td><td>Largura em pixels antes do texto quebrar linha, de 200 a 600. Vale também para o balão do narrador.</td></tr>
       <tr><td><em>Tempo máximo</em></td><td>Mundo</td><td>0</td><td>Segundos até o balão sumir de qualquer jeito, até 300. Zero desliga esse limite: o balão só some ao passar do <em>Limite de subida</em>.</td></tr>
       <tr><td><em>Retrato no balão</em></td><td>Mundo</td><td>Ligado</td><td>Mostra a imagem do token dentro do balão, ao lado do nome.</td></tr>
       <tr><td><em>Escala dos balões</em></td><td>Cliente</td><td>Fixa na tela</td><td>Fixa na tela: o balão tem o mesmo tamanho em qualquer zoom. Junto com o mapa: cresce e encolhe com o zoom.</td></tr>
-      <tr><td><em>Tema do chat</em></td><td>Cliente</td><td>Ligado</td><td>Retratos, cor do autor e um visual para cada tipo de mensagem nos cartões do chat, como o cartão escuro da narração. Desligado, volta o visual padrão do Foundry.</td></tr>
+      <tr><td><em>Tema do chat</em></td><td>Cliente</td><td>Ligado</td><td>Retratos, cor do autor e um visual para cada tipo de mensagem nos cartões do chat, como o fundo mais escuro da narração. Desligado, volta o visual padrão do Foundry.</td></tr>
       <tr><td><em>Agrupar mensagens consecutivas</em></td><td>Cliente</td><td>Ligado</td><td>Esconde o cabeçalho quando o mesmo falante manda outra mensagem em até cinco minutos. Só vale com o <em>Tema do chat</em> ligado.</td></tr>
       <tr><td><em>Log detalhado</em></td><td>Cliente</td><td>Desligado</td><td>Escreve detalhes extras no console do navegador (<kbd>F12</kbd>). Só serve para investigar problemas.</td></tr>
     </tbody>
@@ -62,7 +62,7 @@
       <tr><td>Os balões ficam cortados no alto da tela</td><td>O zoom: afaste o mapa para sobrar espaço acima dos tokens.</td></tr>
       <tr><td>Nada do TBG funciona</td><td>O módulo ativo na lista de módulos do mundo (<em>Module Management</em>). No console do navegador (<kbd>F12</kbd>) deve aparecer uma linha começando com <code>TBG |</code> e dizendo que ele está pronto, sem erros em vermelho.</td></tr>
       <tr><td>O selo de digitação não aparece</td><td><em>Mostrar quem está digitando</em> e <em>Ativar TBG</em> ligadas, <em>Enable Chat Bubbles</em> ligada no computador de quem olha e o token selecionado na cena aberta. O selo só aparece enquanto a pessoa digita. Com o Modo Narrador ligado, ele não aparece mesmo.</td></tr>
-      <tr><td>O letreiro não aparece</td><td><em>Letreiro de narração</em> ligada. Só narração vira letreiro: Modo Narrador ou <code>/n</code>. Ele não depende de cena nem de balões.</td></tr>
+      <tr><td>O balão do narrador não aparece</td><td><em>Balão do narrador</em> ligada. Só narração vira balão no meio da tela: Modo Narrador, <code>/n</code> ou <code>= texto =</code>. Ele não depende de cena nem dos balões dos tokens.</td></tr>
       <tr><td>As abas ON, OFF e ROLL não aparecem</td><td>Custom Chat Tabs ativo, <em>Enable Chat Tabs</em> ligada nele e <em>Abas ON, OFF e ROLL</em> ligada no TBG, com a página recarregada depois de mudar.</td></tr>
     </tbody>
   </table>

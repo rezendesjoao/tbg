@@ -11,7 +11,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 ## 2. Comentários
 
 - Permitido: um bloco JSDoc de resumo (uma frase, mais `@param`/`@returns` só quando o tipo não é óbvio) em classes, funções e constantes exportadas.
-- Permitido: um comentário de uma linha quando o *porquê* não é dedutível do código: contorno de bug do core (com link da issue), ordem obrigatória entre hooks, constante vinda de fora (por exemplo, valores medidos no Habbo).
+- Permitido: um comentário de uma linha quando o *porquê* não é dedutível do código: contorno de bug do core (com link da issue), ordem obrigatória entre hooks, constante vinda de fora (por exemplo, um valor medido no navegador do Foundry).
 - Proibido: comentar o *o quê* (`// incrementa o contador`), separadores decorativos, código comentado, `TODO`/`FIXME` (vira issue no GitHub).
 - Se um comentário foi necessário para explicar o fluxo, o código precisa de um nome melhor ou de uma função menor.
 
