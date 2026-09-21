@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.7.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.8.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -16,7 +16,7 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 ## 2. A1 — Motor de balões
 
 - [ ] **Balão simples.** Selecione um token e mande `Olá`. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
-- [ ] **Cabeçalho.** Dentro do balão, a imagem do token e o nome ficam lado a lado na primeira linha, e a fala vem embaixo. Teste com um personagem de nome longo: o nome quebra em duas linhas mas nunca desce para baixo da imagem.
+- [ ] **Em linha.** Dentro do balão, a imagem do token, o nome em negrito com dois-pontos e a fala ficam na mesma linha. Uma fala curta cabe numa linha só; uma longa quebra e continua por baixo, a partir da margem esquerda do balão.
 - [ ] **Retrato.** Desligue *Retrato no balão* nas configurações e confirme que a imagem some e o nome continua no lugar.
 - [ ] **Empilhamento.** Mande mais duas mensagens seguidas. Os balões antigos sobem e o novo nasce embaixo, colado no token. Nenhum deles se sobrepõe.
 - [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem sozinhos e desaparecem ao passar do limite. O movimento deve ser fluido, sem tranco. Ajuste *Velocidade de subida* ao gosto da mesa.
@@ -225,8 +225,11 @@ await (async () => {
     const p = rect(balao.querySelector(".tbg-bubble__portrait"));
     const n = rect(balao.querySelector(".tbg-bubble__name"));
     const t = rect(balao.querySelector(".tbg-bubble__text"));
+    const linha = parseFloat(getComputedStyle(balao).lineHeight);
+    const bordas = balao.offsetHeight - balao.clientHeight + parseFloat(getComputedStyle(balao).paddingTop) * 2;
     check("nome ao lado do retrato", n.l >= p.r - 1 && n.t < p.b && n.b > p.t);
-    check("texto abaixo do cabeçalho", t.t >= p.b - 2);
+    check("fala na mesma linha do nome", t.l >= n.r - 1 && t.t < n.b && t.b > n.t);
+    check("balão de fala curta numa linha", balao.offsetHeight < linha * 1.5 + bordas, `${balao.offsetHeight}px`);
   }
 
   await say("/n A neblina desce.");

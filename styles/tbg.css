@@ -7,6 +7,7 @@
   --tbg-bubble-font: var(--font-primary, "Signika", sans-serif);
   --tbg-bubble-font-size: 14px;
   --tbg-bubble-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --tbg-bubble-inline-image: 1.45em;
 
   --tbg-narration-bg: rgba(20, 16, 28, 0.85);
   --tbg-narration-fg: #f1e9d2;

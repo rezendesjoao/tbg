@@ -2,11 +2,11 @@
 
 Módulo para **Foundry VTT v14** que transforma o chat numa experiência de *RPG de Habbo*: balões de fala que empilham sobre os tokens e sobem até sumir, um **Modo Narrador** para o Mestre falar sem estar preso a um personagem, e um chat de sidebar com cara de mensageiro.
 
-> **Estado: 0.7.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entraram o indicador de digitação sobre o token (A5), o letreiro de narração (B8) e o balão de uso da ficha (A9). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.8.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entraram o indicador de digitação sobre o token (A5), o letreiro de narração (B8) e o balão de uso da ficha (A9). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
-Com um token selecionado, você fala como ele. No v14 o Foundry só faz isso no modo "Public as Character"; a setting **Falar em personagem automaticamente** (ligada por padrão) faz o texto simples sair em personagem também no modo público, sem mexer no seletor de modos. Cada fala vira um balão acima do token. O balão novo nasce embaixo e empurra os anteriores para cima; um relógio sobe todos devagar; quem passa do limite some. Balões de tokens distantes não se empurram, então cada grupo de conversa forma a própria coluna, como no Free Flow Chat do Habbo.
+Com um token selecionado, você fala como ele. No v14 o Foundry só faz isso no modo "Public as Character"; a setting **Falar em personagem automaticamente** (ligada por padrão) faz o texto simples sair em personagem também no modo público, sem mexer no seletor de modos. Cada fala vira um balão acima do token, com o retrato e o nome na mesma linha do texto: "Nome: fala". O balão novo nasce embaixo e empurra os anteriores para cima; um relógio sobe todos devagar; quem passa do limite some. Balões de tokens distantes não se empurram, então cada grupo de conversa forma a própria coluna, como no Free Flow Chat do Habbo.
 
 ### Modos de fala
 
@@ -53,7 +53,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.7.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.8.0 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 

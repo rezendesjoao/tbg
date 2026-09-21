@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.8.0] — 2026-09-21
+
+### Alterado
+- O retrato e o nome do balão passam a ficar na mesma linha da fala, no formato "Nome: texto" do Habbo, em vez de um cabeçalho em cima. A fala quebra linha por baixo conforme precisa, e uma fala curta cabe numa linha só, deixando o balão mais compacto. O retrato e o ícone do balão de uso encolheram para a altura da linha.
+
 ## [0.7.0] — 2026-09-21
 
 ### Adicionado
