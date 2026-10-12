@@ -6,7 +6,7 @@ Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tem
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.10.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.12.0 pronto` e nenhum erro em vermelho.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -16,7 +16,8 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 ## 2. A1 — Motor de balões
 
 - [ ] **Balão simples.** Selecione um token e mande `Olá`. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
-- [ ] **Em linha.** Dentro do balão, a imagem do token, o nome em negrito com dois-pontos e a fala ficam na mesma linha. Uma fala curta cabe numa linha só; uma longa quebra e continua por baixo, a partir da margem esquerda do balão.
+- [ ] **Em linha.** Dentro do balão, a imagem do token, o nome em negrito com dois-pontos e a fala ficam na mesma linha.
+- [ ] **Linha única.** Mande uma fala de 100 caracteres: o balão não quebra, fica numa linha só, mais comprido, centrado no token e crescendo por igual para os dois lados. Comece outra mensagem com `- ` (o campo vira lista) e cole um texto de duas linhas: os dois balões também ficam numa linha só.
 - [ ] **Compacto.** A borda é fina e o texto fica colado nela; o retrato aparece num quadradinho escuro encostado na borda esquerda.
 - [ ] **Retrato.** Desligue *Retrato no balão* nas configurações e confirme que a imagem some e o nome continua no lugar.
 - [ ] **Empilhamento.** Mande mais duas mensagens seguidas. Os balões antigos sobem e o novo nasce embaixo, colado no token. Nenhum deles se sobrepõe.
@@ -65,7 +66,7 @@ Sempre com um token selecionado.
 
 ## 4b. Contador de caracteres e digitação
 
-- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece `0/150`. Ele sobe conforme você digita. O teto é fixo: não existe configuração para mudá-lo e ele é o mesmo em qualquer mundo.
+- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece `0/100`. Ele sobe conforme você digita. O teto é fixo: não existe configuração para mudá-lo e ele é o mesmo em qualquer mundo.
 - [ ] **Legibilidade.** O contador é branco com contorno preto e continua legível sobre fundo claro e escuro.
 - [ ] **Aviso.** Até a metade do limite ele fica branco; da metade em diante vai ficando vermelho, chegando a vermelho pleno no limite.
 - [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
@@ -78,7 +79,7 @@ Sempre com um token selecionado.
 - [ ] **Some ao sair do campo.** Escreva e clique no mapa: o selo some na hora.
 - [ ] **Troca de token.** Escreva com um token, selecione outro e continue: o selo passa para o novo token.
 - [ ] **Narrando.** Com o Modo Narrador ligado, escrever não mostra selo no token selecionado.
-- [ ] **Só no chat.** Abra um diário em edição, escreva mais de 150 caracteres e aperte Shift+Enter: o diário aceita o texto, nada vai para o chat, e o contador e o selo não reagem.
+- [ ] **Só no chat.** Abra um diário em edição, escreva mais de 100 caracteres e aperte Shift+Enter: o diário aceita o texto, nada vai para o chat, e o contador e o selo não reagem.
 
 ## 4c. B8 — Balão do narrador
 
@@ -86,7 +87,8 @@ Sempre com um token selecionado.
 - [ ] **Para todos.** Com dois clientes, o balão do narrador aparece nas duas telas.
 - [ ] **Sem cena.** Desative a cena (ou abra o mundo sem cena ativa) e narre: o balão aparece do mesmo jeito.
 - [ ] **Empilhamento.** Mande três `/n` seguidos: o novo nasce embaixo e empurra os anteriores, sem sobreposição. No máximo três ficam na tela.
-- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo do balão do narrador* ajusta o mínimo, e *Largura máxima do balão* vale para ele também.
+- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo do balão do narrador* ajusta o mínimo.
+- [ ] **Linha única.** Uma narração de 100 caracteres fica numa linha só, centrada no meio da tela e crescendo por igual para os dois lados, mesmo quando passa da largura da área entre as colunas da interface.
 - [ ] **Edição.** Edite a narração enquanto o balão está na tela: o texto muda. Apague a mensagem: o balão some.
 - [ ] **Movimento reduzido.** Com *Mostrar animações* desligado no Windows (ou *Modo fotossensível* do Foundry), o balão do narrador só aparece e some, sem subir.
 - [ ] **Desligar.** Desligue *Balão do narrador*: a narração volta a ser só o cartão do chat.
@@ -155,6 +157,7 @@ await (async () => {
   const at = el => { const m = new DOMMatrix(el.style.transform); return { x: Math.round(m.m41), y: Math.round(m.m42) }; };
   const rect = el => { const r = el.getBoundingClientRect(); return { l: r.left, r: r.right, t: r.top, b: r.bottom }; };
   const overlap = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+  const umaLinha = el => { const s = getComputedStyle(el); return el.offsetHeight < parseFloat(s.lineHeight) * 1.5 + el.offsetHeight - el.clientHeight + parseFloat(s.paddingTop) * 2; };
   const bubbles = id => [...document.querySelectorAll(`#tbg-bubbles .tbg-bubble[data-token-id="${id}"]`)];
   const kindOf = el => [...el.classList].find(c => c.startsWith("tbg-bubble--") && !c.endsWith("visible"))?.slice(12);
   const typing = async (tokenId, on) => { const layer = await import("/modules/tbg/scripts/bubbles/layer.mjs"); await layer.bubbleLayer.setTyping(tokenId, on, "Digitando"); await pause(200); };
@@ -235,6 +238,7 @@ await (async () => {
   const contador = document.querySelector(".tbg-char-count");
   const contorno = getComputedStyle(contador).getPropertyValue("-webkit-text-stroke");
   check("contador com contorno preto", contorno.includes("rgb(0, 0, 0)"), contorno);
+  check("limite de 100 caracteres", contador.textContent.endsWith("/100"), contador.textContent);
 
   const ooc = game.messages.contents.at(-1);
   check("/off sai fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
@@ -247,12 +251,19 @@ await (async () => {
     const p = rect(balao.querySelector(".tbg-bubble__portrait"));
     const n = rect(balao.querySelector(".tbg-bubble__name"));
     const t = rect(balao.querySelector(".tbg-bubble__text"));
-    const linha = parseFloat(getComputedStyle(balao).lineHeight);
-    const bordas = balao.offsetHeight - balao.clientHeight + parseFloat(getComputedStyle(balao).paddingTop) * 2;
     check("nome ao lado do retrato", n.l >= p.r - 1 && n.t < p.b && n.b > p.t);
     check("fala na mesma linha do nome", t.l >= n.r - 1 && t.t < n.b && t.b > n.t);
-    check("balão de fala curta numa linha", balao.offsetHeight < linha * 1.5 + bordas, `${balao.offsetHeight}px`);
+    check("balão de fala curta numa linha", umaLinha(balao), `${balao.offsetHeight}px`);
   }
+
+  await say("Uma fala comprida, no limite de cem caracteres, continua numa linha só e cresce para os dois lados.");
+  const longa = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${game.messages.contents.at(-1).id}"]`);
+  const centro = longa ? at(longa).x + longa.offsetWidth * new DOMMatrix(longa.style.transform).m11 / 2 : NaN;
+  check("fala longa numa linha só", !!longa && umaLinha(longa), longa ? `${longa.offsetWidth} × ${longa.offsetHeight}px` : "nenhum balão");
+  check("fala longa centrada no token", Math.abs(centro - tokenA.center.x) < 1, `${Math.round(centro)} / ${tokenA.center.x}`);
+  await say("<ul><li><p>Travessão que virou lista no campo do chat</p></li></ul>");
+  const lista = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${game.messages.contents.at(-1).id}"]`);
+  check("lista do editor numa linha só", !!lista && umaLinha(lista), lista ? `${lista.offsetHeight}px` : "nenhum balão");
 
   await say("/n A neblina desce.");
   const narration = game.messages.contents.at(-1);
@@ -262,6 +273,9 @@ await (async () => {
   const fala = bubbles(tokenA.id).find(b => b.classList.contains("tbg-bubble--say"));
   const estilo = el => el ? getComputedStyle(el) : {};
   check("balão do narrador no meio da tela", !!narrador);
+  const faixa = document.getElementById("tbg-banners").getBoundingClientRect();
+  const caixa = narrador?.getBoundingClientRect();
+  check("balão do narrador numa linha, centrado", !!narrador && umaLinha(narrador) && Math.abs(caixa.left + caixa.right - faixa.left - faixa.right) < 2);
   check("balão do narrador preto com letra branca", estilo(narrador).backgroundColor === "rgb(0, 0, 0)" && estilo(narrador).color === "rgb(255, 255, 255)");
   check("balão do narrador no formato do jogador", ["fontSize", "padding", "borderRadius", "borderTopWidth"].every(p => estilo(narrador)[p] === estilo(fala)[p]), `${estilo(narrador).fontSize} / ${estilo(fala).fontSize}`);
   const cartaoNarracao = ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`);

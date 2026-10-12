@@ -9,7 +9,6 @@
   left: 0;
   box-sizing: border-box;
   width: max-content;
-  max-width: var(--tbg-bubble-max-width);
   padding: var(--tbg-bubble-padding);
   background: var(--tbg-bubble-bg);
   color: var(--tbg-bubble-fg);
@@ -19,7 +18,7 @@
   font-family: var(--tbg-bubble-font);
   font-size: var(--tbg-bubble-font-size);
   line-height: var(--tbg-bubble-line-height);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
   transform-origin: 0 0;
   opacity: 0;
   transition: opacity var(--tbg-transition);
@@ -85,14 +84,16 @@ i.tbg-bubble__portrait {
   content: ":";
 }
 
-.tbg-bubble__text > p {
-  display: inline;
-  margin: 0;
+.tbg-bubble__text :is(p, blockquote, ul, ol, li, h1, h2, h3, h4, h5, h6) {
+  display: contents;
 }
 
-.tbg-bubble__text > p + p::before {
-  content: "\A";
-  white-space: pre;
+.tbg-bubble__text :is(p, li, h1, h2, h3, h4, h5, h6)::after {
+  content: " ";
+}
+
+.tbg-bubble__text :is(br, hr) {
+  display: none;
 }
 
 .tbg-bubble--shout {

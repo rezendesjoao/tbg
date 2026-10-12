@@ -41,4 +41,4 @@ export const INPUT_CHANGED = `${MODULE_ID}.chatInputChanged`;
 export const INPUT_BLURRED = `${MODULE_ID}.chatInputBlurred`;
 
 /** Teto de caracteres de uma mensagem, igual para todas as mesas e todos os jogadores. */
-export const CHAT_MAX_LENGTH = 150;
+export const CHAT_MAX_LENGTH = 100;

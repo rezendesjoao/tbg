@@ -6,7 +6,6 @@ export const SETTINGS = Object.freeze({
   BUBBLE_LAYOUT: "bubbleLayout",
   BUBBLE_RISE_SPEED: "bubbleRiseSpeed",
   BUBBLE_RISE_LIMIT: "bubbleRiseLimit",
-  BUBBLE_MAX_WIDTH: "bubbleMaxWidth",
   BUBBLE_MAX_LIFETIME: "bubbleMaxLifetime",
   BUBBLE_SCALING: "bubbleScaling",
   BUBBLE_PORTRAIT: "bubblePortrait",
@@ -41,7 +40,6 @@ const DEFINITIONS = {
   },
   [SETTINGS.BUBBLE_RISE_SPEED]: { scope: "world", type: Number, default: 35, range: { min: 0, max: 120, step: 5 } },
   [SETTINGS.BUBBLE_RISE_LIMIT]: { scope: "world", type: Number, default: 320, range: { min: 100, max: 800, step: 10 } },
-  [SETTINGS.BUBBLE_MAX_WIDTH]: { scope: "world", type: Number, default: 350, range: { min: 200, max: 600, step: 10 } },
   [SETTINGS.BUBBLE_MAX_LIFETIME]: { scope: "world", type: Number, default: 0, range: { min: 0, max: 300, step: 5 } },
   [SETTINGS.BUBBLE_SCALING]: {
     scope: "client",

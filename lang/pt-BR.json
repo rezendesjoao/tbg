@@ -25,10 +25,6 @@
         "name": "Limite de subida",
         "hint": "Pixels de tela acima do token a partir dos quais o balão some."
       },
-      "bubbleMaxWidth": {
-        "name": "Largura máxima do balão",
-        "hint": "Largura em pixels antes do texto quebrar linha. Vale também para o balão do narrador."
-      },
       "bubbleMaxLifetime": {
         "name": "Tempo máximo",
         "hint": "Segundos até o balão sumir independentemente da posição. Zero desliga o limite."

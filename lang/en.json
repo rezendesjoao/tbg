@@ -25,10 +25,6 @@
         "name": "Rise limit",
         "hint": "Screen pixels above the token after which a bubble fades out."
       },
-      "bubbleMaxWidth": {
-        "name": "Maximum bubble width",
-        "hint": "Width in pixels before the text wraps. Also applies to the narrator bubble."
-      },
       "bubbleMaxLifetime": {
         "name": "Maximum lifetime",
         "hint": "Seconds before a bubble fades regardless of position. Zero disables the limit."

@@ -2,6 +2,17 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.12.0] — 2026-10-12
+
+### Alterado
+- O balão nunca quebra a linha: retrato, nome e fala ficam sempre numa linha reta, por mais longa que seja a fala. O balão sobre o token cresce por igual para os dois lados a partir do meio do token, e o balão do narrador, a partir do meio da tela, mesmo quando passa da largura da área entre as colunas da interface.
+- Também ficam numa linha só a mensagem que começa com `- `, `1. `, `> ` ou `# `, que o campo do chat transforma em lista, citação ou título, e o texto colado em vários parágrafos, com um espaço entre eles.
+- O limite de caracteres cai de 150 para 100, fixo e igual para toda mesa e todo jogador, inclusive o Mestre.
+- No guia do jogador, os exemplos e as explicações passam a mostrar o balão numa linha só.
+
+### Removido
+- A configuração *Largura máxima do balão*, que não tem mais função sem quebra de linha.
+
 ## [0.11.0] — 2026-09-21
 
 ### Adicionado

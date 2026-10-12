@@ -67,7 +67,6 @@ class BubbleLayer {
     const container = this.element;
     if (!container) return null;
     this.remove(id);
-    container.style.setProperty("--tbg-bubble-max-width", `${getSetting(SETTINGS.BUBBLE_MAX_WIDTH)}px`);
     const portrait = getSetting(SETTINGS.BUBBLE_PORTRAIT) ? token.document.texture.src : null;
     const bubble = await Bubble.create({ id, token, kind, content, name, portrait, icon, iconClass });
     container.append(bubble.element);

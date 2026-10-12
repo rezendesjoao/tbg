@@ -53,12 +53,11 @@ class BannerLayer {
     }
   }
 
-  /** O novo nasce na base e empurra os que estão na tela, como os balões no modo linha a linha, e usa a mesma largura. */
+  /** O novo nasce na base e empurra os que estão na tela, como os balões no modo linha a linha. */
   async show({ id, name, content }) {
     const container = this.element;
     if (!container) return;
     this.remove(id);
-    container.style.setProperty("--tbg-bubble-max-width", `${getSetting(SETTINGS.BUBBLE_MAX_WIDTH)}px`);
     const minimumSeconds = getSetting(SETTINGS.NARRATION_BANNER_DURATION);
     const banner = await Banner.create({ id, name, content, minimumSeconds });
     container.append(banner.element);
