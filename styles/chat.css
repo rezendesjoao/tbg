@@ -79,8 +79,10 @@
 }
 
 .tbg-char-count {
-  align-self: center;
+  position: absolute;
+  z-index: 1;
   padding: 0 6px;
+  white-space: nowrap;
   font-size: var(--tbg-char-count-size);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -89,4 +91,15 @@
   paint-order: stroke fill;
   transition: color 150ms linear;
   pointer-events: none;
+}
+
+.chat-form .tbg-char-count {
+  right: var(--chat-message-spacing, 0px);
+  bottom: 6px;
+}
+
+.tbg-char-count:has(+ #message-modes.vertical) {
+  bottom: calc(100% + 4px);
+  left: 50%;
+  translate: -50% 0;
 }

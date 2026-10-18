@@ -110,6 +110,10 @@
       "roll": {
         "label": "ROLL",
         "hint": "Rolls and sheet cards"
+      },
+      "enable": {
+        "title": "ON, OFF and ROLL tabs",
+        "content": "The TBG ON, OFF and ROLL tabs need the Custom Chat Tabs option <strong>Enable Chat Tabs</strong>, which is off in this world. Turn it on now? Foundry reloads the page. To stop this notice, turn off <em>ON, OFF and ROLL tabs</em> in the TBG settings."
       }
     },
     "Guide": {

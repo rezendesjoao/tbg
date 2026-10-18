@@ -2,6 +2,17 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.13.0] — 2026-10-18
+
+### Adicionado
+- C2: com *Abas ON, OFF e ROLL* ligada no TBG e *Enable Chat Tabs* desligada no Custom Chat Tabs (o padrão dele), o Mestre recebe ao entrar uma pergunta se pode ligá-la; aceitando, a página recarrega já com as abas. Antes, as abas simplesmente não apareciam e nada dizia por quê.
+
+### Corrigido
+- C2: com a barra lateral recolhida, o Custom Chat Tabs escondia também a notificação do canto da tela de toda mensagem fora da aba ativa. Com o ON aberto, rolagens, cartões da ficha e mensagens do OFF nunca apareciam na tela. Agora a notificação mostra toda mensagem nova, e a aba ativa filtra só o histórico.
+- C2: cartões de sistema sussurrados ao Mestre sem falante, como os de rolagem privada do Mestre, caíam no OFF como conversa fora do personagem. Agora vão para o ROLL; só o sussurro digitado sem token fica no OFF.
+- Cartões seguidos do mesmo falante eram agrupados como se fossem falas, e o segundo perdia o cabeçalho com o nome de quem usou. Agora só falas se agrupam.
+- O contador de caracteres ocupava espaço na barra de controles do chat: para o Mestre, empurrava o botão de limpar o chat para fora da barra lateral, e com o chat no canto da tela alargava a coluna de ícones. Agora ele fica no canto inferior direito do campo do chat e, com o chat no canto da tela, logo acima dos ícones, sem ocupar espaço.
+
 ## [0.12.0] — 2026-10-12
 
 ### Alterado

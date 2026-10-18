@@ -1,6 +1,6 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. D8 aprovada e entregue na 0.10.0 (21/09/2026). Refinamentos de A3 (`/off`), B1 (`= texto =` e cartão de narração) e B8 (balão do narrador) aprovados e entregues na 0.11.0 (21/09/2026). Balão em linha única (A1 e B8) e limite de 100 caracteres aprovados e entregues na 0.12.0 (12/10/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. D8 aprovada e entregue na 0.10.0 (21/09/2026). Refinamentos de A3 (`/off`), B1 (`= texto =` e cartão de narração) e B8 (balão do narrador) aprovados e entregues na 0.11.0 (21/09/2026). Balão em linha única (A1 e B8) e limite de 100 caracteres aprovados e entregues na 0.12.0 (12/10/2026). Refinamentos de C2 (notificações, cartões sussurrados no ROLL, cartões sem agrupar e aviso para ligar as abas) e o contador fora da barra do chat aprovados e entregues na 0.13.0 (18/10/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
@@ -98,7 +98,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   **Recomendação:** o Narrator Tools já faz isso e está ativo no v14. Se instalado, `/cena` delega a ele; versão própria só se o visual precisar ser diferente.
 
 - [x] **C2. Abas ON / OFF / ROLL** — **M**
-  Sem reimplementar abas: com o Custom Chat Tabs ativo, o TBG registra pela API dele as abas **ON** (em personagem e narração), **OFF** (fora do personagem) e **ROLL** (rolagens e cartões da ficha), que juntas cobrem toda mensagem, abre o chat no ON e esconde as abas All, IC, OOC e Rolls dele (pedido do usuário). Setting `chatTabs` desliga e devolve as abas originais.
+  Sem reimplementar abas: com o Custom Chat Tabs ativo, o TBG registra pela API dele as abas **ON** (em personagem e narração), **OFF** (fora do personagem) e **ROLL** (rolagens e cartões da ficha), que juntas cobrem toda mensagem, abre o chat no ON e esconde as abas All, IC, OOC e Rolls dele (pedido do usuário). Setting `chatTabs` desliga e devolve as abas originais. A aba ativa filtra só o histórico: a notificação do canto da tela mostra toda mensagem nova. Com o *Enable Chat Tabs* do Custom Chat Tabs desligado, o Mestre recebe um aviso para ligá-lo.
 
 ---
 

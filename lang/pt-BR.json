@@ -110,6 +110,10 @@
       "roll": {
         "label": "ROLL",
         "hint": "Rolagens e cartões da ficha"
+      },
+      "enable": {
+        "title": "Abas ON, OFF e ROLL",
+        "content": "As abas ON, OFF e ROLL do TBG precisam da opção <strong>Enable Chat Tabs</strong> do Custom Chat Tabs, que está desligada neste mundo. Ligar agora? O Foundry recarrega a página. Para não ver este aviso, desligue <em>Abas ON, OFF e ROLL</em> nas configurações do TBG."
       }
     },
     "Guide": {

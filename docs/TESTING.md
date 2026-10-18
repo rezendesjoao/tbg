@@ -66,8 +66,9 @@ Sempre com um token selecionado.
 
 ## 4b. Contador de caracteres e digitação
 
-- [ ] **Contador.** Ao lado dos ícones de modo de mensagem aparece `0/100`. Ele sobe conforme você digita. O teto é fixo: não existe configuração para mudá-lo e ele é o mesmo em qualquer mundo.
+- [ ] **Contador.** No canto inferior direito do campo do chat aparece `0/100`; com a barra lateral recolhida e o chat no canto da tela, ele fica logo acima dos ícones de modo de mensagem. Ele sobe conforme você digita. O teto é fixo: não existe configuração para mudá-lo e ele é o mesmo em qualquer mundo.
 - [ ] **Legibilidade.** O contador é branco com contorno preto e continua legível sobre fundo claro e escuro.
+- [ ] **Sem empurrar.** Como Mestre, com o chat aberto na barra lateral, os botões de exportar e de limpar o chat aparecem inteiros. Com a barra recolhida, a coluna de ícones do chat tem a largura de um ícone.
 - [ ] **Aviso.** Até a metade do limite ele fica branco; da metade em diante vai ficando vermelho, chegando a vermelho pleno no limite.
 - [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
 - [ ] **Apagar sempre funciona.** Mesmo com o campo cheio, apagar letra a letra e selecionar tudo e apagar continuam funcionando.
@@ -110,10 +111,14 @@ Com o token do personagem na cena e uma arma na ficha.
 
 Com o Custom Chat Tabs ativo e *Enable Chat Tabs* ligado nele.
 
+- [ ] **Ligar pelo TBG.** Desligue *Enable Chat Tabs* no Custom Chat Tabs e recarregue como Mestre: o TBG pergunta se pode ligá-lo. Aceite e a página recarrega com ON, OFF e ROLL. Recusando, nada muda e a pergunta volta no próximo carregamento; desligar *Abas ON, OFF e ROLL* no TBG a cala. Jogadores nunca a veem.
 - [ ] **Abas.** O topo do chat mostra só ON, OFF e ROLL, com o ON selecionado ao abrir o mundo. All, IC, OOC e Rolls não aparecem.
 - [ ] **ON.** Falas, `/shout`, `*ação*`, `/me`, `/think`, `/w` com token e narração aparecem no ON.
 - [ ] **OFF.** `/off`, texto sem token selecionado e `/w` sem token aparecem no OFF.
 - [ ] **ROLL.** `/roll`, rolagens e cartões de item da ficha aparecem no ROLL.
+- [ ] **Cartão sussurrado.** Um cartão de sistema sussurrado ao Mestre sem token, como o de uma rolagem privada do Mestre, aparece no ROLL, não no OFF.
+- [ ] **Notificações.** Com a barra lateral recolhida e o ON ativo, mande `/off oi` e `/roll 1d20`: as duas notificações aparecem no canto da tela. A aba ativa filtra só o histórico.
+- [ ] **Cartões seguidos.** Use o mesmo item duas vezes seguidas pela ficha: os dois cartões mantêm o cabeçalho com o nome de quem usou. Só falas seguidas do mesmo personagem se agrupam.
 - [ ] **Nada some.** Nenhuma mensagem fica fora das três abas.
 - [ ] **Desligar.** Desligue *Abas ON, OFF e ROLL* e recarregue: as abas do Custom Chat Tabs voltam como estavam.
 
@@ -239,6 +244,8 @@ await (async () => {
   const contorno = getComputedStyle(contador).getPropertyValue("-webkit-text-stroke");
   check("contador com contorno preto", contorno.includes("rgb(0, 0, 0)"), contorno);
   check("limite de 100 caracteres", contador.textContent.endsWith("/100"), contador.textContent);
+  const controles = document.getElementById("chat-controls");
+  if (!document.getElementById("message-modes").classList.contains("vertical")) check("contador não empurra os botões do chat", controles.scrollWidth <= controles.clientWidth + 1, `${controles.scrollWidth}/${controles.clientWidth}`);
 
   const ooc = game.messages.contents.at(-1);
   check("/off sai fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
@@ -298,6 +305,8 @@ await (async () => {
   const percepcao = await ChatMessage.create({ speaker: falante, flavor: "Percepção", rolls: [await new Roll("1d20").evaluate()] });
   await pause(400);
   check("rolagem com rótulo vira balão", bubbleOf(percepcao.id)?.textContent.includes("Percepção") === true, bubbleOf(percepcao.id)?.textContent.trim() ?? "nenhum balão");
+  const percepcaoCard = ui.chat.element.querySelector(`.chat-log [data-message-id="${percepcao.id}"]`);
+  check("cartão seguido não se agrupa", !!percepcaoCard && !percepcaoCard.classList.contains("tbg-continued"));
   await say("/roll 1d20");
   check("rolagem crua sem balão", !bubbleOf(game.messages.contents.at(-1).id));
   const sussurrado = await ChatMessage.create({ speaker: falante, content: "<div>cartão de sistema</div>", whisper: [game.user.id] });
@@ -326,6 +335,16 @@ await (async () => {
     check("narração no ON", abaDe(narration).join() === "tbg-on", abaDe(narration).join());
     check("/off no OFF", abaDe(ooc).join() === "tbg-off", abaDe(ooc).join());
     check("rolagem no ROLL", abaDe(percepcao).join() === "tbg-roll", abaDe(percepcao).join());
+    const cartaoMestre = await ChatMessage.create({ speaker: { alias: "Sistema" }, content: "<div>cartão do sistema</div>", whisper: [game.user.id] });
+    check("cartão sussurrado sem falante no ROLL", abaDe(cartaoMestre).join() === "tbg-roll", abaDe(cartaoMestre).join());
+    const expandida = ui.sidebar.expanded;
+    ui.sidebar.collapse();
+    cct.api.setActiveTab("tbg-on", ui.chat.element);
+    await pause(500);
+    await say("/roll 1d20");
+    const aviso = document.querySelector(`#chat-notifications [data-message-id="${game.messages.contents.at(-1).id}"]`);
+    check("notificação de outra aba aparece", !!aviso && aviso.style.display !== "none", aviso ? aviso.style.display : "sem notificação");
+    if (expandida) ui.sidebar.expand();
     const foraDeUma = game.messages.contents.slice(firstMessage).filter(m => abaDe(m).length !== 1).length;
     check("toda mensagem em uma aba só", !foraDeUma, `${foraDeUma} fora`);
   }

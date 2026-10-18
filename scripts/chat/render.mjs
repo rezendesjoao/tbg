@@ -1,5 +1,5 @@
 import { SETTINGS, getSetting } from "../settings.mjs";
-import { resolveKind } from "./kinds.mjs";
+import { isSpeech, resolveKind } from "./kinds.mjs";
 import { speakerImage } from "./speaker.mjs";
 
 const GROUPING_WINDOW_MS = 5 * 60 * 1000;
@@ -34,9 +34,11 @@ function addPortrait(html, message) {
   html.classList.add("tbg-has-portrait");
 }
 
+/** Só falas se agrupam: um cartão de sistema perderia o cabeçalho que o identifica. */
 function continuesPrevious(message, kind) {
+  if (!isSpeech(message)) return false;
   const previous = previousVisible(message);
-  if (!previous || previous.isRoll || message.isRoll) return false;
+  if (!previous || !isSpeech(previous)) return false;
   const sameAuthor = previous.author?.id === message.author?.id;
   const sameSpeaker = SPEAKER_KEYS.every(key => previous.speaker[key] === message.speaker[key]);
   const sameKind = resolveKind(previous) === kind;
