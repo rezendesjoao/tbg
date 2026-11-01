@@ -1,6 +1,6 @@
 {
   "name": "tbg",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "private": true,
   "description": "Módulo Foundry VTT v14: balões de fala sobre os tokens, barra de conversa, histórico da cena e Modo Narrador para jogar por texto.",
   "type": "module",

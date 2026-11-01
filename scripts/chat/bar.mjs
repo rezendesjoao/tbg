@@ -1,11 +1,10 @@
 import { CHAT_MAX_LENGTH, INPUT_BLURRED, INPUT_CHANGED, MODULE_ID, NARRATOR_CHANGED, TEMPLATES } from "../constants.mjs";
 import { localize } from "../utils.mjs";
-import { isNarratorActive, narratorName, toggleNarrator } from "./narrator.mjs";
+import { isNarrating, isNarratorActive, narratorName, toggleNarrator } from "./narrator.mjs";
 
 const MOUNT_ID = "ui-bottom";
 const RAMP_START = 0.5;
 const RECALL_SIZE = 20;
-const MASTER_ICON = "fa-solid fa-crown";
 const NARRATOR_ICON = "fa-solid fa-scroll";
 const NO_ART_ICON = "fa-solid fa-user";
 
@@ -54,7 +53,7 @@ class ChatBar {
     return !!this.input;
   }
 
-  /** Quem fala: o token selecionado, o personagem, a coroa do Mestre sem token ou o pergaminho do narrador. */
+  /** Quem fala: o token selecionado, o personagem ou o pergaminho do narrador, que é o Mestre sem token. */
   syncSpeaker() {
     const button = this.#element?.querySelector(".tbg-bar__speaker");
     if (!button) return;
@@ -156,13 +155,16 @@ class ChatBar {
 }
 
 function speakerView() {
-  if (isNarratorActive()) return { icon: NARRATOR_ICON, label: localize("TBG.Bar.narrating", { name: narratorName() }) };
-  const { actor, token, alias } = ChatMessage.implementation.getSpeaker();
+  const speaker = ChatMessage.implementation.getSpeaker();
+  if (isNarrating(speaker)) {
+    const key = isNarratorActive() ? "TBG.Bar.narrating" : "TBG.Bar.narratingNoToken";
+    return { icon: NARRATOR_ICON, label: localize(key, { name: narratorName() }) };
+  }
+  const { actor, token, alias } = speaker;
   if (token || actor) {
     const image = canvas.tokens?.get(token)?.document.texture.src ?? game.actors.get(actor)?.img ?? null;
     return { image, icon: image ? null : NO_ART_ICON, label: localize("TBG.Bar.speaking", { name: alias }) };
   }
-  if (game.user.isGM) return { icon: MASTER_ICON, label: localize("TBG.Bar.master") };
   return { image: game.user.avatar, label: localize("TBG.Bar.offCharacter") };
 }
 

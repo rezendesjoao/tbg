@@ -93,7 +93,8 @@ function narrateCommand(_command, match) {
 
 /**
  * Texto sem comando é sempre fala, qualquer que seja o modo de mensagem, que só escolhe a privacidade das rolagens:
- * com falante, em personagem; o Mestre sem token fala num balão sem nome; o jogador sem token, fora do personagem.
+ * com falante, em personagem; o jogador sem token, fora do personagem. O Mestre sem token nem chega aqui: o hook do
+ * narrador, registrado antes, já o fez narrar.
  */
 function speakByDefault(chatLog, message, chatData) {
   const [command] = chatLog.constructor.parse(message);
@@ -104,10 +105,9 @@ function speakByDefault(chatLog, message, chatData) {
     ChatMessage.implementation.create(data, { messageMode: "ic" });
     return false;
   }
-  const { OTHER, OOC } = CONST.CHAT_MESSAGE_STYLES;
   data.speaker = { scene: data.speaker?.scene ?? game.user.viewedScene, actor: null, token: null, alias: "" };
-  data.style = game.user.isGM ? OTHER : OOC;
-  setKind(data, game.user.isGM ? KINDS.SAY : KINDS.OOC);
+  data.style = CONST.CHAT_MESSAGE_STYLES.OOC;
+  setKind(data, KINDS.OOC);
   ChatMessage.implementation.create(data, { messageMode: "public" });
   return false;
 }

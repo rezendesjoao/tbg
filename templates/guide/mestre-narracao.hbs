@@ -4,23 +4,19 @@
     <p>Página do Mestre: como narrar a cena sem falar por nenhum token.</p>
   </section>
 
-  <p class="tbg-guide__lead">Os jogadores falam pelos tokens deles. Você fala pelo mundo: o vento, a porta que range, o dragão que acorda. No TBG isso tem dois jeitos, os dois no meio da tela e sem sair de nenhum token: a <strong>voz do Mestre</strong>, num balão comum sem nome, e a <strong>narração</strong>, num balão preto assinado por {{narratorName}}.</p>
+  <p class="tbg-guide__lead">Os jogadores falam pelos tokens deles. Você fala pelo mundo: o vento, a porta que range, o dragão que acorda. No TBG você narra como <strong>{{narratorName}}</strong>, num balão preto no meio da tela, sem sair de nenhum token. Sem token selecionado, tudo o que você escreve já é narração.</p>
 
-  <h3>A voz do Mestre: sem token selecionado</h3>
-  <p>Com nenhum token selecionado, o que você escreve na barra de conversa sai num <strong>balão sem nome</strong>, no meio da tela de todos. É o jeito mais rápido de descrever a cena, falar como alguém fora do mapa ou responder a mesa. A coroa no começo da barra avisa que você está falando como Mestre.</p>
-  <figure class="tbg-guide__stage">
-    <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__text">A porta range devagar, e um cheiro de mofo sobe da escada.</span></div>
-  </figure>
-  <p class="tbg-guide__caption">A voz do Mestre: o balão comum, sem retrato e sem nome.</p>
-  <p>Para falar por um NPC, selecione o token dele: a fala vira balão sobre o NPC, com o nome dele. Para voltar à voz do Mestre, clique no mapa vazio, ou aperte <kbd>Esc</kbd>, e nada fica selecionado. Ações também funcionam: <code>*o vento apaga as tochas*</code> sem token sai num balão bege, sem nome. No Histórico da cena, essas falas aparecem como Mestre.</p>
+  <h3>Sem token selecionado, você narra</h3>
+  <p>Com nenhum token selecionado, o que você escreve na barra de conversa sai como {{narratorName}}, no balão do narrador, no meio da tela de todos. O pergaminho no começo da barra avisa que você está narrando.</p>
+  <p>Para falar por um NPC, selecione o token dele: a fala vira balão sobre o NPC, com o nome dele. Para voltar a narrar, clique no mapa vazio, ou aperte <kbd>Esc</kbd>, e nada fica selecionado. Comandos sem token saem sem nome: <code>*o vento apaga as tochas*</code> vira um balão bege no meio da tela, e no Histórico da cena aparece como Mestre.</p>
 
   <h3>O Modo Narrador</h3>
-  <p>É um interruptor. Ligado, tudo o que você escreve <strong>sem comando</strong> sai como {{narratorName}}, mesmo com um token selecionado.</p>
+  <p>É um interruptor para narrar <strong>com um token selecionado</strong>. Ligado, tudo o que você escreve sem comando sai como {{narratorName}}, mesmo com o token de um NPC na mão.</p>
   <ol class="tbg-guide__steps">
-    <li><strong>Ligue o modo</strong> clicando no retrato do começo da barra de conversa (a coroa, quando nada está selecionado). Ou use o atalho <kbd>{{narratorKey}}</kbd>.</li>
+    <li><strong>Ligue o modo</strong> clicando no retrato do começo da barra de conversa. Ou use o atalho <kbd>{{narratorKey}}</kbd>.</li>
     <li><strong>Confira o aviso.</strong> Uma notificação confirma que o modo ligou, e o começo da barra mostra um pergaminho enquanto ele estiver ativo.</li>
     <li><strong>Narre.</strong> Escreva e aperte <kbd>Enter</kbd>. A mensagem sai como {{narratorName}}, no balão do narrador, e entra no Histórico da cena.</li>
-    <li><strong>Desligue</strong> no mesmo retrato ou no mesmo atalho. Outra notificação avisa, e você volta a falar pelo token selecionado, ou como Mestre.</li>
+    <li><strong>Desligue</strong> no mesmo retrato ou no mesmo atalho. Outra notificação avisa, e você volta a falar pelo token selecionado; sem token, continua narrando.</li>
   </ol>
 
   <table class="tbg-guide__table">
@@ -65,7 +61,7 @@
   <div class="tbg-guide__grid">
     <div class="tbg-guide__card"><strong>Sobe e some</strong><p>Nasce um pouco abaixo do centro da tela, sobe devagar e desaparece aos poucos.</p></div>
     <div class="tbg-guide__card"><strong>Empilha</strong><p>Narrações seguidas se empilham: a nova nasce embaixo e empurra as anteriores. Cabem até três na tela, todas subindo na mesma velocidade.</p></div>
-    <div class="tbg-guide__card"><strong>Tempo de leitura</strong><p>Textos longos ficam mais tempo, até 30 segundos. O mínimo é o <em>Tempo mínimo dos balões do meio da tela</em>: de 3 a 30 segundos, 6 por padrão. Vale também para a voz do Mestre.</p></div>
+    <div class="tbg-guide__card"><strong>Tempo de leitura</strong><p>Textos longos ficam mais tempo, até 30 segundos. O mínimo é o <em>Tempo mínimo dos balões do meio da tela</em>: de 3 a 30 segundos, 6 por padrão. Vale também para os outros balões do meio da tela.</p></div>
     <div class="tbg-guide__card"><strong>Uma linha só</strong><p>Como os balões dos jogadores, nunca quebra a linha: fica no meio da tela e cresce por igual para os dois lados.</p></div>
     <div class="tbg-guide__card"><strong>Sem cena</strong><p>Aparece mesmo sem nenhuma cena ativa, porque não depende do mapa.</p></div>
     <div class="tbg-guide__card"><strong>Menos movimento</strong><p>Para quem pediu menos animação nas configurações do computador, ou ligou o <em>Photosensitivity Mode</em> do Foundry, o balão só aparece e some, sem subir.</p></div>
@@ -79,7 +75,7 @@
   <div class="tbg-guide__grid">
     <div class="tbg-guide__card"><strong>Parágrafos curtos</strong><p>O limite de {{maxLength}} caracteres vale para você também. Divida uma descrição longa em duas ou três narrações: cada uma vira um balão que se lê de relance.</p></div>
     <div class="tbg-guide__card"><strong>Um acontecimento por vez</strong><p>Uma coisa por mensagem: a porta se abre; depois, o que há do outro lado. A mesa acompanha o ritmo e tem espaço para reagir.</p></div>
-    <div class="tbg-guide__card"><strong>Voz do Mestre no dia a dia</strong><p>Para responder à ação de um jogador, solte o token e escreva: sai o balão sem nome. Com um NPC selecionado, um <code>/n</code> curto ou um <code>= texto =</code> narra sem soltar o token.</p></div>
+    <div class="tbg-guide__card"><strong>Narrar entre as falas</strong><p>Para responder à ação de um jogador, solte o token e escreva: sai a narração. Com um NPC selecionado, um <code>/n</code> curto ou um <code>= texto =</code> narra sem soltar o token.</p></div>
     <div class="tbg-guide__card"><strong>Balão nas viradas</strong><p>Toda narração vira balão no meio da tela, então guarde as frases mais marcantes para quando a cena muda: um lugar novo, a noite que cai, um salto no tempo. É aí que o balão preto faz mais efeito.</p></div>
   </div>
 

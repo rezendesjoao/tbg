@@ -78,8 +78,8 @@
       "label": "Barra de conversa",
       "placeholder": "Escreva aqui e aperte Enter para falar…",
       "speaking": "Falando como {name}",
-      "master": "Falando como Mestre, num balão sem nome. Clique para ligar o Modo Narrador.",
-      "narrating": "Narrando como {name}. Clique para desligar o Modo Narrador.",
+      "narrating": "Narrando como {name}, com o Modo Narrador ligado. Clique para desligar.",
+      "narratingNoToken": "Narrando como {name}: nenhum token selecionado. Selecione um token para falar por ele, ou clique para narrar também com token.",
       "offCharacter": "Fora do personagem: selecione o seu token para falar por ele.",
       "focus": "Ir para a barra de conversa",
       "focusHint": "Leva o cursor para a barra de conversa, no pé da tela, para escrever sem usar o mouse."
@@ -97,9 +97,9 @@
     "Narrator": {
       "name": "Narrador",
       "toggle": "Alternar Modo Narrador",
-      "toggleHint": "Texto sem comando sai como Narrador em vez do token selecionado ou do Mestre.",
-      "on": "Modo Narrador ligado: mensagens sem comando saem como Narrador.",
-      "off": "Modo Narrador desligado: você volta a falar pelo token selecionado, ou como Mestre."
+      "toggleHint": "Texto sem comando sai como Narrador mesmo com um token selecionado. Sem token, o Mestre sempre narra.",
+      "on": "Modo Narrador ligado: mensagens sem comando saem como Narrador, mesmo com um token selecionado.",
+      "off": "Modo Narrador desligado: com um token selecionado você fala por ele; sem token, continua narrando."
     },
     "Typing": {
       "label": "Digitando"

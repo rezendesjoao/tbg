@@ -2,6 +2,12 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.14.1] — 2026-11-01
+
+### Alterado
+- Sem token selecionado, o Mestre **narra**: o texto sem comando sai como o narrador, no balão do narrador no meio da tela, em vez do balão sem nome. O retrato da barra mostra o pergaminho enquanto nada está selecionado. O Modo Narrador (retrato da barra ou Alt+N) passa a valer para quando há um token selecionado. Os comandos do Mestre sem token (`*ação*`, `/shout`, `/w`) continuam saindo sem nome.
+- O limite de caracteres por mensagem sobe de 100 para 130, igual para toda mesa e todo jogador; o contador da barra mostra `n/130`.
+
 ## [0.14.0] — 2026-11-01
 
 ### Adicionado

@@ -78,8 +78,8 @@
       "label": "Chat bar",
       "placeholder": "Type here and press Enter to speak…",
       "speaking": "Speaking as {name}",
-      "master": "Speaking as the GM, in a bubble with no name. Click to turn Narrator mode on.",
-      "narrating": "Narrating as {name}. Click to turn Narrator mode off.",
+      "narrating": "Narrating as {name}, with Narrator mode on. Click to turn it off.",
+      "narratingNoToken": "Narrating as {name}: no token selected. Select a token to speak as it, or click to narrate with a token too.",
       "offCharacter": "Out of character: select your token to speak as it.",
       "focus": "Go to the chat bar",
       "focusHint": "Moves the cursor to the chat bar at the bottom of the screen, to type without the mouse."
@@ -97,9 +97,9 @@
     "Narrator": {
       "name": "Narrator",
       "toggle": "Toggle Narrator mode",
-      "toggleHint": "Plain text you send is posted as the Narrator instead of the selected token or the GM.",
-      "on": "Narrator mode on: plain messages are posted as the Narrator.",
-      "off": "Narrator mode off: you speak as the selected token again, or as the GM."
+      "toggleHint": "Plain text you send is posted as the Narrator even with a token selected. With no token, the GM always narrates.",
+      "on": "Narrator mode on: plain messages are posted as the Narrator, even with a token selected.",
+      "off": "Narrator mode off: with a token selected you speak as it; with no token, you keep narrating."
     },
     "Typing": {
       "label": "Typing"

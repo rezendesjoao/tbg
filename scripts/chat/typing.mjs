@@ -3,7 +3,7 @@ import { SETTINGS, getSetting } from "../settings.mjs";
 import { emit, onSocket } from "../sockets.mjs";
 import { localize } from "../utils.mjs";
 import { bubbleLayer } from "../bubbles/layer.mjs";
-import { isNarratorActive } from "./narrator.mjs";
+import { isNarrating } from "./narrator.mjs";
 
 const EMIT_INTERVAL_MS = 1000;
 const IDLE_MS = 3000;
@@ -73,9 +73,9 @@ class TypingAnnouncer {
 
 /** Narrando, o Mestre não fala pelo token selecionado, então não há selo. */
 function currentSpeaker() {
-  if (isNarratorActive()) return null;
-  const { scene, token } = ChatMessage.implementation.getSpeaker();
-  return token ? { sceneId: scene, tokenId: token } : null;
+  const speaker = ChatMessage.implementation.getSpeaker();
+  if (isNarrating(speaker) || !speaker.token) return null;
+  return { sceneId: speaker.scene, tokenId: speaker.token };
 }
 
 /** Liga o indicador de digitação sobre o token. */

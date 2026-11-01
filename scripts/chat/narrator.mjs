@@ -17,8 +17,15 @@ export function registerNarrator() {
   });
 }
 
+/** Modo Narrador ligado à mão, pelo retrato da barra de conversa ou pelo atalho. */
 export function isNarratorActive() {
   return game.user.isGM && getSetting(SETTINGS.NARRATOR_ACTIVE);
+}
+
+/** O Mestre narra com o Modo Narrador ligado e, sempre, quando não tem token nem personagem para falar. */
+export function isNarrating(speaker = ChatMessage.implementation.getSpeaker()) {
+  if (!game.user.isGM) return false;
+  return getSetting(SETTINGS.NARRATOR_ACTIVE) || (!speaker?.actor && !speaker?.token);
 }
 
 /** Nome configurado do narrador, ou o padrão traduzido. */
@@ -54,7 +61,7 @@ export async function toggleNarrator() {
 }
 
 function narrateFromInput(chatLog, message, chatData) {
-  if (!isNarratorActive()) return;
+  if (!isNarrating(chatData.speaker)) return;
   const [command] = chatLog.constructor.parse(message);
   if (command !== "none") return;
   ChatMessage.implementation.create({ ...chatData, ...narrationData(stripParagraph(message)) });

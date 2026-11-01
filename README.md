@@ -2,7 +2,7 @@
 
 Módulo para **Foundry VTT v14** feito para jogar RPG por texto, no jeito das salas de bate-papo dos jogos: uma **barra de conversa** no pé da tela, balões de fala que empilham sobre os tokens e sobem devagar até sumir, o **Histórico da cena** para reler o que foi dito e um **Modo Narrador** para o Mestre.
 
-> **Estado: 0.14.0.** A conversa saiu do chat lateral: escreve-se na barra do pé da tela (D7), o chat lateral fica só com as rolagens e os cartões, e o Histórico da cena (A8) guarda a conversa de cada cena até o Mestre ativar outra. O Mestre sem token fala num balão sem nome. Antes disso já estavam o motor de balões (A1), os modos de fala (A3), o Modo Narrador (B1), o tema do chat (C1), o indicador de digitação (A5), o balão do narrador (B8), o balão de uso da ficha (A9) e o guia no diário (D8). O resto está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.14.1.** A conversa saiu do chat lateral: escreve-se na barra do pé da tela (D7), o chat lateral fica só com as rolagens e os cartões, e o Histórico da cena (A8) guarda a conversa de cada cena até o Mestre ativar outra. O Mestre sem token narra. Antes disso já estavam o motor de balões (A1), os modos de fala (A3), o Modo Narrador (B1), o tema do chat (C1), o indicador de digitação (A5), o balão do narrador (B8), o balão de uso da ficha (A9) e o guia no diário (D8). O resto está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
@@ -15,14 +15,14 @@ A **barra de conversa** fica no pé da tela, acima da barra de macros ou do que 
 | **↑** e **↓** | Trazem de volta o que você já mandou |
 | **Esc** | Sai da barra, sem soltar o token |
 
-Quem fala sem token na cena ganha o balão no meio da tela: o **Mestre sem token selecionado** fala num balão comum sem nome, como a voz do mundo; um jogador sem token fala fora do personagem, num balão cinza com o nome dele. Os botões de modo de mensagem do Foundry continuam no chat lateral, mas só escolhem quem vê as rolagens: o texto da barra sai sempre para a mesa, e o segredo vai por sussurro.
+Quem fala sem token na cena ganha o balão no meio da tela: o **Mestre sem token selecionado narra**, no balão do narrador; um jogador sem token fala fora do personagem, num balão cinza com o nome dele. Comandos do Mestre sem token, como `*ação*`, saem num balão sem nome. Os botões de modo de mensagem do Foundry continuam no chat lateral, mas só escolhem quem vê as rolagens: o texto da barra sai sempre para a mesa, e o segredo vai por sussurro.
 
 ### Modos de fala
 
 | Como | O que acontece |
 |---|---|
 | Texto normal com token selecionado | Fala: balão normal |
-| Texto normal, Mestre sem token | Voz do Mestre: balão sem nome no meio da tela |
+| Texto normal, Mestre sem token | Narração: o balão do narrador no meio da tela |
 | `/shout texto` ou **Shift+Enter** | Grito: negrito, balão maior |
 | `/think texto` (ou `/pensar`) | Pensamento: balão-nuvem só para o Mestre e o dono |
 | `*texto*` ou `/me texto` | Ação: balão em itálico, só o que foi feito, sem o nome antes |
@@ -39,17 +39,17 @@ O botão **Histórico da cena**, na barra de ferramentas dos tokens, abre a conv
 
 ### Contador de caracteres e digitação
 
-No fim da barra, um contador mostra quanto você já escreveu. O teto é de **100 caracteres**, igual para toda mesa e todo jogador, Mestre incluído, e o contador vai ficando vermelho da metade do limite em diante. No limite a barra para de aceitar texto, inclusive colado, mas apagar continua sempre possível.
+No fim da barra, um contador mostra quanto você já escreveu. O teto é de **130 caracteres**, igual para toda mesa e todo jogador, Mestre incluído, e o contador vai ficando vermelho da metade do limite em diante. No limite a barra para de aceitar texto, inclusive colado, mas apagar continua sempre possível.
 
 Enquanto alguém escreve na barra, um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito. Ele aparece para todo mundo, inclusive para quem está digitando, e acompanha o token no zoom. Some ao enviar, ao apagar o texto, ao sair da barra ou após três segundos sem digitar.
 
 ### Modo Narrador
 
-Clique no retrato do começo da barra (a coroa, quando nada está selecionado) ou use **Alt+N**. Ligado, tudo que o Mestre digita sem comando sai como "Narrador", no balão do narrador, e o começo da barra mostra um pergaminho. Para uma narração avulsa sem ligar o modo, use `/n texto` ou escreva a frase entre sinais de igual: `= A neblina desce sobre a vila =`. Só o Mestre narra; um jogador que tentar recebe o aviso "Só o Mestre pode narrar." O nome do narrador é configurável.
+Sem token selecionado, o Mestre sempre narra: o texto sem comando sai como "Narrador", no balão do narrador, e o começo da barra mostra um pergaminho. Para narrar também com um token selecionado, clique no retrato do começo da barra ou use **Alt+N**. Para uma narração avulsa sem ligar o modo, use `/n texto` ou escreva a frase entre sinais de igual: `= A neblina desce sobre a vila =`. Só o Mestre narra; um jogador que tentar recebe o aviso "Só o Mestre pode narrar." O nome do narrador é configurável.
 
 ### Balões no meio da tela
 
-Toda narração aparece para todos num balão no meio da tela, com o mesmo formato e tamanho dos balões dos jogadores, mas com fundo preto, letras brancas e um pergaminho no quadradinho do retrato. A conversa sem token (a voz do Mestre, um jogador sem token na cena) usa o mesmo lugar, no estilo do tipo de fala. Os balões nascem um pouco abaixo do centro, sobem na velocidade dos balões dos tokens e somem; textos longos ficam mais tempo, até 30 segundos. Empilham até três na tela e funcionam mesmo sem cena ativa; com o movimento reduzido do sistema ou o modo fotossensível do Foundry, só aparecem e somem.
+Toda narração aparece para todos num balão no meio da tela, com o mesmo formato e tamanho dos balões dos jogadores, mas com fundo preto, letras brancas e um pergaminho no quadradinho do retrato. A conversa sem token (um jogador sem token na cena, um comando do Mestre sem token) usa o mesmo lugar, no estilo do tipo de fala. Os balões nascem um pouco abaixo do centro, sobem na velocidade dos balões dos tokens e somem; textos longos ficam mais tempo, até 30 segundos. Empilham até três na tela e funcionam mesmo sem cena ativa; com o movimento reduzido do sistema ou o modo fotossensível do Foundry, só aparecem e somem.
 
 ### Balão de uso da ficha
 
@@ -75,7 +75,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.14.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.14.1 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 

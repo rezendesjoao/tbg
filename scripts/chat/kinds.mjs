@@ -34,7 +34,7 @@ export function isTalk(message) {
   return message.whisper.length > 0 && !actor && !token && !CARD_MARKUP.test(message.content ?? "");
 }
 
-/** Fala do Mestre sem token nem personagem: sai num balão sem nome. A narração continua com o nome do narrador. */
+/** Comando do Mestre sem token nem personagem (`*ação*`, `/shout`, `/w`): o balão sai sem nome. O texto simples vira narração. */
 export function isMasterVoice(message) {
   if (!message.author?.isGM || resolveKind(message) === KINDS.NARRATION) return false;
   const { actor, token } = message.speaker;
