@@ -1,5 +1,7 @@
 import { KINDS, MODULE_ID } from "../constants.mjs";
 
+const CARD_MARKUP = /<(div|section|header|footer|table|form|button|figure)\b/i;
+
 /** Tipo TBG de uma mensagem: a flag vence; sem flag, deriva do sussurro ou do estilo do core. */
 export function resolveKind(message) {
   const flagged = message.getFlag(MODULE_ID, "kind");
@@ -17,6 +19,26 @@ export function isSpeech(message) {
   if (message.getFlag(MODULE_ID, "kind")) return true;
   const { IC, EMOTE } = CONST.CHAT_MESSAGE_STYLES;
   return message.type === CONST.BASE_DOCUMENT_TYPE && [IC, EMOTE].includes(message.style);
+}
+
+/**
+ * Conversa, que vai para os balões e o histórico da cena: fala, narração e o que se digitou fora do personagem.
+ * O resto, rolagens e cartões, fica no chat lateral. Sussurro digitado sem personagem chega sem falante; cartão de
+ * sistema sussurrado ao Mestre também, mas traz marcação de cartão.
+ */
+export function isTalk(message) {
+  if (isSpeech(message)) return true;
+  if (message.isRoll) return false;
+  if (message.style === CONST.CHAT_MESSAGE_STYLES.OOC) return true;
+  const { actor, token } = message.speaker;
+  return message.whisper.length > 0 && !actor && !token && !CARD_MARKUP.test(message.content ?? "");
+}
+
+/** Fala do Mestre sem token nem personagem: sai num balão sem nome. A narração continua com o nome do narrador. */
+export function isMasterVoice(message) {
+  if (!message.author?.isGM || resolveKind(message) === KINDS.NARRATION) return false;
+  const { actor, token } = message.speaker;
+  return !actor && !token && !message.getFlag(MODULE_ID, "bubbleToken");
 }
 
 function kindsByStyle() {

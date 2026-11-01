@@ -31,14 +31,19 @@ export const SOCKET_TYPES = Object.freeze({
 
 export const TEMPLATES = Object.freeze({
   bubble: `modules/${MODULE_ID}/templates/bubble.hbs`,
-  banner: `modules/${MODULE_ID}/templates/banner.hbs`
+  banner: `modules/${MODULE_ID}/templates/banner.hbs`,
+  chatBar: `modules/${MODULE_ID}/templates/chat-bar.hbs`,
+  history: `modules/${MODULE_ID}/templates/history.hbs`
 });
 
-/** Evento interno disparado a cada mudança no editor do chat. */
+/** Evento interno disparado a cada mudança no campo da barra de conversa. */
 export const INPUT_CHANGED = `${MODULE_ID}.chatInputChanged`;
 
-/** Evento interno disparado quando o editor do chat perde o foco. */
+/** Evento interno disparado quando o campo da barra de conversa perde o foco. */
 export const INPUT_BLURRED = `${MODULE_ID}.chatInputBlurred`;
+
+/** Evento interno disparado quando o Modo Narrador liga ou desliga. */
+export const NARRATOR_CHANGED = `${MODULE_ID}.narratorChanged`;
 
 /** Teto de caracteres de uma mensagem, igual para todas as mesas e todos os jogadores. */
 export const CHAT_MAX_LENGTH = 100;

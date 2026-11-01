@@ -1,12 +1,13 @@
 # Como testar o TBG
 
-Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tema do chat) e do que veio depois (A5 digitação, B8 balão do narrador, A9 balão de uso da ficha), mais um script de verificação automática no fim. Marque conforme for passando.
+Roteiro manual da Fase 1 (A1 balões, A3 modos de fala, B1 Modo Narrador, C1 tema do chat) e do que veio depois (A5 digitação, B8 balão do narrador, A9 balão de uso da ficha, D7 barra de conversa, A8 histórico da cena), mais um script de verificação automática no fim. Marque conforme for passando.
 
 ## 1. Preparação
 
 - [ ] Foundry VTT **14** (mínimo exigido pelo manifesto; testado em 14.367).
 - [ ] Módulo ativo em *Game Settings → Manage Modules → TBG*.
-- [ ] Console do navegador (F12) mostra `TBG | TBG 0.12.0 pronto` e nenhum erro em vermelho.
+- [ ] Console do navegador (F12) mostra `TBG | TBG 0.14.0 pronto` e nenhum erro em vermelho.
+- [ ] A barra de conversa aparece no pé da tela, acima da barra de macros (ou do HUD da Eternia), e o campo de digitar do chat lateral não aparece mais.
 - [ ] **Opção do core ligada**: *Configure Settings → Core → Enable Chat Bubbles*. Ela é por cliente e o TBG a respeita: desligada, nenhum balão aparece. Esta é a causa mais comum de "não funciona".
 - [ ] Uma cena aberta com **pelo menos dois tokens** de atores diferentes, afastados um do outro (uns dois terços da largura da tela). Eles são necessários para testar as colunas independentes.
 - [ ] Zoom de forma que os dois tokens apareçam com espaço livre acima deles.
@@ -15,84 +16,82 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 
 ## 2. A1 — Motor de balões
 
-- [ ] **Balão simples.** Selecione um token e mande `Olá`. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
+- [ ] **Balão simples.** Selecione um token e mande `Olá` pela barra de conversa. Um balão branco aparece acima dele, com o nome em negrito, dois-pontos e o texto.
 - [ ] **Em linha.** Dentro do balão, a imagem do token, o nome em negrito com dois-pontos e a fala ficam na mesma linha.
-- [ ] **Linha única.** Mande uma fala de 100 caracteres: o balão não quebra, fica numa linha só, mais comprido, centrado no token e crescendo por igual para os dois lados. Comece outra mensagem com `- ` (o campo vira lista) e cole um texto de duas linhas: os dois balões também ficam numa linha só.
+- [ ] **Linha única.** Mande uma fala de 100 caracteres: o balão não quebra, fica numa linha só, mais comprido, centrado no token e crescendo por igual para os dois lados.
 - [ ] **Compacto.** A borda é fina e o texto fica colado nela; o retrato aparece num quadradinho escuro encostado na borda esquerda.
 - [ ] **Retrato.** Desligue *Retrato no balão* nas configurações e confirme que a imagem some e o nome continua no lugar.
 - [ ] **Empilhamento.** Mande mais duas mensagens seguidas. Os balões antigos sobem e o novo nasce embaixo, colado no token. Nenhum deles se sobrepõe.
-- [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem sozinhos e desaparecem ao passar do limite. O movimento deve ser fluido, sem tranco. Ajuste *Velocidade de subida* ao gosto da mesa.
+- [ ] **Subida contínua.** Pare de escrever e observe. Os balões sobem sozinhos, devagar (15 pixels por segundo no padrão), e desaparecem ao passar do limite. O movimento deve ser fluido, sem tranco. Ajuste *Velocidade de subida* ao gosto da mesa.
 - [ ] **Acompanha o token.** Com balões na tela, arraste o token para o outro lado da cena. Os balões vão junto, mantendo a pilha.
 - [ ] **Zoom.** Dê zoom para dentro e para fora. Com *Escala dos balões* em "Fixa na tela", o balão mantém o mesmo tamanho de leitura em qualquer zoom. Troque para "Junto com o mapa" e confirme que passa a encolher e crescer com a cena.
 - [ ] **Colunas independentes (free flow).** Selecione o segundo token, distante, e mande uma mensagem. O balão dele aparece na coluna dele e **não** empurra os balões do primeiro token.
 - [ ] **Linha a linha.** Troque *Empilhamento dos balões* para "Linha a linha" e repita o passo anterior. Agora a mensagem de um token empurra os balões do outro também. Volte para "Free flow" depois.
-- [ ] **Edição.** Edite o conteúdo de uma mensagem que ainda tem balão na tela. O texto do balão muda junto.
-- [ ] **Interruptor geral.** Desligue *Ativar TBG*. Os balões somem e novas mensagens não geram balão. Ligue de novo.
+- [ ] **Interruptor geral.** Desligue *Ativar balões do TBG*. Os balões somem e novas mensagens não geram balão, mas a barra e o histórico continuam. Ligue de novo.
 
 ## 3. A3 — Modos de fala
 
-Sempre com um token selecionado.
+Sempre com um token selecionado, escrevendo na barra de conversa.
 
 | Teste | O que digitar | O que deve acontecer |
 |---|---|---|
-| Fala | `Bom dia` | Balão normal; no chat, cartão em personagem |
+| Fala | `Bom dia` | Balão normal; no histórico da cena, uma linha em personagem |
 | Grito por comando | `/shout ACORDEM` | Balão maior, texto em negrito |
 | Grito por teclado | `ACORDEM` + **Shift+Enter** | Igual ao anterior, sem digitar comando |
 | Pensar | `/think será?` | Balão pontilhado arredondado; só o Mestre e o dono veem |
 | Ação por asterisco | `*saca a espada*` | Balão em itálico com só "saca a espada", sem o nome antes |
 | Ação por comando | `/me ajeita o casaco` | Igual ao anterior, e no cartão do chat o nome aparece uma vez só, no cabeçalho |
 | Sussurro | `/w Nome oi` | Balão tracejado cinza, só para quem recebe |
-| Fala explícita | `/say olá` | Balão normal mesmo com outro modo de mensagem ativo |
-| Fora do personagem | `/off já volto` | Mensagem fora do personagem no chat e balão acinzentado e translúcido sobre o token |
+| Fala explícita | `/say olá` | Balão normal, como o texto normal |
+| Fora do personagem | `/off já volto` | Balão acinzentado e translúcido sobre o token, com o nome do jogador |
 | Fora do personagem (Foundry) | `/ooc já volto` | Igual ao `/off`: o comando do Foundry continua valendo |
 
 - [ ] Todos os nove casos acima.
-- [ ] **Sem token.** Deselecione tudo e mande `teste`. A mensagem sai fora de personagem, sem balão, e nada quebra.
+- [ ] **Sem token, Mestre.** Como Mestre, deselecione tudo e mande `teste`: um balão comum, sem nome nem retrato, aparece no meio da tela de todos.
+- [ ] **Sem token, jogador.** Como jogador sem token nem personagem, mande `teste`: um balão cinza com o nome do jogador aparece no meio da tela.
+- [ ] **Modo de mensagem.** Escolha a rolagem privada nos botões do chat lateral e mande uma fala com token: ela continua pública. Role `/roll 1d20`: a rolagem sai privada.
 - [ ] **Sem token, em personagem.** Ainda sem token, tente `/think algo`. Aparece um aviso pedindo para selecionar um token.
 - [ ] **Comandos do core intactos.** `/roll 1d20` rola normalmente e **não** vira balão.
 
 ## 4. B1 — Modo Narrador
 
-- [ ] **Botão.** Ao lado dos ícones de modo de mensagem (embaixo do chat) existe um botão de pergaminho.
-- [ ] **Ligar.** Clique nele. Aparece a notificação "Modo Narrador ligado" e o botão fica marcado como pressionado.
-- [ ] **Narrar.** Com um token ainda selecionado, digite `O vento uiva na floresta`. A mensagem sai como **Narrador**, num cartão igual ao dos jogadores com o fundo um pouco mais escuro, e **não** gera balão sobre o token, mesmo com o token selecionado.
+- [ ] **Retrato da barra.** Sem token selecionado, o começo da barra mostra uma coroa.
+- [ ] **Ligar.** Clique na coroa. Aparece a notificação "Modo Narrador ligado" e o começo da barra mostra um pergaminho.
+- [ ] **Narrar.** Selecione um token e digite `O vento uiva na floresta`. A mensagem sai como **Narrador**, no balão do narrador no meio da tela, e **não** gera balão sobre o token, mesmo com o token selecionado.
 - [ ] **Comandos passam.** Ainda em Modo Narrador, `/roll 1d20` continua rolando dado normalmente.
-- [ ] **Desligar.** Clique de novo. Notificação "Modo Narrador desligado" e o token volta a falar.
+- [ ] **Desligar.** Clique de novo no retrato da barra. Notificação "Modo Narrador desligado" e o token volta a falar.
 - [ ] **Atalho.** Repita ligando e desligando com **Alt+N**.
 - [ ] **Narração pontual.** Com o modo desligado, mande `/n A porta range`. Sai como Narrador sem trocar o modo.
 - [ ] **Narração com `=`.** Com o modo desligado, mande `= O sino toca ao longe =`. Sai como Narrador, sem os sinais de igual. Num cliente de jogador, o mesmo texto é recusado com o aviso "Só o Mestre pode narrar."
 - [ ] **Nome.** Mude *Nome do narrador* nas configurações para algo como `Cardinal` e confirme que as narrações passam a usar esse nome.
-- [ ] **Só Mestre.** Num cliente de jogador, o botão de pergaminho não aparece e `/n` é recusado.
+- [ ] **Só Mestre.** Num cliente de jogador, clicar no retrato da barra só leva o cursor para a barra, e `/n` é recusado.
 
-## 4b. Contador de caracteres e digitação
+## 4b. D7 — Barra de conversa, contador e digitação
 
-- [ ] **Contador.** No canto inferior direito do campo do chat aparece `0/100`; com a barra lateral recolhida e o chat no canto da tela, ele fica logo acima dos ícones de modo de mensagem. Ele sobe conforme você digita. O teto é fixo: não existe configuração para mudá-lo e ele é o mesmo em qualquer mundo.
-- [ ] **Legibilidade.** O contador é branco com contorno preto e continua legível sobre fundo claro e escuro.
-- [ ] **Sem empurrar.** Como Mestre, com o chat aberto na barra lateral, os botões de exportar e de limpar o chat aparecem inteiros. Com a barra recolhida, a coluna de ícones do chat tem a largura de um ícone.
-- [ ] **Aviso.** Até a metade do limite ele fica branco; da metade em diante vai ficando vermelho, chegando a vermelho pleno no limite.
-- [ ] **Bloqueio.** No limite, o editor para de aceitar novas letras. Colar um texto maior que o limite também é recusado.
-- [ ] **Apagar sempre funciona.** Mesmo com o campo cheio, apagar letra a letra e selecionar tudo e apagar continuam funcionando.
-- [ ] **Digitando.** Comece a escrever com um token selecionado: um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito, **inclusive para você mesmo**. Com dois clientes, aparece nos dois.
-- [ ] **Some ao enviar.** Ao enviar a mensagem, o selo some e vira o balão da fala.
-- [ ] **Encaixe.** Dê zoom para dentro e para fora: o selo continua dentro do token, no mesmo canto, porque acompanha a arte em vez do tamanho de tela.
-- [ ] **Some ao apagar.** Apague tudo que digitou sem enviar: o selo some nas duas telas.
-- [ ] **Some ao parar.** Escreva algo e pare **sem apagar**: em cerca de três segundos o selo some nas duas telas, mesmo com o texto no campo. Volte a digitar e ele reaparece.
-- [ ] **Some ao sair do campo.** Escreva e clique no mapa: o selo some na hora.
+- [ ] **Lugar.** A barra fica no pé da tela, centrada, logo acima da barra de macros ou do HUD da Eternia. Com o painel do HUD aberto, o painel pode cobrir a barra até ser fechado.
+- [ ] **Quem fala.** O retrato no começo da barra é o do token selecionado (ou do personagem atribuído); sem nada, a coroa para o Mestre e o avatar para o jogador. Passe o mouse para ver o nome.
+- [ ] **Enter fala, Shift+Enter grita.** O campo esvazia na hora e o cursor continua nele.
+- [ ] **Setas.** Mande três mensagens; com a barra focada, a seta para cima traz a última, de novo a anterior, e a seta para baixo volta até o rascunho.
+- [ ] **Esc.** Esc tira o cursor da barra sem soltar o token selecionado nem fechar janelas.
+- [ ] **Enter no mapa.** Com o mapa em foco (nada digitando), Enter leva o cursor para a barra.
+- [ ] **Contador.** No fim da barra aparece `0/100`, que sobe conforme você digita e vai ficando vermelho da metade em diante. O teto é fixo e igual em qualquer mundo.
+- [ ] **Bloqueio.** No limite, a barra para de aceitar letras. Colar um texto maior que o limite também é recusado. Apagar sempre funciona.
+- [ ] **Digitando.** Comece a escrever com um token selecionado: o selo com três pontinhos aparece dentro da arte do token, inclusive para você. Com dois clientes, aparece nos dois.
+- [ ] **Some ao enviar, ao apagar, ao parar três segundos e ao sair da barra.**
 - [ ] **Troca de token.** Escreva com um token, selecione outro e continue: o selo passa para o novo token.
-- [ ] **Narrando.** Com o Modo Narrador ligado, escrever não mostra selo no token selecionado.
-- [ ] **Só no chat.** Abra um diário em edição, escreva mais de 100 caracteres e aperte Shift+Enter: o diário aceita o texto, nada vai para o chat, e o contador e o selo não reagem.
+- [ ] **Sem token ou narrando.** Sem token, ou com o Modo Narrador ligado, escrever não mostra selo.
+- [ ] **Desempenho baixo.** Com o Modo de Desempenho do Foundry em Baixo, os pontinhos param de pular.
 
 ## 4c. B8 — Balão do narrador
 
-- [ ] **Balão.** Mande `/n A neblina desce.` (ou `= A neblina desce. =`, ou narre com o Modo Narrador): além do cartão no chat, um balão aparece no meio da tela, no mesmo formato e tamanho dos balões dos jogadores (ícone de pergaminho no lugar do retrato, "Nome:" e texto na mesma linha), mas preto com letras brancas. Ele sobe devagar e some.
+- [ ] **Balão.** Mande `/n A neblina desce.` (ou `= A neblina desce. =`, ou narre com o Modo Narrador): um balão aparece no meio da tela, no mesmo formato e tamanho dos balões dos jogadores (ícone de pergaminho no lugar do retrato, "Nome:" e texto na mesma linha), mas preto com letras brancas. Ele sobe devagar e some.
 - [ ] **Para todos.** Com dois clientes, o balão do narrador aparece nas duas telas.
 - [ ] **Sem cena.** Desative a cena (ou abra o mundo sem cena ativa) e narre: o balão aparece do mesmo jeito.
 - [ ] **Empilhamento.** Mande três `/n` seguidos: o novo nasce embaixo e empurra os anteriores, sem sobreposição. No máximo três ficam na tela.
-- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo do balão do narrador* ajusta o mínimo.
+- [ ] **Tempo.** Um texto longo fica mais tempo do que um curto. *Tempo mínimo dos balões do meio da tela* ajusta o mínimo, também para a voz do Mestre.
 - [ ] **Linha única.** Uma narração de 100 caracteres fica numa linha só, centrada no meio da tela e crescendo por igual para os dois lados, mesmo quando passa da largura da área entre as colunas da interface.
-- [ ] **Edição.** Edite a narração enquanto o balão está na tela: o texto muda. Apague a mensagem: o balão some.
 - [ ] **Movimento reduzido.** Com *Mostrar animações* desligado no Windows (ou *Modo fotossensível* do Foundry), o balão do narrador só aparece e some, sem subir.
-- [ ] **Desligar.** Desligue *Balão do narrador*: a narração volta a ser só o cartão do chat.
+- [ ] **Desligar.** Desligue *Balão do narrador*: a narração fica só no histórico da cena.
 
 ## 4d. A9 — Balão de uso da ficha
 
@@ -107,36 +106,30 @@ Com o token do personagem na cena e uma arma na ficha.
 - [ ] **Digitado.** `/roll 1d20` cru não gera balão; `/roll 1d20 # Ataque` gera "rolou Ataque". Uma fala com link de item (`@UUID`) continua sendo balão de fala.
 - [ ] **Desligar.** Desligue *Balão de uso da ficha*: usar itens volta a não gerar balão.
 
-## 4e. C2 — Abas ON, OFF e ROLL
+## 4e. Chat lateral e A8 — Histórico da cena
 
-Com o Custom Chat Tabs ativo e *Enable Chat Tabs* ligado nele.
-
-- [ ] **Ligar pelo TBG.** Desligue *Enable Chat Tabs* no Custom Chat Tabs e recarregue como Mestre: o TBG pergunta se pode ligá-lo. Aceite e a página recarrega com ON, OFF e ROLL. Recusando, nada muda e a pergunta volta no próximo carregamento; desligar *Abas ON, OFF e ROLL* no TBG a cala. Jogadores nunca a veem.
-- [ ] **Abas.** O topo do chat mostra só ON, OFF e ROLL, com o ON selecionado ao abrir o mundo. All, IC, OOC e Rolls não aparecem.
-- [ ] **ON.** Falas, `/shout`, `*ação*`, `/me`, `/think`, `/w` com token e narração aparecem no ON.
-- [ ] **OFF.** `/off`, texto sem token selecionado e `/w` sem token aparecem no OFF.
-- [ ] **ROLL.** `/roll`, rolagens e cartões de item da ficha aparecem no ROLL.
-- [ ] **Cartão sussurrado.** Um cartão de sistema sussurrado ao Mestre sem token, como o de uma rolagem privada do Mestre, aparece no ROLL, não no OFF.
-- [ ] **Notificações.** Com a barra lateral recolhida e o ON ativo, mande `/off oi` e `/roll 1d20`: as duas notificações aparecem no canto da tela. A aba ativa filtra só o histórico.
-- [ ] **Cartões seguidos.** Use o mesmo item duas vezes seguidas pela ficha: os dois cartões mantêm o cabeçalho com o nome de quem usou. Só falas seguidas do mesmo personagem se agrupam.
-- [ ] **Nada some.** Nenhuma mensagem fica fora das três abas.
-- [ ] **Desligar.** Desligue *Abas ON, OFF e ROLL* e recarregue: as abas do Custom Chat Tabs voltam como estavam.
+- [ ] **Só rolagens.** Fale, grite, sussurre e narre: nada disso aparece no chat lateral, nem nas notificações do canto da tela com a barra lateral recolhida, nem acende o aviso da aba do chat. `/roll 1d20` e os cartões da ficha aparecem como sempre.
+- [ ] **Modos de mensagem.** Os botões de modo de mensagem continuam embaixo do chat lateral e mudam a privacidade das rolagens.
+- [ ] **Botão.** Na barra de ferramentas dos tokens existe o botão do histórico (balões de conversa); na Eternia, logo abaixo do Mercado.
+- [ ] **Janela.** O botão abre o *Histórico da cena* com o nome da cena e cada fala com hora, retrato e nome; a voz do Mestre aparece como "Mestre", com a coroa, e a narração numa faixa escura. Clicar de novo no botão fecha.
+- [ ] **Ao vivo.** Com a janela aberta, mande uma fala: ela entra no fim e a janela desce. Suba para reler e mande outra: a janela fica onde você parou.
+- [ ] **Clique.** Clique numa fala de um token: o mapa vai até ele.
+- [ ] **Privacidade.** Num cliente de jogador, os sussurros e pensamentos de outros não aparecem no histórico.
+- [ ] **Troca de cena.** Ative outra cena como Mestre: a conversa da cena anterior some (as rolagens ficam) e o histórico da cena nova começa vazio. Só olhar outra cena, sem ativar, não apaga nada.
+- [ ] **Abas do Custom Chat Tabs.** Num mundo de antes da 0.14 com as abas dele ligadas, o Mestre recebe uma vez a pergunta se pode desligá-las; aceitando, a página recarrega sem abas.
 
 ## 4f. D8 — Guia do jogador
 
 - [ ] **Botão.** Em *Configurações → TBG* existe *Guia do jogador* com o botão *Criar guia no diário*. Num cliente de jogador ele não aparece.
-- [ ] **Criar.** Clique e confirme: surge a notificação, o diário "Guia do TBG" abre com dez páginas e os balões de exemplo têm o mesmo visual dos balões do mapa.
+- [ ] **Criar.** Clique e confirme: surge a notificação, o diário "Guia do TBG" abre com dez páginas e os balões e a barra de exemplo têm o mesmo visual dos de verdade.
 - [ ] **Jogador.** Num cliente de jogador o diário abre com oito páginas; "Mestre: narração" e "Mestre: configurações" não aparecem.
 - [ ] **Atualizar.** Mova o diário para uma pasta e clique de novo: a notificação diz que foi atualizado, e o diário continua na pasta, com as mesmas permissões.
 - [ ] **Valores da mesa.** Mude o *Nome do narrador* e atualize o guia: a página de narração passa a usar o nome novo.
 
 ## 5. C1 — Tema do chat
 
-- [ ] **Retrato.** Cada cartão do chat tem a imagem do falante, uma só vez. Se o sistema de jogo já desenha um avatar (o dnd5e faz isso), o TBG não acrescenta outro.
-- [ ] **Cor.** O nome aparece na cor do jogador que escreveu.
-- [ ] **Agrupamento.** Duas mensagens seguidas do mesmo falante: a segunda não repete o cabeçalho e encosta na primeira.
-- [ ] **Quebra do agrupamento.** Uma mensagem de outro falante no meio faz o cabeçalho voltar.
-- [ ] **Tipos distintos.** Grito em negrito, pensamento em itálico com balãozinho, ação em itálico, narração no cartão igual ao dos jogadores, com o fundo um pouco mais escuro.
+- [ ] **Retrato.** Cada cartão de rolagem do chat lateral tem a imagem do falante, uma só vez. Se o sistema de jogo já desenha um avatar (o dnd5e e a Eternia fazem isso), o TBG não acrescenta outro.
+- [ ] **Cor.** O nome aparece na cor do jogador que rolou.
 - [ ] **Desligar.** Desligue *Tema do chat* e confirme que os cartões voltam ao visual padrão do Foundry, sem quebrar nada.
 
 ## 6. Com mais de um cliente
@@ -147,12 +140,12 @@ O teste que mais importa, porque balão é coisa de mesa. Abra uma janela anôni
 - [ ] **Pensamento é privado.** `/think` do Mestre **não** aparece para o jogador, nem no chat nem como balão.
 - [ ] **Sussurro é privado.** `/w Jogador oi` aparece só para o alvo, com balão, e não para terceiros.
 - [ ] **Jogador fala.** O jogador seleciona o próprio token e fala: o balão aparece nas duas telas.
-- [ ] **Narração.** A narração do Mestre chega ao jogador como cartão, sem balão.
+- [ ] **Narração e voz do Mestre.** A narração e a fala do Mestre sem token chegam ao jogador como balões no meio da tela, e entram no histórico dele.
 - [ ] **Sem duplicata.** Nenhuma mensagem gera dois balões sobrepostos em nenhuma das telas.
 
 ## 7. Verificação automática
 
-Cole no console (F12) do cliente do **Mestre**, com uma cena aberta. O script cria dois atores e tokens de teste, exercita tudo e imprime uma tabela de aprovado e reprovado. Ele apaga os atores, tokens e mensagens que criou, depois de uma pausa: apagar uma mensagem enquanto o Foundry ainda anima a notificação dela faz o core lançar um erro que não tem relação com o TBG.
+Cole no console (F12) do cliente do **Mestre**, com uma cena aberta. O script cria dois atores e tokens de teste, escreve pela barra de conversa, exercita tudo e imprime uma tabela de aprovado e reprovado. Para testar a troca de cena, ele cria e ativa uma cena temporária e depois volta para a cena aberta: a conversa do mundo inteiro é apagada, como numa troca de cena de verdade, então rode num mundo de teste. No fim ele apaga os atores, os tokens, a cena e as mensagens que criou.
 
 ```js
 await (async () => {
@@ -164,94 +157,116 @@ await (async () => {
   const overlap = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
   const umaLinha = el => { const s = getComputedStyle(el); return el.offsetHeight < parseFloat(s.lineHeight) * 1.5 + el.offsetHeight - el.clientHeight + parseFloat(s.paddingTop) * 2; };
   const bubbles = id => [...document.querySelectorAll(`#tbg-bubbles .tbg-bubble[data-token-id="${id}"]`)];
-  const kindOf = el => [...el.classList].find(c => c.startsWith("tbg-bubble--") && !c.endsWith("visible"))?.slice(12);
-  const typing = async (tokenId, on) => { const layer = await import("/modules/tbg/scripts/bubbles/layer.mjs"); await layer.bubbleLayer.setTyping(tokenId, on, "Digitando"); await pause(200); };
+  const bubbleOf = id => document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${id}"]`);
+  const bannerOf = id => document.querySelector(`#tbg-banners .tbg-banner[data-message-id="${id}"]`);
+  const logOf = id => ui.chat.element.querySelector(`.chat-log [data-message-id="${id}"]`);
+  const escondido = el => !el || getComputedStyle(el).display === "none";
+  const kindOf = el => [...(el?.classList ?? [])].find(c => c.startsWith("tbg-bubble--") && !c.endsWith("visible"))?.slice(12);
+  const barra = () => document.getElementById("tbg-chat-bar");
+  const campo = () => barra().querySelector(".tbg-bar__input");
+  const tecla = (key, extra = {}) => campo().dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true, cancelable: true, ...extra }));
+  const say = async (texto, extra = {}) => {
+    campo().focus();
+    campo().value = texto;
+    campo().dispatchEvent(new InputEvent("input", { bubbles: true }));
+    tecla("Enter", extra);
+    await pause(500);
+    return game.messages.contents.at(-1);
+  };
   const module = game.modules.get("tbg");
+  const inicio = Date.now();
+  const modo = game.settings.get("core", "messageMode");
 
   check("módulo ativo", module?.active === true, module?.version ?? "ausente");
   check("opção do core Enable Chat Bubbles", game.settings.get("core", "chatBubbles") === true);
   check("container no HUD", !!document.getElementById("tbg-bubbles"));
   check("comandos registrados", Object.keys(foundry.applications.sidebar.tabs.ChatLog.CHAT_COMMANDS).filter(k => k.startsWith("tbg")).length === 7);
-  check("botão do Narrador", !!document.querySelector("#message-modes [data-tbg-narrator]"));
-  check("atalho registrado", game.keybindings.actions.has("tbg.toggleNarrator"));
-  check("contador de caracteres", !!document.querySelector(".tbg-char-count"));
+  check("atalhos registrados", game.keybindings.actions.has("tbg.toggleNarrator") && game.keybindings.actions.has("tbg.focusChatBar"));
   check("container do balão do narrador", document.getElementById("tbg-banners")?.parentElement?.id === "ui-middle");
+  check("barra de conversa no pé da tela", barra()?.parentElement?.id === "ui-bottom" && barra() === barra().parentElement.firstElementChild);
+  check("campo do chat lateral escondido", escondido(document.getElementById("chat-message")));
+  check("modos de mensagem continuam", !escondido(document.getElementById("message-modes")));
+  check("velocidade de subida padrão", game.settings.settings.get("tbg.bubbleRiseSpeed").default === 15);
+  const ferramentas = Object.values(ui.controls.controls.tokens.tools).sort((a, b) => a.order - b.order).map(t => t.name);
+  const mercado = ferramentas.indexOf("eterniaMarket");
+  check("botão do histórico", mercado < 0 ? ferramentas.includes("tbgHistory") : ferramentas[mercado + 1] === "tbgHistory", ferramentas.join(" > "));
 
-  const moldura = document.createElement("div");
-  moldura.style.cssText = "position:fixed;left:10px;top:10px;width:400px;height:200px;z-index:1000;background:#fff";
-  moldura.append(foundry.applications.elements.HTMLProseMirrorElement.create({ name: "tbgProbe", value: `<p>${"a".repeat(200)}</p>`, toggled: false }));
-  document.body.append(moldura);
-  await pause(800);
-  const vazou = [];
-  const escuta = Hooks.on("tbg.chatInputChanged", n => vazou.push(n));
-  const diario = moldura.querySelector(".ProseMirror");
-  diario.focus();
-  getSelection().selectAllChildren(diario.querySelector("p"));
-  getSelection().collapseToEnd();
-  document.execCommand("insertText", false, "XYZ");
-  await pause(300);
-  Hooks.off("tbg.chatInputChanged", escuta);
-  check("plugin só no editor do chat", diario.textContent.length === 203 && !vazou.length, `${diario.textContent.length} caracteres, ${vazou.length} eventos`);
-  moldura.remove();
-
-  const firstMessage = game.messages.size;
-  const type = Object.keys(game.system.documentTypes.Actor)[0];
+  const tipos = Object.keys(game.system.documentTypes.Actor);
+  const type = tipos.find(t => t !== "character") ?? tipos[0];
   const actors = await Actor.createDocuments([{ name: "TBG Teste A", type }, { name: "TBG Teste B", type }]);
-  const docs = await Promise.all(actors.map((a, i) => a.getTokenDocument({ x: 400 + i * 1600, y: 800 })));
+  const actorA = actors.find(a => a.name === "TBG Teste A");
+  const docs = await Promise.all(["TBG Teste A", "TBG Teste B"].map((name, i) => actors.find(a => a.name === name).getTokenDocument({ x: canvas.dimensions.sceneX + 300 + i * 1500, y: canvas.dimensions.sceneY + 700 })));
   const tokens = await canvas.scene.createEmbeddedDocuments("Token", docs.map(d => d.toObject()));
   await pause(800);
-  const [tokenA, tokenB] = tokens.map(t => canvas.tokens.get(t.id));
-  const say = async t => { await ui.chat.processMessage(t); await pause(300); };
+  const [tokenA, tokenB] = ["TBG Teste A", "TBG Teste B"].map(name => canvas.tokens.get(tokens.find(t => t.actorId === actors.find(a => a.name === name).id).id));
 
   tokenA.control({ releaseOthers: true });
+  await pause(200);
+  const rotulo = barra().querySelector(".tbg-bar__speaker").ariaLabel;
+  check("retrato do token na barra", !barra().querySelector(".tbg-bar__portrait").hidden && rotulo.includes("TBG Teste A"), rotulo);
   await say("Primeira."); await say("Segunda."); await say("Terceira.");
   await pause(400);
-
   const stack = bubbles(tokenA.id);
   check("três balões, sem duplicata", stack.length === 3, `${stack.length} na tela`);
   const boxes = stack.map(rect);
   let colisoes = 0;
   for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) if (overlap(boxes[i], boxes[j])) colisoes++;
   check("nenhuma sobreposição", colisoes === 0, `${colisoes} colisões`);
+  const terceira = game.messages.contents.at(-1);
+  check("fala fora do chat lateral", escondido(logOf(terceira.id)));
+  check("cena gravada na fala", terceira.getFlag("tbg", "scene") === canvas.scene.id);
 
-  const before = bubbles(tokenA.id).map(b => at(b).x);
+  const antesX = bubbles(tokenA.id).map(b => at(b).x);
   await tokenA.document.update({ x: tokenA.document.x + 400 }, { animate: false });
   await pause(600);
-  check("balões acompanham o token", bubbles(tokenA.id).map(b => at(b).x).every((v, i) => Math.abs(v - before[i] - 400) < 5));
+  check("balões acompanham o token", bubbles(tokenA.id).map(b => at(b).x).every((v, i) => Math.abs(v - antesX[i] - 400) < 5));
 
   const subida = game.settings.get("tbg", "bubbleRiseSpeed");
   await game.settings.set("tbg", "bubbleRiseSpeed", 0);
-  const antes = bubbles(tokenA.id).map(b => at(b).y);
+  const antesY = bubbles(tokenA.id).map(b => at(b).y);
   tokenB.control({ releaseOthers: true });
   await say("Coluna separada.");
   await pause(400);
-  check("colunas independentes (free flow)", JSON.stringify(antes) === JSON.stringify(bubbles(tokenA.id).map(b => at(b).y)));
+  check("colunas independentes (free flow)", JSON.stringify(antesY) === JSON.stringify(bubbles(tokenA.id).map(b => at(b).y)));
   await game.settings.set("tbg", "bubbleRiseSpeed", subida);
 
   tokenA.control({ releaseOthers: true });
-  for (const [text, esperado] of [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"], ["/ooc do Foundry", "ooc"], ["/off fora do personagem", "ooc"]]) {
-    await say(text);
-    const last = game.messages.contents.at(-1);
-    const b = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${last.id}"]`);
-    check(`comando ${text.split(" ")[0]}`, kindOf(b ?? document.createElement("div")) === esperado, b ? kindOf(b) : "nenhum balão");
+  await game.settings.set("core", "messageMode", "gm");
+  const publica = await say("Fala no modo privado.");
+  check("fala pública em qualquer modo de mensagem", publica.whisper.length === 0 && publica.style === CONST.CHAT_MESSAGE_STYLES.IC);
+  await game.settings.set("core", "messageMode", modo);
+  const grito = await say("ACORDEM", { shiftKey: true });
+  check("Shift+Enter grita", kindOf(bubbleOf(grito.id)) === "shout");
+  for (const [texto, esperado] of [["/shout GRITO", "shout"], ["/think penso", "think"], ["*age*", "action"], ["/me gesticula", "action"], ["/say falo", "say"], ["/ooc do Foundry", "ooc"], ["/off fora do personagem", "ooc"]]) {
+    const m = await say(texto);
+    check(`comando ${texto.split(" ")[0]}`, kindOf(bubbleOf(m.id)) === esperado, kindOf(bubbleOf(m.id)) ?? "nenhum balão");
   }
-
   const acao = game.messages.contents.findLast(m => m.getFlag("tbg", "kind") === "action");
-  const acaoTexto = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${acao.id}"] .tbg-bubble__text`)?.textContent.trim();
+  const acaoTexto = bubbleOf(acao.id)?.querySelector(".tbg-bubble__text")?.textContent.trim();
   check("ação sem o nome antes", !acao.content.startsWith(`${acao.alias} `) && !acaoTexto?.startsWith(acao.alias), acaoTexto);
+  const off = game.messages.contents.at(-1);
+  check("/off sai fora do personagem", off.style === CONST.CHAT_MESSAGE_STYLES.OOC);
 
-  const contador = document.querySelector(".tbg-char-count");
-  const contorno = getComputedStyle(contador).getPropertyValue("-webkit-text-stroke");
-  check("contador com contorno preto", contorno.includes("rgb(0, 0, 0)"), contorno);
-  check("limite de 100 caracteres", contador.textContent.endsWith("/100"), contador.textContent);
-  const controles = document.getElementById("chat-controls");
-  if (!document.getElementById("message-modes").classList.contains("vertical")) check("contador não empurra os botões do chat", controles.scrollWidth <= controles.clientWidth + 1, `${controles.scrollWidth}/${controles.clientWidth}`);
-
-  const ooc = game.messages.contents.at(-1);
-  check("/off sai fora do personagem", ooc.style === CONST.CHAT_MESSAGE_STYLES.OOC);
-  const oocCard = ui.chat.element.querySelector(`[data-message-id="${ooc.id}"]`);
-  const visiveis = [...oocCard.querySelectorAll("img")].filter(i => getComputedStyle(i).display !== "none");
-  check("sem retrato duplicado no chat", visiveis.length <= 1, `${visiveis.length} de ${oocCard.querySelectorAll("img").length}`);
+  tecla("ArrowUp");
+  check("seta para cima traz a última", campo().value === "/off fora do personagem", campo().value);
+  tecla("ArrowDown");
+  check("descer volta ao rascunho", campo().value === "");
+  campo().value = "a".repeat(100);
+  campo().dispatchEvent(new InputEvent("input", { bubbles: true }));
+  campo().setSelectionRange(100, 100);
+  const extra = new InputEvent("beforeinput", { inputType: "insertText", data: "b", bubbles: true, cancelable: true });
+  campo().dispatchEvent(extra);
+  const contador = barra().querySelector(".tbg-bar__count");
+  check("limite de 100 caracteres", extra.defaultPrevented && contador.textContent === "100/100", contador.textContent);
+  campo().value = "";
+  campo().dispatchEvent(new InputEvent("input", { bubbles: true }));
+  campo().focus();
+  tecla("Escape");
+  check("Esc sai da barra sem soltar o token", document.activeElement !== campo() && tokenA.controlled);
+  window.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", code: "Enter", bubbles: true, cancelable: true }));
+  await pause(100);
+  check("Enter leva o cursor para a barra", document.activeElement === campo());
+  campo().blur();
 
   const balao = bubbles(tokenA.id).find(b => b.querySelector(".tbg-bubble__portrait"));
   if (balao) {
@@ -262,56 +277,69 @@ await (async () => {
     check("fala na mesma linha do nome", t.l >= n.r - 1 && t.t < n.b && t.b > n.t);
     check("balão de fala curta numa linha", umaLinha(balao), `${balao.offsetHeight}px`);
   }
-
-  await say("Uma fala comprida, no limite de cem caracteres, continua numa linha só e cresce para os dois lados.");
-  const longa = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${game.messages.contents.at(-1).id}"]`);
+  const longa = bubbleOf((await say("Uma fala comprida, no limite de cem caracteres, continua numa linha só e cresce para os dois lados.")).id);
   const centro = longa ? at(longa).x + longa.offsetWidth * new DOMMatrix(longa.style.transform).m11 / 2 : NaN;
   check("fala longa numa linha só", !!longa && umaLinha(longa), longa ? `${longa.offsetWidth} × ${longa.offsetHeight}px` : "nenhum balão");
   check("fala longa centrada no token", Math.abs(centro - tokenA.center.x) < 1, `${Math.round(centro)} / ${tokenA.center.x}`);
-  await say("<ul><li><p>Travessão que virou lista no campo do chat</p></li></ul>");
-  const lista = document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${game.messages.contents.at(-1).id}"]`);
-  check("lista do editor numa linha só", !!lista && umaLinha(lista), lista ? `${lista.offsetHeight}px` : "nenhum balão");
 
-  await say("/n A neblina desce.");
-  const narration = game.messages.contents.at(-1);
-  check("narração sem balão", narration.getFlag("tbg", "kind") === "narration" && !document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${narration.id}"]`), narration.alias);
-  check("tema aplicado ao cartão", ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`)?.classList.contains("tbg-kind-narration") === true);
-  const narrador = document.querySelector(`#tbg-banners .tbg-banner[data-message-id="${narration.id}"] .tbg-bubble--narration`);
-  const fala = bubbles(tokenA.id).find(b => b.classList.contains("tbg-bubble--say"));
-  const estilo = el => el ? getComputedStyle(el) : {};
-  check("balão do narrador no meio da tela", !!narrador);
+  canvas.tokens.releaseAll();
+  await pause(200);
+  check("coroa do Mestre sem token", barra().querySelector(".tbg-bar__icon").classList.contains("fa-crown"));
+  const mestre = await say("A porta range devagar.");
+  check("Mestre sem token fala sem falante", mestre.getFlag("tbg", "kind") === "say" && !mestre.speaker.token && !mestre.speaker.actor);
+  const meio = bannerOf(mestre.id);
+  check("balão do Mestre no meio da tela, sem nome", !!meio && kindOf(meio.querySelector(".tbg-bubble")) === "say" && !meio.querySelector(".tbg-bubble__name"));
+  const narracao = await say("/n A neblina desce.");
+  const narrador = bannerOf(narracao.id)?.querySelector(".tbg-bubble--narration");
+  check("narração sem balão no token", narracao.getFlag("tbg", "kind") === "narration" && !bubbleOf(narracao.id), narracao.alias);
+  check("balão do narrador no meio da tela", !!narrador && !!narrador.querySelector(".tbg-bubble__name"));
   const faixa = document.getElementById("tbg-banners").getBoundingClientRect();
   const caixa = narrador?.getBoundingClientRect();
   check("balão do narrador numa linha, centrado", !!narrador && umaLinha(narrador) && Math.abs(caixa.left + caixa.right - faixa.left - faixa.right) < 2);
-  check("balão do narrador preto com letra branca", estilo(narrador).backgroundColor === "rgb(0, 0, 0)" && estilo(narrador).color === "rgb(255, 255, 255)");
+  const fala = bubbles(tokenA.id).find(b => b.classList.contains("tbg-bubble--say"));
+  const estilo = el => el ? getComputedStyle(el) : {};
   check("balão do narrador no formato do jogador", ["fontSize", "padding", "borderRadius", "borderTopWidth"].every(p => estilo(narrador)[p] === estilo(fala)[p]), `${estilo(narrador).fontSize} / ${estilo(fala).fontSize}`);
-  const cartaoNarracao = ui.chat.element.querySelector(`[data-message-id="${narration.id}"]`);
-  check("cartão da narração um pouco mais escuro", estilo(cartaoNarracao).backgroundImage?.includes("linear-gradient") === true);
-
-  await say("= O sino toca ao longe. =");
-  const marcada = game.messages.contents.at(-1);
+  check("narração fora do chat lateral", escondido(logOf(narracao.id)));
+  const marcada = await say("= O sino toca ao longe. =");
   check("= texto = vira narração", marcada.getFlag("tbg", "kind") === "narration" && marcada.content === "O sino toca ao longe.", marcada.content);
 
-  const bubbleOf = id => document.querySelector(`#tbg-bubbles .tbg-bubble[data-message-id="${id}"]`);
+  tokenA.control({ releaseOthers: true });
   const falante = ChatMessage.getSpeaker({ token: tokenA.document });
-  const [espada] = await actors[0].createEmbeddedDocuments("Item", [{ name: "TBG Espada", type: Object.keys(game.system.documentTypes.Item)[0] }]);
+  const [espada] = await actorA.createEmbeddedDocuments("Item", [{ name: "TBG Espada", type: Object.keys(game.system.documentTypes.Item)[0] }]);
   const cartao = await ChatMessage.create({ speaker: falante, content: `<div data-item-id="${espada.id}">cartão</div>` });
   await pause(400);
-  const usoTexto = bubbleOf(cartao.id)?.textContent.trim();
-  check("uso de item vira balão", kindOf(bubbleOf(cartao.id) ?? document.createElement("div")) === "usage" && usoTexto?.includes("TBG Espada"), usoTexto ?? "nenhum balão");
+  check("uso de item vira balão", kindOf(bubbleOf(cartao.id)) === "usage" && bubbleOf(cartao.id)?.textContent.includes("TBG Espada"));
+  check("cartão no chat lateral", !!logOf(cartao.id) && !escondido(logOf(cartao.id)));
   const dano = await ChatMessage.create({ speaker: falante, flavor: "Dano", rolls: [await new Roll("1d6").evaluate()], flags: { tbgTeste: { originatingMessage: cartao.id } } });
   await pause(400);
   check("rolagem ligada ao uso não repete", !bubbleOf(dano.id));
   const percepcao = await ChatMessage.create({ speaker: falante, flavor: "Percepção", rolls: [await new Roll("1d20").evaluate()] });
   await pause(400);
-  check("rolagem com rótulo vira balão", bubbleOf(percepcao.id)?.textContent.includes("Percepção") === true, bubbleOf(percepcao.id)?.textContent.trim() ?? "nenhum balão");
-  const percepcaoCard = ui.chat.element.querySelector(`.chat-log [data-message-id="${percepcao.id}"]`);
-  check("cartão seguido não se agrupa", !!percepcaoCard && !percepcaoCard.classList.contains("tbg-continued"));
-  await say("/roll 1d20");
-  check("rolagem crua sem balão", !bubbleOf(game.messages.contents.at(-1).id));
+  check("rolagem com rótulo vira balão", bubbleOf(percepcao.id)?.textContent.includes("Percepção") === true);
+  const crua = await say("/roll 1d20");
+  check("rolagem crua sem balão e no chat lateral", !bubbleOf(crua.id) && !escondido(logOf(crua.id)));
   const sussurrado = await ChatMessage.create({ speaker: falante, content: "<div>cartão de sistema</div>", whisper: [game.user.id] });
   await pause(400);
-  check("cartão sussurrado sem balão", !bubbleOf(sussurrado.id));
+  check("cartão sussurrado sem balão, no chat lateral", !bubbleOf(sussurrado.id) && !escondido(logOf(sussurrado.id)));
+  check("balão do core silenciado", document.querySelectorAll("#chat-bubbles .chat-bubble").length === 0);
+
+  document.querySelector('#scene-controls-tools [data-tool="tbgHistory"]')?.click();
+  await pause(900);
+  const linhas = [...document.querySelectorAll("#tbg-history .tbg-history__line")].map(l => l.dataset.messageId);
+  check("histórico com a conversa da cena", [terceira, grito, off, mestre, narracao].every(m => linhas.includes(m.id)), `${linhas.length} linhas`);
+  check("histórico sem rolagens nem cartões", ![cartao, percepcao, crua].some(m => linhas.includes(m.id)));
+  check("Mestre no histórico", document.querySelector(`#tbg-history [data-message-id="${mestre.id}"] .tbg-history__name`)?.textContent === game.i18n.localize("TBG.History.master"));
+
+  campo().focus();
+  campo().value = "digitando";
+  campo().dispatchEvent(new InputEvent("input", { bubbles: true }));
+  await pause(300);
+  check("indicador de digitação", !!document.querySelector(`#tbg-bubbles .tbg-typing[data-token-id="${tokenA.id}"]`));
+  campo().value = "";
+  campo().dispatchEvent(new InputEvent("input", { bubbles: true }));
+  campo().blur();
+  await pause(300);
+  check("indicador some ao apagar", !document.querySelector(".tbg-typing"));
 
   if (!game.journal.some(j => j.getFlag("tbg", "guide"))) {
     const { writeGuide } = await import("/modules/tbg/scripts/guide/guide.mjs");
@@ -321,53 +349,30 @@ await (async () => {
     const { INHERIT, NONE } = CONST.DOCUMENT_OWNERSHIP_LEVELS;
     check("páginas do Mestre ocultas", guia?.pages.filter(p => p.ownership.default === NONE).length === 2);
     check("páginas dos jogadores visíveis", guia?.pages.filter(p => p.ownership.default === INHERIT).length === 8);
-    check("exemplos com a marcação dos balões", guia?.pages.some(p => p.text.content.includes("tbg-bubble--say")) === true);
+    check("exemplos com a marcação dos balões e da barra", guia?.pages.some(p => p.text.content.includes("tbg-bubble--say")) && guia?.pages.some(p => p.text.content.includes("tbg-bar__input")));
     await guia?.sheet.close();
     await guia?.delete();
   }
 
-  const cct = game.modules.get("custom-chat-tabs");
-  const abas = cct?.active && game.settings.get("custom-chat-tabs", "enable") ? cct.api.getTabs() : null;
-  if (abas) {
-    const abaDe = m => ["tbg-on", "tbg-off", "tbg-roll"].filter(k => abas.get(k)?.filter(m));
-    const todas = document.querySelector('.custom-chat-tabs-tab[data-tab="all"]');
-    check("aba All escondida", !!todas && getComputedStyle(todas).display === "none");
-    check("narração no ON", abaDe(narration).join() === "tbg-on", abaDe(narration).join());
-    check("/off no OFF", abaDe(ooc).join() === "tbg-off", abaDe(ooc).join());
-    check("rolagem no ROLL", abaDe(percepcao).join() === "tbg-roll", abaDe(percepcao).join());
-    const cartaoMestre = await ChatMessage.create({ speaker: { alias: "Sistema" }, content: "<div>cartão do sistema</div>", whisper: [game.user.id] });
-    check("cartão sussurrado sem falante no ROLL", abaDe(cartaoMestre).join() === "tbg-roll", abaDe(cartaoMestre).join());
-    const expandida = ui.sidebar.expanded;
-    ui.sidebar.collapse();
-    cct.api.setActiveTab("tbg-on", ui.chat.element);
-    await pause(500);
-    await say("/roll 1d20");
-    const aviso = document.querySelector(`#chat-notifications [data-message-id="${game.messages.contents.at(-1).id}"]`);
-    check("notificação de outra aba aparece", !!aviso && aviso.style.display !== "none", aviso ? aviso.style.display : "sem notificação");
-    if (expandida) ui.sidebar.expand();
-    const foraDeUma = game.messages.contents.slice(firstMessage).filter(m => abaDe(m).length !== 1).length;
-    check("toda mensagem em uma aba só", !foraDeUma, `${foraDeUma} fora`);
-  }
-  check("balão do core silenciado", document.querySelectorAll("#chat-bubbles .chat-bubble").length === 0);
-
-  await typing(tokenA.id, true);
-  check("indicador de digitação", !!document.querySelector(`#tbg-bubbles .tbg-typing[data-token-id="${tokenA.id}"]`));
-  await typing(tokenA.id, false);
-  check("indicador some ao parar", !document.querySelector(".tbg-typing"));
-
-  tokenA.control({ releaseOthers: true });
-  Hooks.callAll("tbg.chatInputChanged", 5);
-  await pause(300);
-  const seloLigou = !!document.querySelector(`#tbg-bubbles .tbg-typing[data-token-id="${tokenA.id}"]`);
-  await pause(3200);
-  const seloFicou = !!document.querySelector(".tbg-typing");
-  check("selo some com o texto parado", seloLigou && !seloFicou, seloLigou ? (seloFicou ? "continuou na tela" : "") : "não apareceu");
-  Hooks.callAll("tbg.chatInputChanged", 0);
-
+  canvas.tokens.releaseAll();
   await pause(1500);
+  const original = canvas.scene;
+  const [temporaria] = await Scene.createDocuments([{ name: "TBG Cena Temporária", width: 1000, height: 800 }]);
+  await temporaria.activate();
+  for (let i = 0; i < 40 && canvas.scene?.id !== temporaria.id; i++) await pause(250);
+  await pause(1500);
+  check("trocar de cena apaga a conversa", ![terceira, mestre, narracao].some(m => game.messages.has(m.id)));
+  check("trocar de cena guarda rolagens e cartões", game.messages.has(crua.id) && game.messages.has(cartao.id));
+  check("histórico da cena nova vazio", !!document.querySelector("#tbg-history .tbg-history__empty"));
+  await original.activate();
+  for (let i = 0; i < 40 && canvas.scene?.id !== original.id; i++) await pause(250);
+  await pause(1500);
+  await temporaria.delete();
+  await foundry.applications.instances.get("tbg-history")?.close();
+
   await canvas.scene.deleteEmbeddedDocuments("Token", tokens.map(t => t.id));
   await Actor.deleteDocuments(actors.map(a => a.id));
-  await ChatMessage.deleteDocuments(game.messages.contents.slice(firstMessage).map(m => m.id));
+  await ChatMessage.deleteDocuments(game.messages.filter(m => m.timestamp >= inicio).map(m => m.id));
   await pause(600);
   const orfaos = document.querySelectorAll(tokens.map(t => `#tbg-bubbles .tbg-bubble[data-token-id="${t.id}"]`).join(", ")).length;
   check("nenhum balão órfão no fim", orfaos === 0, `${orfaos} restaram`);
@@ -379,7 +384,7 @@ await (async () => {
 })();
 ```
 
-O script não cobre o que depende de olho humano ou de um segundo cliente: aparência dos balões e do balão do narrador, subida contínua, zoom, agrupamento no chat, uso de item de verdade pela ficha e os testes da seção 6. Faça esses à mão. A contagem de órfãos olha só os tokens de teste, porque balões de mensagens anteriores podem estar legitimamente na tela.
+O script não cobre o que depende de olho humano ou de um segundo cliente: aparência dos balões, da barra e da janela do histórico, subida contínua, zoom, uso de item de verdade pela ficha e os testes da seção 6. Faça esses à mão. A contagem de órfãos olha só os tokens de teste, porque balões de mensagens anteriores podem estar legitimamente na tela.
 
 ## 8. Ao reportar um problema
 

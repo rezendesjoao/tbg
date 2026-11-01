@@ -2,6 +2,30 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.14.0] — 2026-11-01
+
+### Adicionado
+- D7: a **barra de conversa**, no pé da tela, acima da barra de macros ou do que tomou o lugar dela (o HUD da Eternia): é onde todo mundo escreve. Enter fala, Shift+Enter grita, Esc sai da barra sem soltar o token e as setas trazem de volta as últimas mensagens mandadas. O retrato no começo mostra por quem você vai falar (o token, o personagem, a coroa do Mestre sem token ou o pergaminho do narrador), e o contador de 100 caracteres fica no fim. Com o mapa em foco, Enter leva o cursor até ela (atalho configurável).
+- A8: o **Histórico da cena**, um botão na barra de ferramentas dos tokens (na Eternia, logo abaixo do Mercado) que abre a conversa da cena que se está vendo, com a hora de cada fala, ao vivo; um clique numa fala leva o mapa até quem falou. Cada um vê só o que pode ver, como nos balões.
+- O Mestre sem token selecionado fala num **balão sem nome** no meio da tela, como a voz do mundo; `*ação*` sem token sai em bege, também sem nome. No histórico, essas falas aparecem como "Mestre".
+- Quem fala sem token na cena (um jogador cujo token não está no mapa, um personagem atribuído sem token, um sussurro sem token) ganha o balão no meio da tela, no estilo do tipo de fala.
+- Ao ativar outra cena, o Mestre ativo apaga a conversa das outras cenas: o histórico recomeça a cada cena, e o registro do mundo não cresce sem fim.
+- Ao abrir um mundo de antes da 0.14, o Mestre ativo leva a *Velocidade de subida* gravada no padrão antigo (35) para o novo e, se o Custom Chat Tabs estiver com as abas ligadas, pergunta uma vez se pode desligá-las.
+- Com o Modo de Desempenho do Foundry em Baixo, os três pontinhos do selo de digitação param de pular.
+
+### Alterado
+- O chat lateral fica **só com as rolagens e os cartões**: o campo de digitar some, e a conversa não aparece no log nem nas notificações do canto da tela, nem acende o aviso de mensagem nova. Os botões de modo de mensagem continuam lá, só para a privacidade das rolagens.
+- O texto simples é sempre fala, qualquer que seja o modo de mensagem escolhido: com token, em personagem; sem token, fora do personagem, para o jogador, e o balão sem nome, para o Mestre.
+- Os balões **sobem mais devagar**: a *Velocidade de subida* padrão cai de 35 para 15 pixels por segundo, e os balões do meio da tela seguem a mesma configuração.
+- O interruptor do Modo Narrador passa para o retrato da barra de conversa; o atalho Alt+N continua.
+- *Ativar TBG* passa a se chamar *Ativar balões do TBG* e liga e desliga os balões; a barra e o histórico funcionam sempre. *Tempo mínimo do balão do narrador* vira *Tempo mínimo dos balões do meio da tela*.
+- Guia do jogador: a página das abas virou *Histórico da cena*, e as outras falam da barra de conversa.
+
+### Removido
+- C2: as abas ON, OFF e ROLL do Custom Chat Tabs e a configuração *Abas ON, OFF e ROLL*, junto com o aviso para ligar as abas dele.
+- As configurações *Falar em personagem automaticamente*, que virou o comportamento da barra, e *Agrupar mensagens consecutivas*, que só valia para as falas do chat lateral.
+- O Shift+Enter, o limite e o contador no campo do chat do Foundry, que não aparece mais.
+
 ## [0.13.0] — 2026-10-18
 
 ### Adicionado

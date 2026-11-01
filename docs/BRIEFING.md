@@ -1,6 +1,6 @@
 # TBG — Briefing de funcionalidades
 
-**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. D8 aprovada e entregue na 0.10.0 (21/09/2026). Refinamentos de A3 (`/off`), B1 (`= texto =` e cartão de narração) e B8 (balão do narrador) aprovados e entregues na 0.11.0 (21/09/2026). Balão em linha única (A1 e B8) e limite de 100 caracteres aprovados e entregues na 0.12.0 (12/10/2026). Refinamentos de C2 (notificações, cartões sussurrados no ROLL, cartões sem agrupar e aviso para ligar as abas) e o contador fora da barra do chat aprovados e entregues na 0.13.0 (18/10/2026). Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
+**Aprovado em 11/09/2026.** Fase 1 entregue na versão 0.2.0 e A5 na 0.3.0 (11/09/2026). A9 e B8 aprovados e entregues na 0.7.0 (21/09/2026). C2 entregue na 0.9.0 (21/09/2026), integrada ao Custom Chat Tabs. D8 aprovada e entregue na 0.10.0 (21/09/2026). Refinamentos de A3 (`/off`), B1 (`= texto =` e cartão de narração) e B8 (balão do narrador) aprovados e entregues na 0.11.0 (21/09/2026). Balão em linha única (A1 e B8) e limite de 100 caracteres aprovados e entregues na 0.12.0 (12/10/2026). Refinamentos de C2 (notificações, cartões sussurrados no ROLL, cartões sem agrupar e aviso para ligar as abas) e o contador fora da barra do chat aprovados e entregues na 0.13.0 (18/10/2026). Em 01/11/2026 o usuário pediu a conversa no jeito das salas de bate-papo dos jogos: D7 (a barra de conversa) e A8 (o Histórico da cena) entregues na 0.14.0, com a voz do Mestre sem token, a subida mais lenta e o chat lateral só com rolagens; C2 saiu. Marque `[x]` quando um item for entregue. A fase indica a ordem de implementação. Esforço: **P** horas · **M** 1–3 dias · **G** semana ou mais. "Sobreposição" cita módulos existentes parecidos (para integrar, não copiar).
 
 Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commits e conversas.
 
@@ -63,8 +63,8 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 
 ## Fase 3 — Conforto
 
-- [ ] **A8. Histórico de balões da cena** — **M**
-  Painel lateral (aberto por um botão `>`) com tudo que foi "dito" na cena atual: retrato, filtro por token e por modo, busca. Clicar numa linha centra o canvas no token e re-mostra o balão por alguns segundos. Opcional: "replay" acelerado dos últimos minutos, para recapitular.
+- [x] **A8. Histórico de balões da cena** — **M**
+  Janela aberta por um botão na barra de ferramentas dos tokens (na Eternia, logo abaixo do Mercado) com tudo que foi "dito" na cena que se está vendo: hora, retrato, nome, o tipo (sussurro, pensamento, fora do personagem) e a fala, ao vivo e descendo sozinha. Clicar numa linha centra o canvas no token. Ao ativar outra cena, o Mestre ativo apaga a conversa das outras cenas, e o histórico recomeça (pedido do usuário). Entregue na 0.14.0 (01/11/2026), sem filtro, busca e replay, que seguem como ideias.
   Sobreposição: Scene Specific Messages (v12, só filtro).
 
 - [ ] **C7. Responder / citar** — **P/M**
@@ -75,8 +75,8 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   Campo de busca no chat (texto ou falante) e botão "⬇ N novas" quando você rolou para cima e chegaram mensagens.
   Sobreposição: Yuuko (busca).
 
-- [ ] **D7. Modo "sem chat aberto"** — **P/M**
-  Para quem joga com a sidebar recolhida: um input flutuante minimalista embaixo do canvas (Enter abre) para falar sem abrir a sidebar. O jogo vira "só canvas + balões".
+- [x] **D7. Modo "sem chat aberto"** — **P/M**
+  A barra de conversa no pé da tela, acima da barra de macros ou do que tomou o lugar dela, é o único lugar onde se digita (Enter leva o cursor até ela, Enter fala, Shift+Enter grita, Esc sai, as setas repetem as últimas falas). O campo do chat lateral some, e o chat lateral fica só com rolagens e cartões. O Mestre sem token fala num balão sem nome no meio da tela; o retrato da barra mostra quem fala e liga o Modo Narrador. Entregue na 0.14.0 (01/11/2026).
   Sobreposição: Sleek Chat (v13, parcial).
 
 - [ ] **C10. Exportar a sessão como "diário"** — **P/M**
@@ -97,7 +97,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
   `/cena texto` mostra o texto grande centralizado sobre o canvas para todos, com fade, opcionalmente escurecendo a cena e pausando balões.
   **Recomendação:** o Narrator Tools já faz isso e está ativo no v14. Se instalado, `/cena` delega a ele; versão própria só se o visual precisar ser diferente.
 
-- [x] **C2. Abas ON / OFF / ROLL** — **M**
+- [ ] ~~**C2. Abas ON / OFF / ROLL**~~ — **M** — *retirada na 0.14.0 a pedido do usuário (01/11/2026): o chat lateral ficou só com rolagens e a conversa foi para a barra e o histórico (D7, A8); o TBG pergunta uma vez ao Mestre se pode desligar as abas do Custom Chat Tabs.*
   Sem reimplementar abas: com o Custom Chat Tabs ativo, o TBG registra pela API dele as abas **ON** (em personagem e narração), **OFF** (fora do personagem) e **ROLL** (rolagens e cartões da ficha), que juntas cobrem toda mensagem, abre o chat no ON e esconde as abas All, IC, OOC e Rolls dele (pedido do usuário). Setting `chatTabs` desliga e devolve as abas originais. A aba ativa filtra só o histórico: a notificação do canto da tela mostra toda mensagem nova. Com o *Enable Chat Tabs* do Custom Chat Tabs desligado, o Mestre recebe um aviso para ligá-lo.
 
 ---

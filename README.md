@@ -1,57 +1,59 @@
 # TBG
 
-Módulo para **Foundry VTT v14** feito para jogar RPG por texto: balões de fala que empilham sobre os tokens e sobem até sumir, um **Modo Narrador** para o Mestre falar sem estar preso a um personagem, e um chat de sidebar com cara de mensageiro.
+Módulo para **Foundry VTT v14** feito para jogar RPG por texto, no jeito das salas de bate-papo dos jogos: uma **barra de conversa** no pé da tela, balões de fala que empilham sobre os tokens e sobem devagar até sumir, o **Histórico da cena** para reler o que foi dito e um **Modo Narrador** para o Mestre.
 
-> **Estado: 0.12.0.** Fase 1 completa: motor de balões (A1), modos de fala (A3), Modo Narrador (B1) e tema do chat (C1). Da Fase 2 já entraram o indicador de digitação sobre o token (A5), o balão do narrador (B8) e o balão de uso da ficha (A9). O que vem depois está em [docs/BRIEFING.md](docs/BRIEFING.md).
+> **Estado: 0.14.0.** A conversa saiu do chat lateral: escreve-se na barra do pé da tela (D7), o chat lateral fica só com as rolagens e os cartões, e o Histórico da cena (A8) guarda a conversa de cada cena até o Mestre ativar outra. O Mestre sem token fala num balão sem nome. Antes disso já estavam o motor de balões (A1), os modos de fala (A3), o Modo Narrador (B1), o tema do chat (C1), o indicador de digitação (A5), o balão do narrador (B8), o balão de uso da ficha (A9) e o guia no diário (D8). O resto está em [docs/BRIEFING.md](docs/BRIEFING.md).
 
 ## Como funciona
 
-Com um token selecionado, você fala como ele. No v14 o Foundry só faz isso no modo "Public as Character"; a setting **Falar em personagem automaticamente** (ligada por padrão) faz o texto simples sair em personagem também no modo público, sem mexer no seletor de modos. Cada fala vira um balão compacto acima do token: borda fina, texto colado na moldura e o retrato e o nome na mesma linha da fala: "Nome: fala". O balão nunca quebra: é sempre uma linha só, centrada no token, que cresce por igual para os dois lados conforme a fala. O balão novo nasce embaixo e empurra os anteriores para cima; um relógio sobe todos devagar; quem passa do limite some. No empilhamento *Free flow*, o padrão, balões de tokens distantes não se empurram, então cada grupo de conversa forma a própria coluna.
+A **barra de conversa** fica no pé da tela, acima da barra de macros ou do que tomou o lugar dela (o HUD da Eternia, por exemplo). Com um token selecionado, você fala como ele; o retrato no começo da barra mostra por quem você vai falar. Cada fala vira um balão compacto acima do token: borda fina, texto colado na moldura e o retrato e o nome na mesma linha da fala: "Nome: fala". O balão nunca quebra: é sempre uma linha só, centrada no token, que cresce por igual para os dois lados. O balão novo nasce embaixo e empurra os anteriores; um relógio sobe todos devagar (15 pixels por segundo, para dar tempo de ler); quem passa do limite some. No empilhamento *Free flow*, o padrão, balões de tokens distantes não se empurram, então cada grupo de conversa forma a própria coluna.
+
+| Tecla na barra | O que faz |
+|---|---|
+| **Enter** | Fala. Com o mapa em foco, leva o cursor para a barra |
+| **Shift+Enter** | Grita |
+| **↑** e **↓** | Trazem de volta o que você já mandou |
+| **Esc** | Sai da barra, sem soltar o token |
+
+Quem fala sem token na cena ganha o balão no meio da tela: o **Mestre sem token selecionado** fala num balão comum sem nome, como a voz do mundo; um jogador sem token fala fora do personagem, num balão cinza com o nome dele. Os botões de modo de mensagem do Foundry continuam no chat lateral, mas só escolhem quem vê as rolagens: o texto da barra sai sempre para a mesa, e o segredo vai por sussurro.
 
 ### Modos de fala
 
 | Como | O que acontece |
 |---|---|
 | Texto normal com token selecionado | Fala: balão normal |
+| Texto normal, Mestre sem token | Voz do Mestre: balão sem nome no meio da tela |
 | `/shout texto` ou **Shift+Enter** | Grito: negrito, balão maior |
 | `/think texto` (ou `/pensar`) | Pensamento: balão-nuvem só para o Mestre e o dono |
 | `*texto*` ou `/me texto` | Ação: balão em itálico, só o que foi feito, sem o nome antes |
-| `/w Nome texto` | Sussurro em personagem: balão itálico só para quem recebe |
-| `/say texto` (ou `/falar`) | Fala explícita, mesmo com outro modo ativo |
+| `/w Nome texto` ou `/w [Nome Composto] texto` | Sussurro: balão itálico só para quem recebe |
+| `/say texto` (ou `/falar`) | Fala, como o texto normal |
 | `/n texto` (ou `/narrar`) ou `= texto =` | Narração pontual (só Mestre) |
 | `/off texto` | Fora do personagem: balão acinzentado e translúcido. O `/ooc` do Foundry continua funcionando do mesmo jeito |
 
+### O chat lateral e o Histórico da cena
+
+O campo de digitar do chat lateral some: ninguém escreve nele. O chat fica só com a mecânica, as rolagens e os cartões da ficha, e a conversa nem chega a ele (nem nas notificações do canto da tela).
+
+O botão **Histórico da cena**, na barra de ferramentas dos tokens, abre a conversa da cena que você está vendo, da mais antiga à mais nova, com a hora de cada fala: falas, narração, o que foi dito fora do personagem e os sussurros e pensamentos que você pode ver. A janela acompanha a conversa ao vivo e desce sozinha quando já estava no fim; um clique numa fala leva o mapa até quem falou. Na Eternia, o botão fica logo abaixo do Mercado. Quando o Mestre ativa outra cena, a conversa das outras cenas é apagada, e o histórico recomeça.
+
 ### Contador de caracteres e digitação
 
-Ao lado dos modos de mensagem fica um contador que mostra quanto você já escreveu. O teto é de **100 caracteres**, igual para toda mesa e todo jogador, Mestre incluído, sem configuração que possa divergir. O contador é branco com contorno preto, para se ler sobre qualquer fundo, e vai ficando vermelho da metade do limite em diante. No limite o editor para de aceitar texto, inclusive colado, mas apagar continua sempre possível.
+No fim da barra, um contador mostra quanto você já escreveu. O teto é de **100 caracteres**, igual para toda mesa e todo jogador, Mestre incluído, e o contador vai ficando vermelho da metade do limite em diante. No limite a barra para de aceitar texto, inclusive colado, mas apagar continua sempre possível.
 
-Enquanto alguém escreve, um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito. Ele aparece para todo mundo, inclusive para quem está digitando, e acompanha o token no zoom. Aparece só enquanto há digitação: some ao enviar, ao apagar o texto, ao sair do campo ou após três segundos sem digitar, mesmo com texto no campo. O limite, o Shift+Enter e o selo valem só para o campo do chat, nunca para diários ou descrições.
+Enquanto alguém escreve na barra, um selo pequeno com três pontinhos aparece dentro da arte do token, no canto superior direito. Ele aparece para todo mundo, inclusive para quem está digitando, e acompanha o token no zoom. Some ao enviar, ao apagar o texto, ao sair da barra ou após três segundos sem digitar.
 
 ### Modo Narrador
 
-Botão 📜 ao lado dos modos de mensagem, ou **Alt+N**. Ligado, tudo que o Mestre digita sem comando sai como "Narrador", sem balão sobre token. Desligado, volta ao normal. Para uma narração avulsa sem ligar o modo, use `/n texto` ou escreva a frase entre sinais de igual: `= A neblina desce sobre a vila =`, com ou sem espaço junto do `=`. Só o Mestre narra; um jogador que tentar recebe o aviso "Só o Mestre pode narrar." O nome do narrador é configurável.
+Clique no retrato do começo da barra (a coroa, quando nada está selecionado) ou use **Alt+N**. Ligado, tudo que o Mestre digita sem comando sai como "Narrador", no balão do narrador, e o começo da barra mostra um pergaminho. Para uma narração avulsa sem ligar o modo, use `/n texto` ou escreva a frase entre sinais de igual: `= A neblina desce sobre a vila =`. Só o Mestre narra; um jogador que tentar recebe o aviso "Só o Mestre pode narrar." O nome do narrador é configurável.
 
-No chat, a narração tem a cara de uma mensagem de jogador: retrato com o avatar do Mestre, nome na cor dele e fonte normal, só com o fundo num tom levemente mais escuro para se destacar.
+### Balões no meio da tela
 
-### Balão do narrador
-
-Toda narração, pelo Modo Narrador, por `/n` ou por `= texto =`, aparece também para todos num balão no meio da tela, com o mesmo formato e tamanho dos balões dos jogadores (quadradinho do retrato, "Nome:" em negrito e o texto na mesma linha, borda fina e rabinho), mas com fundo preto e letras brancas, e um pergaminho branco no quadradinho do retrato. Ele nasce um pouco abaixo do centro, sobe devagar e some; textos longos ficam mais tempo, até 30 segundos. Narrações seguidas empilham, até três na tela, todas na mesma velocidade, e cada uma fica numa linha só, crescendo por igual para os dois lados a partir do meio da tela. Funciona mesmo sem cena ativa e, com o movimento reduzido do sistema ou o modo fotossensível do Foundry, só aparece e some. Editar a narração atualiza o balão, e apagá-la o remove.
+Toda narração aparece para todos num balão no meio da tela, com o mesmo formato e tamanho dos balões dos jogadores, mas com fundo preto, letras brancas e um pergaminho no quadradinho do retrato. A conversa sem token (a voz do Mestre, um jogador sem token na cena) usa o mesmo lugar, no estilo do tipo de fala. Os balões nascem um pouco abaixo do centro, sobem na velocidade dos balões dos tokens e somem; textos longos ficam mais tempo, até 30 segundos. Empilham até três na tela e funcionam mesmo sem cena ativa; com o movimento reduzido do sistema ou o modo fotossensível do Foundry, só aparecem e somem.
 
 ### Balão de uso da ficha
 
 Quando alguém usa um item, uma característica ou uma rolagem pela ficha, em qualquer sistema, aparece sobre o token um balão bege com o ícone do item: "Kirito usou Espada Longa", ou "Kirito rolou Percepção" para rolagens sem item. Só o nome da ação, nunca o resultado. Um uso que gera várias mensagens (cartão, ataque, dano) mostra um balão só, e rolagens privadas ou cegas só aparecem para quem pode ver o cartão.
-
-### Abas ON, OFF e ROLL
-
-Com o [Custom Chat Tabs](https://github.com/Larkinabout/fvtt-custom-chat-tabs) ativo, o chat fica com três abas e abre na primeira:
-
-| Aba | O que mostra |
-|---|---|
-| **ON** | Em personagem: falas, gritos, ações, pensamentos, sussurros em personagem e narração |
-| **OFF** | Fora do personagem: `/off`, texto sem token e sussurros sem personagem |
-| **ROLL** | Rolagens e cartões da ficha |
-
-Toda mensagem cai em uma das três. As abas All, IC, OOC e Rolls do Custom Chat Tabs ficam escondidas enquanto isso estiver ligado; desligar *Abas ON, OFF e ROLL* devolve as originais.
 
 ### Guia do jogador
 
@@ -59,7 +61,9 @@ Em *Configurações → TBG → Criar guia no diário*, o Mestre cria no mundo o
 
 ### Configurações
 
-Mundo: interruptor geral, falar em personagem automaticamente, mostrar quem está digitando, balão de uso da ficha, balão do narrador e seu tempo mínimo, abas ON, OFF e ROLL, layout dos balões (free flow ou linha a linha), velocidade de subida, limite de subida, tempo máximo, retrato no balão, nome do narrador. Cliente: escala dos balões (tamanho fixo na tela ou junto com o mapa), tema do chat, agrupamento de mensagens consecutivas, log de debug.
+Mundo: interruptor dos balões, mostrar quem está digitando, balão de uso da ficha, balão do narrador e o tempo mínimo dos balões do meio da tela, layout dos balões (free flow ou linha a linha), velocidade de subida (15 por padrão), limite de subida, tempo máximo, retrato no balão, nome do narrador. Cliente: escala dos balões (tamanho fixo na tela ou junto com o mapa), tema do chat, log de debug. Teclas: **Enter** (ir para a barra de conversa) e **Alt+N** (Modo Narrador).
+
+Ao abrir um mundo de antes da 0.14 pela primeira vez, o Mestre ativo leva a velocidade de subida gravada no padrão antigo (35) para o novo e, se o Custom Chat Tabs estiver com as abas ligadas, pergunta uma vez se pode desligá-las.
 
 ## Instalação
 
@@ -71,7 +75,7 @@ O Foundry lê módulos de `Data/modules/<id>`. Crie uma *junction* apontando par
 New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\FoundryVTT\Data\modules\tbg" -Target "C:\caminho\para\tbg"
 ```
 
-Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.12.0 pronto`.
+Depois: *Return to Setup* → abra o mundo → *Manage Modules* → marque **TBG**. No console (F12) aparece `TBG | TBG 0.14.0 pronto`.
 
 Com `"hotReload": true` no `Config/options.json` do Foundry, mudanças em CSS, HBS e JSON de idioma aparecem sem recarregar.
 
@@ -88,7 +92,8 @@ Enquanto o repositório for privado, o link só funciona para quem tem acesso.
 ## Compatibilidade
 
 - Foundry VTT **14** (testado em 14.367). Não roda em v13.
-- Agnóstico de sistema. Sem dependências obrigatórias. Recomendados: Narrator Tools, Custom Chat Tabs, Cautious Gamemaster's Pack.
+- Agnóstico de sistema. Sem dependências obrigatórias. Recomendados: Narrator Tools, Cautious Gamemaster's Pack.
+- Na Eternia, o botão do histórico entra logo abaixo do Mercado e a barra fica acima do HUD; o visual de pergaminho vem do próprio sistema.
 - API: `game.modules.get("tbg").api` expõe `say(token, html, { kind })`, `narrate(html)`, `toggleNarrator()`, `isEnabled()` e `KINDS`.
 
 ## Desenvolvimento

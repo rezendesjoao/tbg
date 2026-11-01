@@ -1,5 +1,4 @@
 import { KINDS, MODULE_ID } from "../constants.mjs";
-import { SETTINGS, getSetting } from "../settings.mjs";
 import { localize, stripParagraph } from "../utils.mjs";
 import { narrate } from "./narrator.mjs";
 
@@ -19,7 +18,7 @@ const OFF_PATTERN = /^(\/off )([^]*)/i;
 
 /**
  * Registra os comandos de fala, o `/off` e o `/ooc` com balão, a narração por `/n` e por `= texto =`,
- * o `/me` sem nome repetido e o falante em sussurros.
+ * o `/me` sem nome repetido, o texto simples como fala e o falante em sussurros.
  */
 export function registerChatCommands() {
   const { CHAT_COMMANDS } = foundry.applications.sidebar.tabs.ChatLog;
@@ -27,7 +26,7 @@ export function registerChatCommands() {
   CHAT_COMMANDS.ooc = withBubbleToken(CHAT_COMMANDS.ooc);
   CHAT_COMMANDS.tbgOff = { ...CHAT_COMMANDS.ooc, rgx: OFF_PATTERN };
   CHAT_COMMANDS.emote = withoutNamePrefix(CHAT_COMMANDS.emote);
-  Hooks.on("chatMessage", speakInCharacterByDefault);
+  Hooks.on("chatMessage", speakByDefault);
   Hooks.on("chatMessage", keepWhisperSpeaker);
   Hooks.on("preCreateChatMessage", restoreWhisperSpeaker);
 }
@@ -92,13 +91,24 @@ function narrateCommand(_command, match) {
   return false;
 }
 
-function speakInCharacterByDefault(chatLog, message, chatData) {
-  if (!getSetting(SETTINGS.AUTO_IN_CHARACTER) || !hasSpeaker(chatData)) return;
-  if (game.settings.get("core", "messageMode") !== "public") return;
+/**
+ * Texto sem comando é sempre fala, qualquer que seja o modo de mensagem, que só escolhe a privacidade das rolagens:
+ * com falante, em personagem; o Mestre sem token fala num balão sem nome; o jogador sem token, fora do personagem.
+ */
+function speakByDefault(chatLog, message, chatData) {
   const [command] = chatLog.constructor.parse(message);
   if (command !== "none") return;
-  const content = withLineBreaks(stripParagraph(message));
-  ChatMessage.implementation.create({ ...chatData, content }, { messageMode: "ic" });
+  const data = { ...chatData, content: withLineBreaks(stripParagraph(message)) };
+  if (hasSpeaker(data)) {
+    setKind(data, KINDS.SAY);
+    ChatMessage.implementation.create(data, { messageMode: "ic" });
+    return false;
+  }
+  const { OTHER, OOC } = CONST.CHAT_MESSAGE_STYLES;
+  data.speaker = { scene: data.speaker?.scene ?? game.user.viewedScene, actor: null, token: null, alias: "" };
+  data.style = game.user.isGM ? OTHER : OOC;
+  setKind(data, game.user.isGM ? KINDS.SAY : KINDS.OOC);
+  ChatMessage.implementation.create(data, { messageMode: "public" });
   return false;
 }
 

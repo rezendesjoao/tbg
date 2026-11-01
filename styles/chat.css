@@ -1,3 +1,7 @@
+#chat-message {
+  display: none;
+}
+
 .chat-message.tbg-has-portrait {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -27,79 +31,10 @@
   color: var(--tbg-author-color, inherit);
 }
 
-.tbg-message.tbg-continued {
-  margin-top: -4px;
-  padding-top: 0;
-  border-top: 0;
-}
-
-.tbg-has-portrait.tbg-continued > .tbg-portrait {
-  visibility: hidden;
-}
-
-.tbg-message.tbg-continued .message-sender {
-  display: none;
-}
-
-.tbg-message.tbg-continued .message-header {
-  min-height: 0;
-}
-
-.tbg-kind-shout .message-content {
-  font-weight: 700;
-}
-
-.tbg-kind-think .message-content {
-  font-style: italic;
-  opacity: 0.85;
-}
-
-.tbg-kind-think .message-content::before {
-  content: "💭 ";
-}
-
-.tbg-kind-action .message-content {
-  font-style: italic;
-}
-
-.tbg-kind-ooc .message-content {
-  opacity: 0.8;
-}
-
-.tbg-kind-narration {
-  background: linear-gradient(var(--tbg-narration-shade), var(--tbg-narration-shade)), var(--chat-message-background);
-}
-
-.custom-chat-tabs-bar:has([data-tab="tbg-on"]) :is([data-tab="all"], [data-tab="ic"], [data-tab="ooc"], [data-tab="rolls"]) {
-  display: none;
-}
-
 .tbg-message.tbg-roll .message-content {
   font-size: 0.9em;
 }
 
-.tbg-char-count {
-  position: absolute;
-  z-index: 1;
-  padding: 0 6px;
-  white-space: nowrap;
-  font-size: var(--tbg-char-count-size);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: color-mix(in srgb, var(--tbg-char-count-base), var(--tbg-char-count-peak) calc(var(--tbg-char-ratio, 0) * 100%));
-  -webkit-text-stroke: var(--tbg-char-count-stroke) var(--tbg-char-count-outline);
-  paint-order: stroke fill;
-  transition: color 150ms linear;
-  pointer-events: none;
-}
-
-.chat-form .tbg-char-count {
-  right: var(--chat-message-spacing, 0px);
-  bottom: 6px;
-}
-
-.tbg-char-count:has(+ #message-modes.vertical) {
-  bottom: calc(100% + 4px);
-  left: 50%;
-  translate: -50% 0;
+.chat-log > .chat-message.tbg-talk {
+  display: none;
 }

@@ -1,0 +1,140 @@
+.tbg-history .window-content {
+  padding: 0;
+}
+
+.tbg-history__body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tbg-history__scene {
+  flex: none;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--tbg-history-line);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tbg-history__scene i {
+  margin-right: 4px;
+  opacity: 0.6;
+}
+
+.tbg-history__log {
+  flex: 1;
+  margin: 0;
+  padding: 6px 6px 8px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.tbg-history__line {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: 6px;
+  margin: 0;
+  padding: 3px 5px;
+  border-radius: 4px;
+  line-height: 1.35;
+}
+
+.tbg-history__line[data-action] {
+  cursor: pointer;
+}
+
+.tbg-history__line[data-action]:hover {
+  background: var(--tbg-history-hover);
+}
+
+.tbg-history__time {
+  padding-top: 1px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
+}
+
+.tbg-history__portrait {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 4px;
+  object-fit: cover;
+  font-size: 11px;
+}
+
+i.tbg-history__portrait {
+  background: var(--tbg-bubble-portrait-bg);
+  color: #ffffff;
+}
+
+.tbg-history__speech {
+  overflow-wrap: anywhere;
+}
+
+.tbg-history__name {
+  font-weight: 700;
+}
+
+.tbg-history__name::after {
+  content: ":";
+}
+
+.tbg-history__note {
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.65;
+}
+
+.tbg-history__text :is(p, blockquote, ul, ol, li, h1, h2, h3, h4, h5, h6) {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+.tbg-history__line--shout .tbg-history__text {
+  font-weight: 700;
+}
+
+.tbg-history__line--whisper .tbg-history__text,
+.tbg-history__line--think .tbg-history__text {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.tbg-history__line--action .tbg-history__text {
+  font-style: italic;
+}
+
+.tbg-history__line--action .tbg-history__name::after {
+  content: "";
+}
+
+.tbg-history__line--ooc {
+  font-size: 0.92em;
+  opacity: 0.75;
+}
+
+.tbg-history__line--narration {
+  margin: 2px 0;
+  background: var(--tbg-history-narration-bg);
+  color: var(--tbg-history-narration-fg);
+}
+
+.tbg-history__line--narration .tbg-history__text {
+  font-style: italic;
+}
+
+.tbg-history__empty {
+  padding: 24px 12px;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.6;
+}

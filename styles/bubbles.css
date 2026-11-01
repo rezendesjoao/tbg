@@ -220,3 +220,8 @@ i.tbg-bubble__icon {
   0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
   30% { opacity: 1; transform: translateY(calc(var(--tbg-typing-size) * -0.14)); }
 }
+
+body.performance-low .tbg-typing__dot {
+  opacity: 0.7;
+  animation: none;
+}

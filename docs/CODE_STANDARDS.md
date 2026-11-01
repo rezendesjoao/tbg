@@ -42,7 +42,7 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 
 - ApplicationV2 com HandlebarsApplicationMixin; DialogV2; zero jQuery; DOM nativo (`querySelector`, `append`, `classList`, `dataset`).
 - Handlebars em `templates/`; as páginas do guia usam só as classes `tbg-guide__*` de `styles/guide.css` e a marcação real dos balões. HTML em string JS só para um elemento trivial. Conteúdo vindo do usuário passa por `enrichHTML` ou `escapeHTML`; nunca `innerHTML` com texto cru.
-- CSS entra sozinho na layer `modules`: sem `!important`, sem seletor por id do core além dos pontos de montagem (`#hud`, `#ui-middle`, `#message-modes`, `#chat-message`).
+- CSS entra sozinho na layer `modules`: sem `!important`, sem seletor por id do core além dos pontos de montagem (`#hud`, `#ui-middle`, `#ui-bottom`, `#message-modes`, `#chat-message`).
 - Movimento contínuo com `requestAnimationFrame`; transição pontual com `Element.animate`. Medir DOM uma vez, fora do loop.
 
 ## 7. Erros e logs
@@ -58,10 +58,11 @@ Objetivo: um módulo pequeno, legível e cirúrgico. Cada arquivo faz uma coisa,
 - Agnóstico de sistema: só campos do core (`name`, `img`, `texture.src`, `color`). Nada de `actor.system.*`.
 - Exceção única: o resolvedor do balão de uso (`chat/usage-item.mjs`) lê `message.system` e as flags de outros pacotes de forma genérica, procurando ids e UUIDs de item sem conhecer nenhuma chave de sistema.
 - Coexistir com Narrator Tools, Custom Chat Tabs e CGMP: nunca desligar recurso alheio; marcar mensagens com `flags.tbg.kind` e classes `tbg-kind-*` para que eles filtrem.
-- Exceção decidida pelo usuário (21/09/2026): com a setting `chatTabs` ligada, o TBG esconde as abas All, IC, OOC e Rolls do Custom Chat Tabs, substituídas pelas ON, OFF e ROLL que ele registra pela API do módulo.
+- Exceção decidida pelo usuário (01/11/2026): o TBG esconde o campo do chat do core (`#chat-message`) e tira a conversa do chat lateral, que fica só com rolagens e cartões; a conversa vai pela barra de conversa e fica no histórico da cena, apagado quando o Mestre ativa outra cena. Uma vez por mundo, o Mestre ativo é perguntado se as abas do Custom Chat Tabs podem ser desligadas (pela setting dele, `enable`).
+- Integração com a Eternia sem ler dados dela: o botão do histórico entra logo abaixo do botão `eterniaMarket` quando ele existe (pelo `order` da ferramenta), e a barra é o primeiro filho de `#ui-bottom`, acima do HUD que a Eternia põe lá. O visual de pergaminho vem do `css/tbg.css` da Eternia, pelas variáveis `--tbg-*`.
 
 ## 9. Verificação e commits
 
-- Antes de commitar: `npm run lint` limpo, `node --check` em cada `.mjs`, teste manual no mundo `teste` seguindo a checklist do item em `docs/BRIEFING.md`.
+- Antes de commitar: `npm run lint` limpo, `node --check` em cada `.mjs`, teste no mundo seguindo a checklist do item em `docs/BRIEFING.md` e o roteiro automático de `docs/TESTING.md` §7.
 - Conventional Commits em pt-BR, escopo igual à pasta: `feat(bubbles): empilhamento free flow`, `fix(chat): …`, `docs: …`, `chore: …`. O corpo cita o código do briefing (A1, B1).
 - `CHANGELOG.md` e a versão em `module.json` e `package.json` mudam no mesmo commit da funcionalidade.

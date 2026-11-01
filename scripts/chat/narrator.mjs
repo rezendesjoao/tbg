@@ -1,13 +1,10 @@
-import { KINDS, MODULE_ID } from "../constants.mjs";
+import { KINDS, MODULE_ID, NARRATOR_CHANGED } from "../constants.mjs";
 import { SETTINGS, getSetting, setSetting } from "../settings.mjs";
 import { localize, stripParagraph } from "../utils.mjs";
 
-const BUTTON_SELECTOR = "[data-tbg-narrator]";
-
-/** Registra o interruptor do Modo Narrador: hook de chat, botão junto aos modos de mensagem e atalho. */
+/** Registra o Modo Narrador: hook de chat e atalho. O interruptor de clique é o retrato da barra de conversa. */
 export function registerNarrator() {
   Hooks.on("chatMessage", narrateFromInput);
-  Hooks.on("renderChatInput", addNarratorButton);
   game.keybindings.register(MODULE_ID, "toggleNarrator", {
     name: "TBG.Narrator.toggle",
     hint: "TBG.Narrator.toggleHint",
@@ -52,7 +49,7 @@ export async function toggleNarrator() {
   if (!game.user.isGM) return;
   const active = !getSetting(SETTINGS.NARRATOR_ACTIVE);
   await setSetting(SETTINGS.NARRATOR_ACTIVE, active);
-  syncNarratorButton();
+  Hooks.callAll(NARRATOR_CHANGED, active);
   ui.notifications.info(localize(active ? "TBG.Narrator.on" : "TBG.Narrator.off"));
 }
 
@@ -62,23 +59,4 @@ function narrateFromInput(chatLog, message, chatData) {
   if (command !== "none") return;
   ChatMessage.implementation.create({ ...chatData, ...narrationData(stripParagraph(message)) });
   return false;
-}
-
-function addNarratorButton(_chatLog, elements) {
-  const modes = elements["#message-modes"];
-  if (!game.user.isGM || !modes || modes.querySelector(BUTTON_SELECTOR)) return;
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = "ui-control icon fa-solid fa-scroll";
-  button.dataset.tbgNarrator = "";
-  button.dataset.tooltip = "";
-  button.ariaLabel = localize("TBG.Narrator.button");
-  button.addEventListener("click", toggleNarrator);
-  modes.append(button);
-  syncNarratorButton();
-}
-
-function syncNarratorButton() {
-  const button = document.querySelector(`#message-modes ${BUTTON_SELECTOR}`);
-  if (button) button.ariaPressed = String(isNarratorActive());
 }

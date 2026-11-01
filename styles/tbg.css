@@ -12,14 +12,19 @@
   --tbg-bubble-inline-image: 1.3em;
   --tbg-bubble-portrait-bg: #3a3a3a;
 
-  --tbg-narration-shade: rgba(0, 0, 0, 0.12);
-
   --tbg-portrait-size: 36px;
   --tbg-transition: 200ms ease;
 
-  --tbg-char-count-size: 12px;
+  --tbg-bar-width: 520px;
+  --tbg-bar-height: 38px;
+  --tbg-bar-font-size: 15px;
+  --tbg-bar-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+
   --tbg-char-count-base: #ffffff;
   --tbg-char-count-peak: #ff2020;
-  --tbg-char-count-outline: #000000;
-  --tbg-char-count-stroke: 2px;
+
+  --tbg-history-line: color-mix(in srgb, currentColor 18%, transparent);
+  --tbg-history-hover: color-mix(in srgb, currentColor 9%, transparent);
+  --tbg-history-narration-bg: rgba(0, 0, 0, 0.78);
+  --tbg-history-narration-fg: #ffffff;
 }

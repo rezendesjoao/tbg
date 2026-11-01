@@ -1,8 +1,6 @@
 import { TEMPLATES } from "../constants.mjs";
 
 const START_RATIO = 0.62;
-const RISE_RATIO_PER_REFERENCE = 0.25;
-const REFERENCE_MS = 8000;
 const FADE_IN_MS = 400;
 const FADE_OUT_MS = 1000;
 const PUSH_MS = 200;
@@ -13,9 +11,9 @@ const MIN_DURATION_MS = 2000;
 const MAX_DURATION_MS = 30000;
 
 /**
- * O balão do narrador: o mesmo balão dos jogadores, em preto, que nasce abaixo do meio da tela, sobe devagar
- * e some. A subida anima o `transform` do balão e o empurrão anima o `translate` do elemento externo, então os
- * dois compõem sem conflito.
+ * Um balão no meio da tela: o mesmo balão dos jogadores, que nasce abaixo do meio, sobe devagar e some. O do
+ * narrador é preto e tem o nome dele; o do Mestre sem token não tem nome. A subida anima o `transform` do balão e
+ * o empurrão anima o `translate` do elemento externo, então os dois compõem sem conflito.
  */
 export default class Banner {
   push = 0;
@@ -27,9 +25,10 @@ export default class Banner {
     this.duration = readingMs;
   }
 
-  /** Renderiza o balão; textos longos pedem mais tempo de leitura, até o teto. */
-  static async create({ id, name, content, minimumSeconds }) {
-    const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.banner, { id, name, content });
+  /** Renderiza o balão; textos longos pedem mais tempo de leitura, até o teto. Sem `name`, sai sem cabeçalho. */
+  static async create({ id, kind, name, portrait, iconClass, content, minimumSeconds }) {
+    const context = { id, kind, name, portrait, iconClass, content };
+    const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.banner, context);
     const element = foundry.utils.parseHTML(html);
     const length = element.querySelector(".tbg-bubble__text").textContent.trim().length;
     const readingMs = Math.min(MAX_DURATION_MS, Math.max(minimumSeconds * 1000, BASE_MS + length * PER_CHARACTER_MS));
@@ -49,14 +48,13 @@ export default class Banner {
   }
 
   /**
-   * Todos sobem na mesma velocidade, senão um balão curto alcançaria o longo que ele empurrou. O tempo
-   * encurta se o balão chegaria ao topo antes de sumir. Medidas em pixels do container, porque
+   * Todos sobem na mesma velocidade, em pixels por milissegundo, senão um balão curto alcançaria o longo que ele
+   * empurrou. O tempo encurta se o balão chegaria ao topo antes de sumir. Medidas em pixels do container, porque
    * `getBoundingClientRect` viria escalado pelo `--ui-scale` do `#ui-middle`.
    */
-  play(containerHeight, { reducedMotion }) {
+  play(containerHeight, { speed }) {
     const top = containerHeight * START_RATIO - this.height;
     this.element.style.top = `${top}px`;
-    const speed = reducedMotion ? 0 : (containerHeight * RISE_RATIO_PER_REFERENCE) / REFERENCE_MS;
     if (speed) this.duration = Math.max(MIN_DURATION_MS, Math.min(this.duration, top / speed));
     this.card.animate([
       { transform: "translateY(0)", opacity: 0 },

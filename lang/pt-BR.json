@@ -2,8 +2,8 @@
   "TBG": {
     "Settings": {
       "enabled": {
-        "name": "Ativar TBG",
-        "hint": "Interruptor geral dos balões de fala e dos modos de fala. O Modo Narrador e o tema do chat têm interruptores próprios."
+        "name": "Ativar balões do TBG",
+        "hint": "Interruptor geral dos balões: os de cima dos tokens, as falas sem token no meio da tela, o de uso da ficha e o selo de digitação. O balão do narrador tem interruptor próprio. A barra de conversa e o histórico da cena continuam funcionando."
       },
       "debug": {
         "name": "Log detalhado",
@@ -19,7 +19,7 @@
       },
       "bubbleRiseSpeed": {
         "name": "Velocidade de subida",
-        "hint": "Pixels de tela por segundo que os balões sobem. Zero deixa parados até um balão novo empurrar."
+        "hint": "Pixels de tela por segundo que os balões sobem, sobre os tokens e no meio da tela. O padrão, 15, é devagar, para dar tempo de ler. Zero deixa parados até um balão novo empurrar."
       },
       "bubbleRiseLimit": {
         "name": "Limite de subida",
@@ -41,13 +41,9 @@
         "name": "Retrato no balão",
         "hint": "Mostra a imagem do token dentro do balão, ao lado do nome."
       },
-      "autoInCharacter": {
-        "name": "Falar em personagem automaticamente",
-        "hint": "Com um token selecionado (ou personagem atribuído), texto simples sai em personagem mesmo com o modo de mensagem em Público como Usuário. Comandos e o seletor de modo continuam funcionando."
-      },
       "typingIndicator": {
         "name": "Mostrar quem está digitando",
-        "hint": "Enquanto alguém escreve, um selo com reticências aparece no canto do token dele. Some ao enviar, ao sair do campo ou após três segundos sem digitar, mesmo com texto no campo."
+        "hint": "Enquanto alguém escreve na barra de conversa, um selo com reticências aparece no canto do token dele. Some ao enviar, ao sair do campo ou após três segundos sem digitar, mesmo com texto no campo."
       },
       "usageBubbles": {
         "name": "Balão de uso da ficha",
@@ -55,11 +51,11 @@
       },
       "narrationBanner": {
         "name": "Balão do narrador",
-        "hint": "Toda narração do Mestre aparece também, para todos, num balão preto de letras brancas no meio da tela, no mesmo formato dos balões dos jogadores, que sobe devagar e some."
+        "hint": "Toda narração do Mestre aparece, para todos, num balão preto de letras brancas no meio da tela, no mesmo formato dos balões dos jogadores, que sobe devagar e some. Desligado, a narração fica só no histórico da cena."
       },
       "narrationBannerDuration": {
-        "name": "Tempo mínimo do balão do narrador",
-        "hint": "Segundos que o balão do narrador fica na tela. Textos longos ficam mais tempo, até 30 segundos."
+        "name": "Tempo mínimo dos balões do meio da tela",
+        "hint": "Segundos que o balão do narrador e as falas sem token ficam no meio da tela. Textos longos ficam mais tempo, até 30 segundos."
       },
       "narratorName": {
         "name": "Nome do narrador",
@@ -71,24 +67,39 @@
       },
       "chatTheme": {
         "name": "Tema do chat",
-        "hint": "Retratos, cor do autor e tipos de mensagem nos cartões do chat. Só neste cliente."
+        "hint": "Retrato e cor do autor nos cartões de rolagem do chat lateral. Só neste cliente."
       },
-      "chatGrouping": {
-        "name": "Agrupar mensagens consecutivas",
-        "hint": "Esconde o cabeçalho quando o mesmo falante manda outra mensagem em até cinco minutos."
-      },
-      "chatTabs": {
-        "name": "Abas ON, OFF e ROLL",
-        "hint": "Com o Custom Chat Tabs ativo, o chat ganha as abas ON (em personagem e narração), OFF (fora do personagem) e ROLL (rolagens e cartões da ficha), abre no ON e esconde as abas All, IC, OOC e Rolls dele. Toda mensagem cai numa das três."
+      "migration": {
+        "name": "Versão dos dados do TBG",
+        "hint": "Até onde este mundo já foi atualizado pelo TBG."
       }
+    },
+    "Bar": {
+      "label": "Barra de conversa",
+      "placeholder": "Escreva aqui e aperte Enter para falar…",
+      "speaking": "Falando como {name}",
+      "master": "Falando como Mestre, num balão sem nome. Clique para ligar o Modo Narrador.",
+      "narrating": "Narrando como {name}. Clique para desligar o Modo Narrador.",
+      "offCharacter": "Fora do personagem: selecione o seu token para falar por ele.",
+      "focus": "Ir para a barra de conversa",
+      "focusHint": "Leva o cursor para a barra de conversa, no pé da tela, para escrever sem usar o mouse."
+    },
+    "History": {
+      "button": "Histórico da cena",
+      "title": "Histórico da cena",
+      "empty": "Ninguém falou nesta cena ainda.",
+      "noScene": "Sem cena",
+      "master": "Mestre",
+      "whisper": "sussurro para {names}",
+      "think": "pensamento",
+      "ooc": "fora do personagem"
     },
     "Narrator": {
       "name": "Narrador",
-      "button": "Modo Narrador",
       "toggle": "Alternar Modo Narrador",
-      "toggleHint": "Texto sem comando sai como Narrador em vez do token selecionado.",
+      "toggleHint": "Texto sem comando sai como Narrador em vez do token selecionado ou do Mestre.",
       "on": "Modo Narrador ligado: mensagens sem comando saem como Narrador.",
-      "off": "Modo Narrador desligado: o token selecionado volta a falar."
+      "off": "Modo Narrador desligado: você volta a falar pelo token selecionado, ou como Mestre."
     },
     "Typing": {
       "label": "Digitando"
@@ -98,23 +109,9 @@
       "rolled": "{name} rolou {label}",
       "initiative": "Iniciativa"
     },
-    "Tabs": {
-      "on": {
-        "label": "ON",
-        "hint": "Em personagem (IC): falas, ações, pensamentos, sussurros em personagem e narração"
-      },
-      "off": {
-        "label": "OFF",
-        "hint": "Fora do personagem (OOC)"
-      },
-      "roll": {
-        "label": "ROLL",
-        "hint": "Rolagens e cartões da ficha"
-      },
-      "enable": {
-        "title": "Abas ON, OFF e ROLL",
-        "content": "As abas ON, OFF e ROLL do TBG precisam da opção <strong>Enable Chat Tabs</strong> do Custom Chat Tabs, que está desligada neste mundo. Ligar agora? O Foundry recarrega a página. Para não ver este aviso, desligue <em>Abas ON, OFF e ROLL</em> nas configurações do TBG."
-      }
+    "Migration": {
+      "tabsTitle": "Abas do chat",
+      "tabsContent": "O TBG agora deixa o chat lateral só com as rolagens e os cartões; a conversa vai para a barra no pé da tela e para o Histórico da cena. As abas do Custom Chat Tabs ficaram sobrando. Desligar <strong>Enable Chat Tabs</strong> agora? O Foundry recarrega a página."
     },
     "Guide": {
       "menu": {

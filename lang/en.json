@@ -2,8 +2,8 @@
   "TBG": {
     "Settings": {
       "enabled": {
-        "name": "Enable TBG",
-        "hint": "Master switch for speech bubbles and speech modes. Narrator mode and the chat theme have their own switches."
+        "name": "Enable TBG bubbles",
+        "hint": "Master switch for the bubbles: the ones over the tokens, the speech with no token in the middle of the screen, the sheet action bubble and the typing badge. The narrator bubble has its own switch. The chat bar and the scene history keep working."
       },
       "debug": {
         "name": "Debug logging",
@@ -19,7 +19,7 @@
       },
       "bubbleRiseSpeed": {
         "name": "Rise speed",
-        "hint": "Screen pixels per second that bubbles drift upward. Zero keeps them in place until newer bubbles push them."
+        "hint": "Screen pixels per second that bubbles drift upward, over the tokens and in the middle of the screen. The default, 15, is slow, to leave time to read. Zero keeps them in place until newer bubbles push them."
       },
       "bubbleRiseLimit": {
         "name": "Rise limit",
@@ -41,13 +41,9 @@
         "name": "Portrait in bubbles",
         "hint": "Show the token image inside the bubble, next to the name."
       },
-      "autoInCharacter": {
-        "name": "Speak in character automatically",
-        "hint": "With a token selected (or an assigned character), plain text is posted in character even when the message mode is Public as User. Commands and the mode picker still work as usual."
-      },
       "typingIndicator": {
         "name": "Show who is typing",
-        "hint": "While someone writes, an ellipsis badge appears in the corner of their token. It disappears when the message is sent, when the input loses focus, or after three seconds without typing, even if text is left in the input."
+        "hint": "While someone writes in the chat bar, an ellipsis badge appears in the corner of their token. It disappears when the message is sent, when the input loses focus, or after three seconds without typing, even if text is left in the input."
       },
       "usageBubbles": {
         "name": "Sheet action bubbles",
@@ -55,11 +51,11 @@
       },
       "narrationBanner": {
         "name": "Narrator bubble",
-        "hint": "Every GM narration also shows, for everyone, as a black bubble with white text in the middle of the screen, in the same format as the players' bubbles, rising slowly until it fades."
+        "hint": "Every GM narration shows, for everyone, as a black bubble with white text in the middle of the screen, in the same format as the players' bubbles, rising slowly until it fades. When off, narration only goes to the scene history."
       },
       "narrationBannerDuration": {
-        "name": "Minimum narrator bubble time",
-        "hint": "Seconds the narrator bubble stays on screen. Longer texts stay longer, up to 30 seconds."
+        "name": "Minimum time of the middle bubbles",
+        "hint": "Seconds the narrator bubble and the speech with no token stay in the middle of the screen. Longer texts stay longer, up to 30 seconds."
       },
       "narratorName": {
         "name": "Narrator name",
@@ -71,24 +67,39 @@
       },
       "chatTheme": {
         "name": "Chat theme",
-        "hint": "Portraits, author colors and message kinds on the chat cards. This client only."
+        "hint": "Author portrait and color on the roll cards of the chat sidebar. This client only."
       },
-      "chatGrouping": {
-        "name": "Group consecutive messages",
-        "hint": "Hide the header when the same speaker posts again within five minutes."
-      },
-      "chatTabs": {
-        "name": "ON, OFF and ROLL tabs",
-        "hint": "With Custom Chat Tabs active, the chat gets ON (in character and narration), OFF (out of character) and ROLL (rolls and sheet cards) tabs, opens on ON and hides its All, IC, OOC and Rolls tabs. Every message lands in one of the three."
+      "migration": {
+        "name": "TBG data version",
+        "hint": "How far TBG has updated this world."
       }
+    },
+    "Bar": {
+      "label": "Chat bar",
+      "placeholder": "Type here and press Enter to speak…",
+      "speaking": "Speaking as {name}",
+      "master": "Speaking as the GM, in a bubble with no name. Click to turn Narrator mode on.",
+      "narrating": "Narrating as {name}. Click to turn Narrator mode off.",
+      "offCharacter": "Out of character: select your token to speak as it.",
+      "focus": "Go to the chat bar",
+      "focusHint": "Moves the cursor to the chat bar at the bottom of the screen, to type without the mouse."
+    },
+    "History": {
+      "button": "Scene history",
+      "title": "Scene history",
+      "empty": "Nobody has spoken in this scene yet.",
+      "noScene": "No scene",
+      "master": "GM",
+      "whisper": "whisper to {names}",
+      "think": "thought",
+      "ooc": "out of character"
     },
     "Narrator": {
       "name": "Narrator",
-      "button": "Narrator mode",
       "toggle": "Toggle Narrator mode",
-      "toggleHint": "Plain text you send is posted as the Narrator instead of the selected token.",
+      "toggleHint": "Plain text you send is posted as the Narrator instead of the selected token or the GM.",
       "on": "Narrator mode on: plain messages are posted as the Narrator.",
-      "off": "Narrator mode off: the selected token speaks again."
+      "off": "Narrator mode off: you speak as the selected token again, or as the GM."
     },
     "Typing": {
       "label": "Typing"
@@ -98,23 +109,9 @@
       "rolled": "{name} rolled {label}",
       "initiative": "Initiative"
     },
-    "Tabs": {
-      "on": {
-        "label": "ON",
-        "hint": "In character (IC): speech, actions, thoughts, in-character whispers and narration"
-      },
-      "off": {
-        "label": "OFF",
-        "hint": "Out of character (OOC)"
-      },
-      "roll": {
-        "label": "ROLL",
-        "hint": "Rolls and sheet cards"
-      },
-      "enable": {
-        "title": "ON, OFF and ROLL tabs",
-        "content": "The TBG ON, OFF and ROLL tabs need the Custom Chat Tabs option <strong>Enable Chat Tabs</strong>, which is off in this world. Turn it on now? Foundry reloads the page. To stop this notice, turn off <em>ON, OFF and ROLL tabs</em> in the TBG settings."
-      }
+    "Migration": {
+      "tabsTitle": "Chat tabs",
+      "tabsContent": "TBG now keeps only rolls and cards in the chat sidebar; conversation goes to the bar at the bottom of the screen and to the Scene history. The Custom Chat Tabs tabs are no longer needed. Turn <strong>Enable Chat Tabs</strong> off now? Foundry reloads the page."
     },
     "Guide": {
       "menu": {

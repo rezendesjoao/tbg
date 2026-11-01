@@ -15,7 +15,7 @@ const PAGES = [
   { key: "baloes", name: "Os balões" },
   { key: "digitando", name: "Digitando…" },
   { key: "ficha", name: "Ações da ficha" },
-  { key: "abas", name: "Abas ON, OFF e ROLL" },
+  { key: "historico", name: "Histórico da cena" },
   { key: "etiqueta", name: "Boas práticas" },
   { key: "mestre-narracao", name: "Mestre: narração", isGMOnly: true },
   { key: "mestre-configuracoes", name: "Mestre: configurações", isGMOnly: true }
