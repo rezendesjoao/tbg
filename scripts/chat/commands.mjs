@@ -8,24 +8,23 @@ const COMMANDS = {
   tbgSay: { rgx: /^\/(?:say|falar)\s([^]*)/i, fn: speakAs(KINDS.SAY) },
   tbgShout: { rgx: /^\/(?:shout|gritar)\s([^]*)/i, fn: speakAs(KINDS.SHOUT) },
   tbgThink: { rgx: /^\/(?:think|pensar)\s([^]*)/i, fn: think },
-  tbgAction: { rgx: /^\*([^*]+)\*$/, fn: act },
   tbgNarrate: { rgx: /^\/(?:n|narrar|narrate)\s([^]*)/i, fn: narrateCommand },
   tbgNarrateMarks: { rgx: /^=\s*([^=][^]*?)\s*=$/, fn: narrateCommand }
 };
 
-/** `/off` é o fora do personagem da mesa; o `/ooc` do core continua valendo pelo mesmo caminho. */
-const OFF_PATTERN = /^(\/off )([^]*)/i;
+/** Fora do personagem: a mensagem inteira entre colchetes, ou terminada em `[]`. O `/ooc` do core vale do mesmo jeito. */
+const OFF_PATTERN = /^\[([^[\]]*[^[\]\s][^[\]]*)\]$|^([^]*\S)\s*\[\]$/;
 
 /**
- * Registra os comandos de fala, o `/off` e o `/ooc` com balão, a narração por `/n` e por `= texto =`,
- * o `/me` sem nome repetido, o texto simples como fala e o falante em sussurros.
+ * Registra os comandos de fala, o fora do personagem entre colchetes e o `/ooc` com balão, a narração por `/n` e por
+ * `= texto =`, o `/me` como ação inteira, o texto simples como fala e o falante em sussurros.
  */
 export function registerChatCommands() {
   const { CHAT_COMMANDS } = foundry.applications.sidebar.tabs.ChatLog;
   Object.assign(CHAT_COMMANDS, COMMANDS);
   CHAT_COMMANDS.ooc = withBubbleToken(CHAT_COMMANDS.ooc);
-  CHAT_COMMANDS.tbgOff = { ...CHAT_COMMANDS.ooc, rgx: OFF_PATTERN };
-  CHAT_COMMANDS.emote = withoutNamePrefix(CHAT_COMMANDS.emote);
+  CHAT_COMMANDS.tbgOff = { rgx: OFF_PATTERN, fn: offCharacter };
+  CHAT_COMMANDS.emote = asWholeAction(CHAT_COMMANDS.emote);
   Hooks.on("chatMessage", speakByDefault);
   Hooks.on("chatMessage", keepWhisperSpeaker);
   Hooks.on("preCreateChatMessage", restoreWhisperSpeaker);
@@ -45,14 +44,24 @@ function withBubbleToken(command) {
   };
 }
 
-/** O `/me` do core repete o nome no texto, e o cartão já o mostra no cabeçalho; devolve o texto limpo que o core capturou. */
-function withoutNamePrefix(command) {
+/** Passa pelo `/ooc` do core, com o token do balão, entregando a ele só o texto, sem os colchetes. */
+function offCharacter(_command, match, chatData, createOptions) {
+  const { ooc } = foundry.applications.sidebar.tabs.ChatLog.CHAT_COMMANDS;
+  return ooc.fn.call(this, "ooc", [match[0], "", (match[1] ?? match[2]).trim()], chatData, createOptions);
+}
+
+/**
+ * O `/me` do core vira uma ação inteira, como `*texto*`: a fala em negrito num balão comum. O core põe o nome no começo
+ * do texto, e o balão já o mostra; fica o texto limpo que ele capturou.
+ */
+function asWholeAction(command) {
   return {
     ...command,
     fn(name, match, chatData, createOptions) {
       const result = command.fn.call(this, name, match, chatData, createOptions);
-      chatData.content = withLineBreaks(match[2]);
-      setKind(chatData, KINDS.ACTION);
+      chatData.content = `<strong>${withLineBreaks(match[2])}</strong>`;
+      chatData.style = CONST.CHAT_MESSAGE_STYLES.IC;
+      setKind(chatData, KINDS.SAY);
       return result;
     }
   };
@@ -73,17 +82,6 @@ function think(_command, match, chatData) {
   chatData.style = CONST.CHAT_MESSAGE_STYLES.IC;
   chatData.whisper = thinkRecipients();
   setKind(chatData, KINDS.THINK);
-}
-
-function act(_command, match, chatData) {
-  const text = withLineBreaks(match[1]);
-  setKind(chatData, KINDS.ACTION);
-  if (!hasSpeaker(chatData)) {
-    chatData.content = text;
-    return speakOutOfCharacter(chatData);
-  }
-  chatData.style = CONST.CHAT_MESSAGE_STYLES.EMOTE;
-  chatData.content = text;
 }
 
 function narrateCommand(_command, match) {

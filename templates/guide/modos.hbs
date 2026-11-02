@@ -11,7 +11,7 @@
     <div class="tbg-bubble tbg-bubble--shout"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Abram o portão!</span></div>
     <div class="tbg-bubble tbg-bubble--whisper"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Fica atrás de mim.</span></div>
     <div class="tbg-bubble tbg-bubble--think"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Isso está quieto demais…</span></div>
-    <div class="tbg-bubble tbg-bubble--action"><span class="tbg-bubble__text">saca a espada devagar</span></div>
+    <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text"><strong>saca a espada devagar</strong> Ninguém se mexe.</span></div>
     <div class="tbg-bubble tbg-bubble--ooc"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Rafa</span></span> <span class="tbg-bubble__text">posso rolar Percepção aqui?</span></div>
     <div class="tbg-guide__token"><img src="{{portrait}}" alt=""></div>
   </figure>
@@ -27,8 +27,8 @@
       <tr><td>Gritar</td><td><kbd>Shift</kbd> + <kbd>Enter</kbd>, <code>/shout texto</code> ou <code>/gritar texto</code></td><td>Negrito, maior, borda mais grossa</td><td>Todos</td></tr>
       <tr><td>Sussurrar</td><td><code>/w Nome texto</code></td><td>Cinza, itálico, borda tracejada</td><td>Você e quem recebe</td></tr>
       <tr><td>Pensar</td><td><code>/think texto</code> ou <code>/pensar texto</code></td><td>Nuvem arredondada, borda pontilhada, itálico</td><td>Você e o Mestre</td></tr>
-      <tr><td>Agir</td><td><code>*texto*</code>, <code>/me texto</code> ou <code>/emote texto</code></td><td>Bege, itálico, sem nome</td><td>Todos</td></tr>
-      <tr><td>Fora do personagem</td><td><code>/off texto</code></td><td>Cinza e translúcido, com o seu nome de jogador</td><td>Todos</td></tr>
+      <tr><td>Agir</td><td><code>*texto*</code> ou <code>'texto'</code>, sozinho ou no meio da fala</td><td>O balão de quem fala, com a ação em negrito</td><td>Todos</td></tr>
+      <tr><td>Fora do personagem</td><td><code>[texto]</code> ou <code>texto []</code></td><td>O balão comum, translúcido, com o seu nome de jogador</td><td>Todos</td></tr>
     </tbody>
   </table>
 
@@ -47,10 +47,16 @@
   <p>Para pensar, você precisa de um token selecionado ou de um personagem atribuído. Sem nenhum dos dois, o pensamento não sai e um aviso pede que você selecione um token.</p>
 
   <h3>Agir</h3>
-  <p>Escreva a mensagem inteira entre asteriscos, como <code>*abre a porta devagar*</code>, ou use <code>/me abre a porta devagar</code> (também <code>/emote</code>). O balão é bege, em itálico e sem o nome, e se lê como um trecho de narração. No chat, o nome aparece uma vez só, no cabeçalho da mensagem.</p>
+  <p>Escreva o que o personagem faz entre asteriscos ou entre aspas simples, sozinho ou junto da fala, no começo, no meio ou no fim: <code>Você tem certeza? *aponta a lâmina para ele*</code> ou <code>'abre a porta devagar'</code>. Os asteriscos e as aspas somem, e a ação sai em negrito no mesmo balão da fala, com o seu nome. Cabe mais de uma ação na mesma mensagem.</p>
+  <figure class="tbg-guide__stage">
+    <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Você tem certeza? <strong>aponta a lâmina para ele</strong></span></div>
+    <div class="tbg-guide__token"><img src="{{portrait}}" alt=""></div>
+  </figure>
+  <p class="tbg-guide__caption"><code>Você tem certeza? *aponta a lâmina para ele*</code> na barra vira este balão.</p>
+  <p>A marca só vale em volta do texto: o apóstrofo de <code>copo d'água</code> e o asterisco de <code>2*3</code> ficam como estão.</p>
 
   <h3>Fora do personagem</h3>
-  <p><code>/off texto</code> é para falar como jogador: tirar uma dúvida de regra, combinar alguma coisa com a mesa. Se você estiver com o token selecionado, aparece sobre ele um balão cinza e translúcido com o seu nome de jogador, para ninguém confundir com a fala do personagem; sem token, o mesmo balão aparece no meio da tela. O <code>/ooc texto</code> do próprio Foundry também funciona, do mesmo jeito.</p>
+  <p>Para falar como jogador, tirar uma dúvida de regra ou combinar alguma coisa com a mesa, escreva a mensagem inteira entre colchetes, como <code>[posso rolar Percepção aqui?]</code>, ou termine com <code>[]</code>: <code>posso rolar Percepção aqui? []</code>. O balão é o mesmo de sempre, só que translúcido e com o seu nome de jogador, para ninguém confundir com a fala do personagem. Com o token selecionado, ele aparece sobre o token; sem token, no meio da tela. Colchetes no meio de uma fala, como em <code>pego a [espada]</code>, ficam como estão.</p>
 
   <div class="tbg-guide__callout">
     <p><strong>Os comandos valem só para a mensagem em que você os escreve.</strong> Os botões de modo de mensagem do chat lateral não mudam a fala: eles escolhem só quem vê as suas rolagens.</p>

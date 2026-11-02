@@ -8,7 +8,10 @@
 
   <h3>Sem token selecionado, você narra</h3>
   <p>Com nenhum token selecionado, o que você escreve na barra de conversa sai como {{narratorName}}, no balão do narrador, no meio da tela de todos. O pergaminho no começo da barra avisa que você está narrando.</p>
-  <p>Para falar por um NPC, selecione o token dele: a fala vira balão sobre o NPC, com o nome dele. Para voltar a narrar, clique no mapa vazio, ou aperte <kbd>Esc</kbd>, e nada fica selecionado. Comandos sem token saem sem nome: <code>*o vento apaga as tochas*</code> vira um balão bege no meio da tela, e no Histórico da cena aparece como Mestre.</p>
+  <p>Para falar por um NPC, selecione o token dele: a fala vira balão sobre o NPC, com o nome dele. Para voltar a narrar, clique no mapa vazio, ou aperte <kbd>Esc</kbd>, e nada fica selecionado. A ação entre asteriscos entra na narração, em negrito: <code>*o vento apaga as tochas*</code> sai no balão do narrador. Comandos sem token, como <code>/shout</code> e <code>/w</code>, saem num balão sem nome no meio da tela, e no Histórico da cena aparecem como Mestre. <code>[texto]</code> é você falando fora do personagem, com o seu nome de usuário, como os jogadores.</p>
+  <div class="tbg-guide__callout tbg-guide__callout--warn">
+    <p><strong>Token de jogador na mão?</strong> Se o token selecionado for de um personagem que tem jogador, a barra pergunta antes de falar por ele: normalmente o Mestre não fala pelos personagens da mesa. Cancelar, o padrão, deixa o texto na barra. Se precisar mesmo jogar por ele, como quando o jogador faltou, marque a caixinha e a barra não pergunta mais por aquele personagem até você recarregar a página.</p>
+  </div>
 
   <h3>O Modo Narrador</h3>
   <p>É um interruptor para narrar <strong>com um token selecionado</strong>. Ligado, tudo o que você escreve sem comando sai como {{narratorName}}, mesmo com o token de um NPC na mão.</p>
@@ -24,8 +27,9 @@
       <tr><th>Com o Modo Narrador ligado, se você escrever</th><th>O que acontece</th></tr>
     </thead>
     <tbody>
-      <tr><td>Texto sem comando</td><td>Narração, como {{narratorName}}, no balão do narrador</td></tr>
-      <tr><td><code>*ação*</code>, <code>/say</code>, <code>/shout</code> ou <kbd>Shift</kbd> + <kbd>Enter</kbd></td><td>Sai do token selecionado, como sempre, com balão</td></tr>
+      <tr><td>Texto sem comando, com ou sem <code>*ação*</code></td><td>Narração, como {{narratorName}}, no balão do narrador; a ação sai em negrito</td></tr>
+      <tr><td><code>/say</code>, <code>/shout</code> ou <kbd>Shift</kbd> + <kbd>Enter</kbd></td><td>Sai do token selecionado, como sempre, com balão</td></tr>
+      <tr><td><code>[texto]</code> ou <code>texto []</code></td><td>Fora do personagem, com o seu nome de usuário, num balão translúcido</td></tr>
       <tr><td><code>/w Nome texto</code></td><td>Sussurro normal</td></tr>
       <tr><td><code>/roll 1d20</code></td><td>Rolagem normal</td></tr>
     </tbody>
@@ -51,7 +55,7 @@
   <p>Neste mundo, as narrações saem como <strong>{{narratorName}}</strong>. Para trocar, mude <em>Nome do narrador</em> nas configurações do TBG: pode ser o nome de um deus, de uma entidade ou do próprio mundo. Deixar o campo vazio volta para "Narrador".</p>
 
   <h3>O balão do narrador</h3>
-  <p>Toda narração, pelo Modo Narrador, por <code>/n</code> ou por <code>= texto =</code>, aparece também para a mesa inteira num balão no meio da tela. Ele tem o mesmo formato e o mesmo tamanho dos balões dos jogadores, com um pergaminho no lugar do retrato e o nome do narrador antes do texto, na mesma linha. A diferença é a cor: fundo preto e letras brancas.</p>
+  <p>Toda narração, pelo Modo Narrador, por <code>/n</code> ou por <code>= texto =</code>, aparece também para a mesa inteira num balão um pouco acima do meio da tela. Ele tem o mesmo formato e o mesmo tamanho dos balões dos jogadores, com um pergaminho no lugar do retrato e o nome do narrador antes do texto, na mesma linha. A diferença é a cor: fundo preto e letras brancas.</p>
 
   <figure class="tbg-guide__stage">
     <div class="tbg-bubble tbg-bubble--narration"><span class="tbg-bubble__speaker"><i class="tbg-bubble__portrait fa-solid fa-scroll" inert></i><span class="tbg-bubble__name">{{narratorName}}</span></span> <span class="tbg-bubble__text">A neblina desce sobre a vila, e os sinos param de tocar.</span></div>
@@ -59,9 +63,9 @@
   <p class="tbg-guide__caption">O balão do narrador, que todos veem ao mesmo tempo.</p>
 
   <div class="tbg-guide__grid">
-    <div class="tbg-guide__card"><strong>Sobe e some</strong><p>Nasce um pouco abaixo do centro da tela, sobe devagar e desaparece aos poucos.</p></div>
-    <div class="tbg-guide__card"><strong>Empilha</strong><p>Narrações seguidas se empilham: a nova nasce embaixo e empurra as anteriores. Cabem até três na tela, todas subindo na mesma velocidade.</p></div>
-    <div class="tbg-guide__card"><strong>Tempo de leitura</strong><p>Textos longos ficam mais tempo, até 30 segundos. O mínimo é o <em>Tempo mínimo dos balões do meio da tela</em>: de 3 a 30 segundos, 6 por padrão. Vale também para os outros balões do meio da tela.</p></div>
+    <div class="tbg-guide__card"><strong>Sobe e some</strong><p>Nasce um pouco acima do centro da tela, sobe devagar e desaparece aos poucos.</p></div>
+    <div class="tbg-guide__card"><strong>Empilha</strong><p>Narrações seguidas se empilham: a nova nasce embaixo e empurra as anteriores. Cabem até cinco na tela, todas subindo na mesma velocidade.</p></div>
+    <div class="tbg-guide__card"><strong>Tempo de leitura</strong><p>Fica pelo menos 30 segundos na tela, mesmo com um <em>Tempo máximo</em> menor, para a mesa ler com calma. Para caber esse tempo todo, sobe mais devagar que os balões dos tokens nas telas baixas.</p></div>
     <div class="tbg-guide__card"><strong>Uma linha só</strong><p>Como os balões dos jogadores, nunca quebra a linha: fica no meio da tela e cresce por igual para os dois lados.</p></div>
     <div class="tbg-guide__card"><strong>Sem cena</strong><p>Aparece mesmo sem nenhuma cena ativa, porque não depende do mapa.</p></div>
     <div class="tbg-guide__card"><strong>Menos movimento</strong><p>Para quem pediu menos animação nas configurações do computador, ou ligou o <em>Photosensitivity Mode</em> do Foundry, o balão só aparece e some, sem subir.</p></div>

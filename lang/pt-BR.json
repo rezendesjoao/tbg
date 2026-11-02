@@ -27,7 +27,7 @@
       },
       "bubbleMaxLifetime": {
         "name": "Tempo máximo",
-        "hint": "Segundos até o balão sumir independentemente da posição. Zero desliga o limite."
+        "hint": "Segundos até o balão sumir independentemente da posição, sobre os tokens e no meio da tela. Zero desliga o limite."
       },
       "bubbleScaling": {
         "name": "Escala dos balões",
@@ -51,11 +51,11 @@
       },
       "narrationBanner": {
         "name": "Balão do narrador",
-        "hint": "Toda narração do Mestre aparece, para todos, num balão preto de letras brancas no meio da tela, no mesmo formato dos balões dos jogadores, que sobe devagar e some. Desligado, a narração fica só no histórico da cena."
+        "hint": "Toda narração do Mestre aparece, para todos, num balão preto de letras brancas um pouco acima do meio da tela, no mesmo formato dos balões dos jogadores, que sobe devagar e some depois de pelo menos 30 segundos. Desligado, a narração fica só no histórico da cena."
       },
       "narrationBannerDuration": {
         "name": "Tempo mínimo dos balões do meio da tela",
-        "hint": "Segundos que o balão do narrador e as falas sem token ficam no meio da tela. Textos longos ficam mais tempo, até 30 segundos."
+        "hint": "Segundos que as falas sem token ficam, no mínimo, no meio da tela. Elas ficam pelo menos o tempo que um balão sobre o token leva para subir até o limite; textos longos, mais, até um minuto. O balão do narrador fica sempre pelo menos 30 segundos."
       },
       "narratorName": {
         "name": "Nome do narrador",
@@ -92,7 +92,19 @@
       "master": "Mestre",
       "whisper": "sussurro para {names}",
       "think": "pensamento",
-      "ooc": "fora do personagem"
+      "ooc": "fora do personagem",
+      "thisScene": "Esta cena",
+      "allScenes": "Todas as cenas",
+      "export": "Exportar em JSON",
+      "older": "{count} falas mais antigas ficaram de fora; a exportação traz todas."
+    },
+    "Guard": {
+      "title": "Falar por um personagem de jogador?",
+      "owner": "{name} é personagem de {players}.",
+      "question": "Normalmente o Mestre não fala por um personagem de jogador. Mandar a fala mesmo assim?",
+      "remember": "Não perguntar de novo por este personagem até recarregar a página",
+      "speak": "Falar como {name}",
+      "cancel": "Cancelar"
     },
     "Narrator": {
       "name": "Narrador",

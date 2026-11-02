@@ -27,7 +27,7 @@
       },
       "bubbleMaxLifetime": {
         "name": "Maximum lifetime",
-        "hint": "Seconds before a bubble fades regardless of position. Zero disables the limit."
+        "hint": "Seconds before a bubble fades regardless of position, over the tokens and in the middle of the screen. Zero disables the limit."
       },
       "bubbleScaling": {
         "name": "Bubble scale",
@@ -51,11 +51,11 @@
       },
       "narrationBanner": {
         "name": "Narrator bubble",
-        "hint": "Every GM narration shows, for everyone, as a black bubble with white text in the middle of the screen, in the same format as the players' bubbles, rising slowly until it fades. When off, narration only goes to the scene history."
+        "hint": "Every GM narration shows, for everyone, as a black bubble with white text a little above the middle of the screen, in the same format as the players' bubbles, rising slowly and fading after at least 30 seconds. When off, narration only goes to the scene history."
       },
       "narrationBannerDuration": {
         "name": "Minimum time of the middle bubbles",
-        "hint": "Seconds the narrator bubble and the speech with no token stay in the middle of the screen. Longer texts stay longer, up to 30 seconds."
+        "hint": "Minimum seconds the speech with no token stays in the middle of the screen. It stays at least as long as a bubble over a token takes to rise to the limit; longer texts stay longer, up to one minute. The narrator bubble always stays at least 30 seconds."
       },
       "narratorName": {
         "name": "Narrator name",
@@ -92,7 +92,19 @@
       "master": "GM",
       "whisper": "whisper to {names}",
       "think": "thought",
-      "ooc": "out of character"
+      "ooc": "out of character",
+      "thisScene": "This scene",
+      "allScenes": "All scenes",
+      "export": "Export as JSON",
+      "older": "{count} older lines are left out; the export has them all."
+    },
+    "Guard": {
+      "title": "Speak as a player character?",
+      "owner": "{name} is a character of {players}.",
+      "question": "The GM usually does not speak as a player character. Send it anyway?",
+      "remember": "Do not ask again for this character until the page reloads",
+      "speak": "Speak as {name}",
+      "cancel": "Cancel"
     },
     "Narrator": {
       "name": "Narrator",

@@ -3,7 +3,7 @@ export const MODULE_TITLE = "TBG";
 export const LOG_PREFIX = "TBG |";
 export const SOCKET_EVENT = `module.${MODULE_ID}`;
 
-/** Tipos de mensagem do TBG, gravados em `flags.tbg.kind`. */
+/** Tipos de mensagem do TBG, gravados em `flags.tbg.kind`. A ação inteira só vem de mensagens antigas e do estilo emote do core. */
 export const KINDS = Object.freeze({
   SAY: "say",
   SHOUT: "shout",
@@ -20,9 +20,6 @@ export const BUBBLE_KINDS = new Set([KINDS.SAY, KINDS.SHOUT, KINDS.WHISPER, KIND
 /** Variante do balão de uso da ficha; derivada da mensagem, nunca gravada em flag. */
 export const USAGE_KIND = "usage";
 
-/** Tipos sem cabeçalho no balão: a ação se lê como narração curta, e o uso já traz o nome no texto. */
-export const ANONYMOUS_KINDS = new Set([KINDS.ACTION, USAGE_KIND]);
-
 export const SOCKET_TYPES = Object.freeze({
   PING: "ping",
   TYPING: "typing",
@@ -33,7 +30,8 @@ export const TEMPLATES = Object.freeze({
   bubble: `modules/${MODULE_ID}/templates/bubble.hbs`,
   banner: `modules/${MODULE_ID}/templates/banner.hbs`,
   chatBar: `modules/${MODULE_ID}/templates/chat-bar.hbs`,
-  history: `modules/${MODULE_ID}/templates/history.hbs`
+  history: `modules/${MODULE_ID}/templates/history.hbs`,
+  speakerWarning: `modules/${MODULE_ID}/templates/speaker-warning.hbs`
 });
 
 /** Evento interno disparado a cada mudança no campo da barra de conversa. */

@@ -6,6 +6,7 @@ import { createApi } from "./api.mjs";
 import { registerBubbles } from "./bubbles/layer.mjs";
 import { registerBanners } from "./banners/layer.mjs";
 import { registerChatCommands } from "./chat/commands.mjs";
+import { registerActionMarks } from "./chat/marks.mjs";
 import { registerChatBar } from "./chat/bar.mjs";
 import { registerTypingIndicator } from "./chat/typing.mjs";
 import { registerNarrator } from "./chat/narrator.mjs";
@@ -23,6 +24,7 @@ Hooks.once("init", () => {
   registerSocket();
   registerNarrator();
   registerChatCommands();
+  registerActionMarks();
   registerChatBar();
   registerTypingIndicator();
   registerChatRender();

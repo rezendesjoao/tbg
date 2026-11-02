@@ -1,4 +1,4 @@
-import { ANONYMOUS_KINDS, TEMPLATES } from "../constants.mjs";
+import { TEMPLATES, USAGE_KIND } from "../constants.mjs";
 
 const MARGIN = 12;
 const FADE_MS = 250;
@@ -22,7 +22,7 @@ export default class Bubble {
     this.element = element;
   }
 
-  /** Renderiza o balão; `icon` é uma imagem e `iconClass` um ícone Font Awesome, para o balão de uso. */
+  /** Renderiza o balão; `icon` é uma imagem e `iconClass` um ícone Font Awesome, para o balão de uso, que já traz o nome no texto. */
   static async create({ id, token, kind, content, name, portrait, icon, iconClass }) {
     const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.bubble, {
       id,
@@ -33,7 +33,7 @@ export default class Bubble {
       portrait,
       icon,
       iconClass,
-      showName: !ANONYMOUS_KINDS.has(kind)
+      showName: kind !== USAGE_KIND
     });
     return new Bubble({ id, token, kind, element: foundry.utils.parseHTML(html) });
   }

@@ -138,15 +138,14 @@ i.tbg-bubble__portrait {
   height: 4px;
 }
 
-.tbg-bubble--action,
 .tbg-bubble--usage {
   --tbg-bubble-bg: #f3edde;
   --tbg-bubble-fg: #4b4233;
   --tbg-bubble-border: #887c5d;
 }
 
-.tbg-bubble--action {
-  font-style: italic;
+.tbg-bubble--action .tbg-bubble__text {
+  font-weight: 700;
 }
 
 .tbg-bubble__icon {
@@ -165,15 +164,7 @@ i.tbg-bubble__icon {
 }
 
 .tbg-bubble--ooc {
-  --tbg-bubble-bg: #dcdcdc;
-  --tbg-bubble-fg: #4a4a4a;
-  --tbg-bubble-border: #8a8a8a;
-  opacity: 0;
-  border-style: solid;
-}
-
-.tbg-bubble--ooc.tbg-bubble--visible {
-  opacity: 0.78;
+  filter: opacity(var(--tbg-bubble-ooc-opacity));
 }
 
 .tbg-typing {

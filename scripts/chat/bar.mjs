@@ -1,6 +1,7 @@
 import { CHAT_MAX_LENGTH, INPUT_BLURRED, INPUT_CHANGED, MODULE_ID, NARRATOR_CHANGED, TEMPLATES } from "../constants.mjs";
 import { localize } from "../utils.mjs";
 import { isNarrating, isNarratorActive, narratorName, toggleNarrator } from "./narrator.mjs";
+import { confirmSpeaker } from "./guard.mjs";
 
 const MOUNT_ID = "ui-bottom";
 const RAMP_START = 0.5;
@@ -122,15 +123,23 @@ class ChatBar {
     this.#announce();
   }
 
-  /** O campo esvazia na hora, para a conversa correr; se o envio falhar, o texto volta. */
+  /**
+   * O campo esvazia na hora, para a conversa correr; se o envio falhar, o texto volta. Fala do Mestre por um
+   * personagem de jogador espera a confirmação, com o texto ainda no campo.
+   */
   async #send(shout) {
     const input = this.input;
     const text = input.value.trim();
     if (!text) return;
+    const message = commandFor(escapeText(text), shout);
+    if (!(await confirmSpeaker(message))) {
+      input.focus();
+      return;
+    }
     this.#remember(text);
     input.value = "";
     this.#announce();
-    const message = commandFor(escapeText(text), shout);
+    input.focus();
     try {
       await ui.chat.processMessage(message);
     } catch (error) {

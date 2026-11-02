@@ -1,7 +1,16 @@
 <section class="tbg-history__body">
-    <header class="tbg-history__scene"><i class="fa-solid fa-map" inert></i> {{scene}}</header>
+    <header class="tbg-history__scene"><i class="fa-solid {{#if isAll}}fa-layer-group{{else}}fa-map{{/if}}" inert></i> {{title}}</header>
+    {{#if isGM}}
+    <nav class="tbg-history__tools">
+        <button type="button" data-action="scope" data-scope="scene" aria-pressed="{{#if isAll}}false{{else}}true{{/if}}">{{localize "TBG.History.thisScene"}}</button>
+        <button type="button" data-action="scope" data-scope="all" aria-pressed="{{#if isAll}}true{{else}}false{{/if}}">{{localize "TBG.History.allScenes"}}</button>
+        <button type="button" class="tbg-history__export" data-action="export" data-tooltip="" aria-label="{{localize "TBG.History.export"}}"><i class="fa-solid fa-file-export" inert></i></button>
+    </nav>
+    {{/if}}
     <ol class="tbg-history__log">
+        {{#if older}}<li class="tbg-history__older">{{localize "TBG.History.older" count=older}}</li>{{/if}}
         {{#each lines}}
+        {{#if opensScene}}<li class="tbg-history__divider">{{sceneName}}</li>{{/if}}
         <li class="tbg-history__line tbg-history__line--{{kind}}" data-message-id="{{id}}"{{#if tokenId}} data-action="pan" data-token-id="{{tokenId}}"{{/if}}>
             <time class="tbg-history__time">{{time}}</time>
             {{#if portrait}}<img class="tbg-history__portrait" src="{{portrait}}" alt="">{{else}}<i class="tbg-history__portrait {{icon}}" inert></i>{{/if}}

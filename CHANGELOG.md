@@ -2,6 +2,23 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.15.0] — 2026-11-02
+
+### Adicionado
+- Histórico da cena, para o Mestre: os botões *Esta cena* e *Todas as cenas* (com uma faixa com o nome de cada cena) e *Exportar em JSON*, que baixa toda a conversa do recorte aberto (hora, cena, tipo, quem falou, o jogador, os destinatários de um sussurro e o texto) para ler fora do Foundry. A janela mostra as últimas 500 falas e avisa quantas ficaram de fora.
+- **Ação no meio da fala.** O que estiver entre asteriscos ou entre aspas simples vira ação, sozinho ou junto da fala: `Você tem certeza? *aponta a lâmina para ele*` sai num balão só, com os asteriscos sumidos e a ação em negrito. Vale em qualquer conversa (fala, grito, sussurro, pensamento, narração), e o apóstrofo de `d'água` e a conta `2*3` ficam como estão. A exportação do histórico devolve os asteriscos.
+- **Fora do personagem entre colchetes.** A mensagem inteira entre colchetes, `[já volto]`, ou terminada em `[]`, `já volto []`, sai fora do personagem, com o nome do jogador. O `/ooc` do Foundry continua valendo.
+- **Aviso ao falar por personagem de jogador.** Quando o Mestre vai mandar uma fala (texto, grito, ação, pensamento ou sussurro) pelo token de um personagem que tem jogador (dono ou personagem atribuído), uma caixa pergunta antes; cancelar, o padrão, deixa o texto na barra. Uma caixinha deixa de perguntar por aquele personagem até recarregar a página. Rolagens, narração e o fora do personagem não perguntam.
+
+### Alterado
+- **A conversa nunca é apagada.** Ativar outra cena não apaga mais nada: a cena guarda a hora em que foi ativada, e o histórico dos jogadores recomeça dali; o do Mestre mostra a cena inteira, de todas as visitas.
+- **Os balões do meio da tela duram como os de cima dos tokens:** as falas sem token ficam pelo menos o tempo que um balão sobre o token leva para subir até o *Limite de subida* (uns 21 segundos no padrão), e textos longos, até um minuto; o *Tempo máximo* dos balões também vale para elas. Cabem até cinco na tela.
+- **O balão do narrador nasce mais alto e fica pelo menos 30 segundos**, mesmo com um *Tempo máximo* menor. Os balões do meio da tela nascem um pouco acima do centro (antes, bem abaixo dele) e, para o narrador caber esse tempo todo na tela, sobem mais devagar nas telas baixas, todos na mesma velocidade.
+- **A ação e o fora do personagem usam o balão comum.** A ação sai em negrito no balão de quem fala, com o nome (antes, um balão bege em itálico e sem nome); o fora do personagem é o balão comum, só translúcido (antes, cinza). O `/me` do Foundry vira uma ação inteira. Do Mestre sem token, a ação entre asteriscos entra na narração.
+
+### Removido
+- O comando `/off`, trocado pelos colchetes, e o comando `*texto*` de mensagem inteira com balão próprio, trocado pela ação no meio da fala.
+
 ## [0.14.1] — 2026-11-01
 
 ### Alterado

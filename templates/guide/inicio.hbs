@@ -8,16 +8,16 @@
 
   <figure class="tbg-guide__stage">
     <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text">Alguém viu a chave do portão?</span></div>
-    <div class="tbg-bubble tbg-bubble--action"><span class="tbg-bubble__text">encosta na parede e cruza os braços</span></div>
+    <div class="tbg-bubble tbg-bubble--say"><span class="tbg-bubble__speaker"><img class="tbg-bubble__portrait" src="{{portrait}}" alt=""><span class="tbg-bubble__name">Kirito</span></span> <span class="tbg-bubble__text"><strong>encosta na parede e cruza os braços</strong> Eu espero aqui.</span></div>
     <div class="tbg-guide__token"><img src="{{portrait}}" alt=""></div>
   </figure>
-  <p class="tbg-guide__caption">Uma fala e uma ação saindo do mesmo token.</p>
+  <p class="tbg-guide__caption">Uma fala e, embaixo, uma ação em negrito junto da fala, saindo do mesmo token.</p>
 
   <h3>Em 30 segundos</h3>
   <ol class="tbg-guide__steps">
     <li><strong>Selecione o seu token</strong> no mapa, com um clique. É ele quem vai falar.</li>
     <li><strong>Escreva na barra de conversa</strong>, no pé da tela, e aperte <kbd>Enter</kbd>. A fala vira um balão sobre o token.</li>
-    <li><strong>Varie o jeito de falar:</strong> <code>*saca a espada*</code> para ações, <kbd>Shift</kbd> + <kbd>Enter</kbd> para gritar e <code>/off</code> para falar fora do personagem.</li>
+    <li><strong>Varie o jeito de falar:</strong> <code>*saca a espada*</code> para ações, sozinhas ou no meio da fala, <kbd>Shift</kbd> + <kbd>Enter</kbd> para gritar e <code>[texto]</code> para falar fora do personagem.</li>
   </ol>
 
   <div class="tbg-guide__callout tbg-guide__callout--tip">
@@ -32,10 +32,10 @@
     <tbody>
       <tr><td>Texto normal, com o token selecionado</td><td>Fala: balão normal</td></tr>
       <tr><td><kbd>Shift</kbd> + <kbd>Enter</kbd> ou <code>/shout texto</code></td><td>Grito: balão maior, em negrito</td></tr>
-      <tr><td><code>*texto*</code> ou <code>/me texto</code></td><td>Ação: balão bege, sem o nome</td></tr>
+      <tr><td><code>*texto*</code> ou <code>'texto'</code></td><td>Ação, sozinha ou no meio da fala: sai em negrito no mesmo balão</td></tr>
       <tr><td><code>/think texto</code></td><td>Pensamento: só você e o Mestre veem</td></tr>
       <tr><td><code>/w Nome texto</code></td><td>Sussurro: só quem recebe vê</td></tr>
-      <tr><td><code>/off texto</code></td><td>Fora do personagem: balão cinza e translúcido</td></tr>
+      <tr><td><code>[texto]</code> ou <code>texto []</code></td><td>Fora do personagem: o balão comum, translúcido, com o seu nome de jogador</td></tr>
       <tr><td><code>/say texto</code></td><td>Fala, do mesmo jeito que o texto normal</td></tr>
       <tr><td><code>/n texto</code> ou <code>= texto =</code></td><td>Narração, só para o Mestre: balão preto no meio da tela de todos. Sem token selecionado, o texto normal do Mestre já é narração</td></tr>
     </tbody>

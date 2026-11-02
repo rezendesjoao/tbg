@@ -1,6 +1,6 @@
 import { TEMPLATES } from "../constants.mjs";
 
-const START_RATIO = 0.62;
+const START_RATIO = 0.4;
 const FADE_IN_MS = 400;
 const FADE_OUT_MS = 1000;
 const PUSH_MS = 200;
@@ -8,12 +8,12 @@ const DISMISS_MS = 250;
 const BASE_MS = 2000;
 const PER_CHARACTER_MS = 60;
 const MIN_DURATION_MS = 2000;
-const MAX_DURATION_MS = 30000;
+const MAX_DURATION_MS = 60000;
 
 /**
- * Um balão no meio da tela: o mesmo balão dos jogadores, que nasce abaixo do meio, sobe devagar e some. O do
- * narrador é preto e tem o nome dele; o do Mestre sem token não tem nome. A subida anima o `transform` do balão e
- * o empurrão anima o `translate` do elemento externo, então os dois compõem sem conflito.
+ * Um balão no meio da tela: o mesmo balão dos jogadores, que nasce um pouco acima do meio, sobe devagar e some. O
+ * do narrador é preto e tem o nome dele; o comando do Mestre sem token não tem nome. A subida anima o `transform` do
+ * balão e o empurrão anima o `translate` do elemento externo, então os dois compõem sem conflito.
  */
 export default class Banner {
   push = 0;
@@ -25,13 +25,16 @@ export default class Banner {
     this.duration = readingMs;
   }
 
-  /** Renderiza o balão; textos longos pedem mais tempo de leitura, até o teto. Sem `name`, sai sem cabeçalho. */
-  static async create({ id, kind, name, portrait, iconClass, content, minimumSeconds }) {
+  /**
+   * Renderiza o balão; fica pelo menos `minimumMs`, textos longos pedem mais tempo de leitura, e `maximumMs` (ou um
+   * minuto) é o teto. Sem `name`, sai sem cabeçalho.
+   */
+  static async create({ id, kind, name, portrait, iconClass, content, minimumMs, maximumMs }) {
     const context = { id, kind, name, portrait, iconClass, content };
     const html = await foundry.applications.handlebars.renderTemplate(TEMPLATES.banner, context);
     const element = foundry.utils.parseHTML(html);
     const length = element.querySelector(".tbg-bubble__text").textContent.trim().length;
-    const readingMs = Math.min(MAX_DURATION_MS, Math.max(minimumSeconds * 1000, BASE_MS + length * PER_CHARACTER_MS));
+    const readingMs = Math.min(maximumMs || MAX_DURATION_MS, Math.max(minimumMs, BASE_MS + length * PER_CHARACTER_MS));
     return new Banner({ id, element, readingMs });
   }
 
