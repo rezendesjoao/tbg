@@ -12,9 +12,11 @@ const CONTAINER_ID = "tbg-bubbles";
 const TYPING_CONTAINER_ID = "tbg-typing-indicators";
 const GAP = 8;
 const EDGE = 8;
-const MAX_BASELINE_RATIO = 0.9;
 const ROLL_ICON = "fa-solid fa-dice-d20";
 const NARRATOR_ICON = "fa-solid fa-scroll";
+
+/** A linha nunca passa do meio da tela: mais embaixo, os balões nasceriam atrás da barra de conversa e do HUD. */
+const MAX_BASELINE_RATIO = 0.5;
 
 /** O balão novo fica parado um instante antes do primeiro pulo, mesmo que nasça às vésperas de um (pedido do usuário). */
 const DWELL_MS = 700;
@@ -23,9 +25,9 @@ const DWELL_MS = 700;
 const NARRATION_MIN_MS = 30000;
 
 /**
- * A faixa dos balões, presa ao topo da tela como nas salas de bate-papo dos jogos. Todo balão nasce na mesma linha, na
- * altura do *Limite de subida*, embaixo do token que fala (no meio, sem token), e empurra para cima os que encosta; de
- * tempos em tempos todos pulam uma linha, e quem passa do topo some. O pulo é uma transição curta de `transform` e o
+ * A faixa dos balões, presa ao topo da tela como nas salas de bate-papo dos jogos. Todo balão nasce na mesma linha, a
+ * *Altura da faixa* pixels do topo, embaixo do token que fala (no meio, sem token), e empurra para cima os que encosta;
+ * de tempos em tempos todos pulam uma linha, e quem passa do topo some. O pulo é uma transição curta de `transform` e o
  * pan do mapa só mexe no `translate`, então nada roda a cada quadro.
  */
 class BubbleLayer {
@@ -231,7 +233,7 @@ class BubbleLayer {
   /** Medidas da faixa, em pixels dela: ela escala com a interface (`--ui-scale`), como as colunas do core. */
   #measure() {
     const scale = Number(getComputedStyle(document.body).getPropertyValue("--ui-scale")) || 1;
-    const baseline = Math.min(getSetting(SETTINGS.BUBBLE_RISE_LIMIT), (innerHeight / scale) * MAX_BASELINE_RATIO);
+    const baseline = Math.min(getSetting(SETTINGS.BUBBLE_BAND_HEIGHT), (innerHeight / scale) * MAX_BASELINE_RATIO);
     this.#metrics = { scale, baseline };
     return this.#metrics;
   }

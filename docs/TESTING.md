@@ -28,7 +28,7 @@ Se algo falhar aqui, pare: o resto do roteiro depende disso.
 - [ ] **Colunas independentes (free flow).** Selecione o segundo token, distante, e mande uma mensagem. O balão dele aparece na coluna dele e **não** empurra os balões do primeiro token.
 - [ ] **Linha a linha.** Troque *Empilhamento dos balões* para "Linha a linha" e repita o passo anterior. Agora a mensagem de um token empurra os balões do outro também. Volte para "Free flow" depois.
 - [ ] **Colisão entre todos.** Com dois tokens lado a lado, mande falas dos dois e uma narração no meio: ninguém se sobrepõe, quem encosta sobe.
-- [ ] **Altura da faixa.** Troque *Altura da faixa dos balões* para 200: os balões passam a nascer mais perto do topo. Volte para 320.
+- [ ] **Altura da faixa.** Os balões nascem no alto da tela, longe da barra de conversa. Troque *Altura da faixa dos balões* para 320: eles passam a nascer mais embaixo, com mais linhas na faixa; mesmo em 600, a linha não passa do meio da tela. Volte para 200.
 - [ ] **Interruptor geral.** Desligue *Ativar balões do TBG*. Os balões somem e novas mensagens não geram balão, mas a barra e o histórico continuam. Ligue de novo.
 
 ## 3. A3 — Modos de fala
@@ -153,7 +153,7 @@ O teste que mais importa, porque balão é coisa de mesa. Abra uma janela anôni
 
 ## 7. Verificação automática
 
-Cole no console (F12) do cliente do **Mestre**, com uma cena aberta. O script cria dois atores e tokens de teste, leva a vista até eles, escreve pela barra de conversa, exercita tudo e imprime uma tabela de aprovado e reprovado. Para medir os pulos e o tempo do narrador ele muda por alguns segundos a *Velocidade de subida*, o *Empilhamento* e o *Tempo máximo*, e devolve tudo, a vista também, no fim; ele leva cerca de um minuto. Para testar a troca de cena, ele cria e ativa uma cena temporária e depois volta para a cena aberta, o que recomeça o histórico dos jogadores nessa cena, então rode num mundo de teste. No fim ele apaga os atores, os tokens, a cena e as mensagens que criou.
+Cole no console (F12) do cliente do **Mestre**, com uma cena aberta. O script cria dois atores e tokens de teste, leva a vista até eles, escreve pela barra de conversa, exercita tudo e imprime uma tabela de aprovado e reprovado. Para medir os pulos e o tempo do narrador ele muda por alguns segundos a *Velocidade de subida*, a *Altura da faixa*, o *Empilhamento* e o *Tempo máximo*, e devolve tudo, a vista também, no fim; ele leva cerca de um minuto. Para testar a troca de cena, ele cria e ativa uma cena temporária e depois volta para a cena aberta, o que recomeça o histórico dos jogadores nessa cena, então rode num mundo de teste. No fim ele apaga os atores, os tokens, a cena e as mensagens que criou.
 
 ```js
 await (async () => {
@@ -171,7 +171,7 @@ await (async () => {
   const direita = r => r?.height ? r.right : 0;
   const meioDaFaixa = () => (Math.max(0, ...[ui.controls, ui.nav].map(a => direita(a?.element?.getBoundingClientRect()))) + (ui.sidebar?.element?.getBoundingClientRect().left ?? innerWidth)) / 2 / escala;
   const naFaixa = token => ((token.center.x - canvas.stage.pivot.x) * canvas.stage.scale.x + canvas.stage.position.x) / escala;
-  const linhaBase = () => Math.min(game.settings.get("tbg", "bubbleRiseLimit"), innerHeight / escala * 0.9);
+  const linhaBase = () => Math.min(game.settings.get("tbg", "bubbleBandHeight"), innerHeight / escala * 0.5);
   const sobrepostos = lista => { let n = 0; const r = lista.map(el => el.getBoundingClientRect()); for (let i = 0; i < r.length; i++) for (let j = i + 1; j < r.length; j++) if (r[i].left < r[j].right && r[i].right > r[j].left && r[i].top < r[j].bottom && r[i].bottom > r[j].top) n++; return n; };
   const logOf = id => ui.chat.element.querySelector(`.chat-log [data-message-id="${id}"]`);
   const escondido = el => !el || getComputedStyle(el).display === "none";
@@ -202,6 +202,7 @@ await (async () => {
   check("campo do chat lateral escondido", escondido(document.getElementById("chat-message")));
   check("modos de mensagem continuam", !escondido(document.getElementById("message-modes")));
   check("velocidade de subida padrão", game.settings.settings.get("tbg.bubbleRiseSpeed").default === 15);
+  check("faixa no alto da tela por padrão", game.settings.settings.get("tbg.bubbleBandHeight").default === 200);
   const ferramentas = Object.values(ui.controls.controls.tokens.tools).sort((a, b) => a.order - b.order).map(t => t.name);
   const mercado = ferramentas.indexOf("eterniaMarket");
   check("botão do histórico", mercado < 0 ? ferramentas.includes("tbgHistory") : ferramentas[mercado + 1] === "tbgHistory", ferramentas.join(" > "));
@@ -218,6 +219,12 @@ await (async () => {
   canvas.pan({ x: tokenA.center.x - (meioDaFaixa() * escala - canvas.stage.position.x), y: tokenA.center.y, scale: 1 });
   const subida = game.settings.get("tbg", "bubbleRiseSpeed");
   await game.settings.set("tbg", "bubbleRiseSpeed", 0);
+  const altura = game.settings.get("tbg", "bubbleBandHeight");
+  await game.settings.set("tbg", "bubbleBandHeight", 600);
+  tokenB.control({ releaseOthers: true });
+  const funda = bubbleOf((await say("Linha no meio.")).id);
+  check("a linha não passa do meio da tela", Math.abs(yOf(funda) - innerHeight / escala * 0.5) < 1, `${yOf(funda)} / ${innerHeight / escala}`);
+  await game.settings.set("tbg", "bubbleBandHeight", 320);
 
   tokenA.control({ releaseOthers: true });
   await pause(200);
@@ -382,6 +389,7 @@ await (async () => {
   check("narrador fica 30 s mesmo com Tempo máximo menor", !bubbleOf(breve.id) && !!bubbleOf(curta.id));
   await game.settings.set("tbg", "bubbleMaxLifetime", maximo);
   await game.settings.set("tbg", "bubbleRiseSpeed", subida);
+  await game.settings.set("tbg", "bubbleBandHeight", altura);
   check("narração fora do chat lateral", escondido(logOf(narracao.id)));
   const marcada = await say("= O sino toca ao longe. =");
   check("= texto = vira narração", marcada.getFlag("tbg", "kind") === "narration" && marcada.content === "O sino toca ao longe.", marcada.content);

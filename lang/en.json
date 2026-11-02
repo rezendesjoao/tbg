@@ -21,7 +21,7 @@
         "name": "Rise speed",
         "hint": "Average screen pixels per second that bubbles rise. They rise in hops, one line at a time: at the default, 15, that is about one hop every two seconds. Zero keeps them in place until newer bubbles push them."
       },
-      "bubbleRiseLimit": {
+      "bubbleBandHeight": {
         "name": "Bubble band height",
         "hint": "Distance, in pixels, from the top of the screen to the line where bubbles appear. They rise from there to the top and fade out."
       },

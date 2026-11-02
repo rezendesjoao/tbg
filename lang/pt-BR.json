@@ -21,7 +21,7 @@
         "name": "Velocidade de subida",
         "hint": "Quantos pixels por segundo os balões sobem, em média. Eles sobem aos pulos, uma linha por vez: no padrão, 15, é mais ou menos um pulo a cada dois segundos. Zero deixa os balões parados até um novo empurrar."
       },
-      "bubbleRiseLimit": {
+      "bubbleBandHeight": {
         "name": "Altura da faixa dos balões",
         "hint": "Distância, em pixels, do topo da tela até a linha onde os balões nascem. Eles sobem dali até o topo e somem."
       },

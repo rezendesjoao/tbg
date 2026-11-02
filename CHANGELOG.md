@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.16.1] — 2026-11-02
+
+### Corrigido
+- **Os balões nasciam no pé da tela, atrás da barra de conversa**, nas mesas que tinham aumentado o antigo *Limite de subida*: a 0.16.0 usou a mesma configuração para a altura da faixa, que tem outro sentido. A *Altura da faixa dos balões* agora é uma configuração nova, que ignora o valor antigo e começa mais perto do topo (200 pixels; antes, 320), e a linha onde os balões nascem nunca passa do meio da tela.
+
 ## [0.16.0] — 2026-11-02
 
 Os balões saem de uma faixa só, presa ao topo da tela, como nas salas de bate-papo dos jogos: todos nascem na mesma linha, se empurram sem nunca se sobrepor e sobem aos pulos, uma linha por vez, até sumir lá em cima.

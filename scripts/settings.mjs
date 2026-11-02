@@ -5,7 +5,7 @@ export const SETTINGS = Object.freeze({
   DEBUG: "debug",
   BUBBLE_LAYOUT: "bubbleLayout",
   BUBBLE_RISE_SPEED: "bubbleRiseSpeed",
-  BUBBLE_RISE_LIMIT: "bubbleRiseLimit",
+  BUBBLE_BAND_HEIGHT: "bubbleBandHeight",
   BUBBLE_MAX_LIFETIME: "bubbleMaxLifetime",
   BUBBLE_PORTRAIT: "bubblePortrait",
   TYPING_INDICATOR: "typingIndicator",
@@ -34,7 +34,7 @@ const DEFINITIONS = {
     choices: choicesFor(SETTINGS.BUBBLE_LAYOUT, BUBBLE_LAYOUTS)
   },
   [SETTINGS.BUBBLE_RISE_SPEED]: { scope: "world", type: Number, default: 15, range: { min: 0, max: 120, step: 5 } },
-  [SETTINGS.BUBBLE_RISE_LIMIT]: { scope: "world", type: Number, default: 320, range: { min: 100, max: 800, step: 10 } },
+  [SETTINGS.BUBBLE_BAND_HEIGHT]: { scope: "world", type: Number, default: 200, range: { min: 60, max: 600, step: 10 } },
   [SETTINGS.BUBBLE_MAX_LIFETIME]: { scope: "world", type: Number, default: 0, range: { min: 0, max: 300, step: 5 } },
   [SETTINGS.BUBBLE_PORTRAIT]: { scope: "world", type: Boolean, default: true },
   [SETTINGS.TYPING_INDICATOR]: { scope: "world", type: Boolean, default: true },
