@@ -4,7 +4,6 @@ import { registerSettings } from "./settings.mjs";
 import { registerQueries, registerSocket } from "./sockets.mjs";
 import { createApi } from "./api.mjs";
 import { registerBubbles } from "./bubbles/layer.mjs";
-import { registerBanners } from "./banners/layer.mjs";
 import { registerChatCommands } from "./chat/commands.mjs";
 import { registerActionMarks } from "./chat/marks.mjs";
 import { registerChatBar } from "./chat/bar.mjs";
@@ -32,7 +31,6 @@ Hooks.once("init", () => {
   registerSceneTalk();
   registerHistory();
   registerBubbles();
-  registerBanners();
   registerMigration();
   foundry.applications.handlebars.loadTemplates(Object.values(TEMPLATES));
   const module = game.modules.get(MODULE_ID);

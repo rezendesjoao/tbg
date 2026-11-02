@@ -2,6 +2,22 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.16.0] — 2026-11-02
+
+Os balões saem de uma faixa só, presa ao topo da tela, como nas salas de bate-papo dos jogos: todos nascem na mesma linha, se empurram sem nunca se sobrepor e sobem aos pulos, uma linha por vez, até sumir lá em cima.
+
+### Alterado
+- **A faixa dos balões.** Todo balão nasce na mesma linha, perto do topo da tela (a 320 pixels dele, no padrão), na direção do token que fala; a narração e a conversa sem token nascem no meio. O balão novo empurra para cima os que encosta, e a colisão vale entre todos: balões de tokens diferentes, a narração e o balão de uso da ficha nunca ficam um por cima do outro. Perto da borda, o balão se encosta na parte visível, sem entrar embaixo da barra lateral nem da lista de cenas.
+- **Sobem aos pulos.** Em vez de subir devagar sem parar, os balões ficam parados e, de tempos em tempos, pulam uma linha todos juntos, num movimento curto (no padrão, mais ou menos um pulo a cada dois segundos); quem passa do topo some. O balão recém-nascido espera um instante antes do primeiro pulo. Nada roda a cada quadro, e no Modo de Desempenho Baixo, com o movimento reduzido do sistema ou no modo fotossensível, o pulo é imediato.
+- **O balão fica onde foi dito.** Ele não segue mais o token que anda nem some quando o token sai da cena; quando você arrasta o mapa, os balões dos tokens andam junto só na horizontal, e o zoom só muda o lugar deles na linha.
+- **O narrador na faixa.** O balão do narrador nasce no meio da faixa, na mesma linha dos outros, e pula mais devagar que eles, para ficar pelo menos 30 segundos quando nada o empurra.
+- *Limite de subida* vira *Altura da faixa dos balões*: a distância do topo da tela até a linha onde os balões nascem. A *Velocidade de subida* passa a ser a média dos pulos.
+- A fala de um token que você não vê não vira balão (antes, um balão invisível ocupava o lugar e empurrava os vizinhos).
+
+### Removido
+- Os balões do meio da tela, que viraram parte da faixa, e a configuração *Tempo mínimo dos balões do meio da tela*.
+- *Escala dos balões*: na faixa, os balões têm sempre o mesmo tamanho, em qualquer zoom.
+
 ## [0.15.0] — 2026-11-02
 
 ### Adicionado

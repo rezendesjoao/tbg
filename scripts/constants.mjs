@@ -28,7 +28,6 @@ export const SOCKET_TYPES = Object.freeze({
 
 export const TEMPLATES = Object.freeze({
   bubble: `modules/${MODULE_ID}/templates/bubble.hbs`,
-  banner: `modules/${MODULE_ID}/templates/banner.hbs`,
   chatBar: `modules/${MODULE_ID}/templates/chat-bar.hbs`,
   history: `modules/${MODULE_ID}/templates/history.hbs`,
   speakerWarning: `modules/${MODULE_ID}/templates/speaker-warning.hbs`

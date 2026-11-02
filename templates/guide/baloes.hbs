@@ -1,17 +1,17 @@
 <div class="tbg-guide">
   <section class="tbg-guide__hero">
     <h2>Os balões</h2>
-    <p>Como eles nascem, empilham, sobem e somem.</p>
+    <p>Onde eles nascem, como empilham, pulam e somem.</p>
   </section>
 
-  <p class="tbg-guide__lead">Os balões do TBG não têm cronômetro. Eles sobem devagar, para dar tempo de ler, e somem lá no alto, e cada fala nova os empurra mais depressa para lá. O que sumiu continua no Histórico da cena.</p>
+  <p class="tbg-guide__lead">Toda fala vira um balão numa faixa no topo da tela, como nas salas de bate-papo dos jogos. Os balões nascem todos na mesma linha, se empurram sem nunca ficar um por cima do outro e sobem aos pulos até sumir lá no alto. O que sumiu continua no Histórico da cena.</p>
 
-  <h3>Como a pilha anda</h3>
+  <h3>Como a faixa anda</h3>
   <ol class="tbg-guide__steps">
-    <li><strong>O balão novo nasce embaixo</strong>, logo acima do token.</li>
-    <li><strong>Ele empurra os mais antigos para cima</strong>, num deslize rápido.</li>
-    <li><strong>Todos sobem devagar</strong>, mesmo quando ninguém fala.</li>
-    <li><strong>Passou da altura limite, some</strong>, apagando-se suavemente.</li>
+    <li><strong>O balão novo nasce na linha da faixa</strong>, na direção do token que fala.</li>
+    <li><strong>Ele empurra para cima os balões em que encosta</strong>, num pulo rápido.</li>
+    <li><strong>De tempos em tempos, todos pulam uma linha</strong>, juntos, mesmo quando ninguém fala.</li>
+    <li><strong>Passou do topo da tela, some</strong>, apagando-se suavemente.</li>
   </ol>
 
   <figure class="tbg-guide__stage">
@@ -22,15 +22,15 @@
   </figure>
   <p class="tbg-guide__caption">O balão de baixo é o mais novo. Os de cima já estão a caminho de sumir.</p>
 
-  <p>Por isso a vida de um balão acompanha o ritmo da conversa. Numa cena agitada, os novos empurram os antigos e eles somem rápido. Numa cena calma, cada balão fica mais tempo na tela.</p>
+  <p>Por isso a vida de um balão acompanha o ritmo da conversa. Numa cena agitada, os novos empurram os antigos e eles somem rápido. Numa cena calma, cada balão só sobe nos pulos e fica mais tempo na tela.</p>
 
   <h3>Sempre numa linha</h3>
-  <p>O balão nunca quebra a linha, por mais longa que seja a fala. Ele fica centrado no token e cresce por igual para os dois lados: uma fala comprida só deixa o balão mais largo. O limite de {{maxLength}} caracteres por mensagem mantém a linha fácil de ler.</p>
+  <p>O balão nunca quebra a linha, por mais longa que seja a fala. Ele fica centrado na direção do token e cresce por igual para os dois lados: uma fala comprida só deixa o balão mais largo. Perto da borda da tela, ele se encosta na parte que se vê. O limite de {{maxLength}} caracteres por mensagem mantém a linha fácil de ler.</p>
 
   <h3>Vários balões, vários tokens</h3>
-  <p>Um token pode ter vários balões ao mesmo tempo, e a cena inteira pode falar junto. Os balões acompanham o token quando ele anda e seguem o mapa quando você arrasta a tela ou dá zoom.</p>
+  <p>Um token pode ter vários balões ao mesmo tempo, e a cena inteira pode falar junto: os balões de todo mundo se empurram, e nenhum fica por cima de outro. O balão fica onde foi dito: se o token anda depois, o balão não vai atrás. Quando você arrasta o mapa, os balões dos tokens andam junto, só para os lados, e a linha da faixa não sai do lugar.</p>
   <p>Se você não enxerga um token, também não vê os balões dele.</p>
-  <p>Quem fala sem token na cena, como um jogador cujo token não está no mapa, ganha o balão no meio da tela. O Mestre sem nada selecionado narra, no balão do narrador.</p>
+  <p>Quem fala sem token na cena, como um jogador cujo token não está no mapa, ganha o balão no meio da faixa. O Mestre sem nada selecionado narra, no balão do narrador.</p>
 
   <h3>Empilhamento</h3>
   <p>O Mestre escolhe como os balões se empurram em <em>Empilhamento dos balões</em>:</p>
@@ -40,23 +40,19 @@
     </thead>
     <tbody>
       <tr><td><strong>Free flow</strong>, o padrão</td><td>O balão novo só empurra os balões em que ele encosta. Grupos de conversa distantes formam colunas próprias.</td></tr>
-      <tr><td><strong>Linha a linha</strong></td><td>Cada balão novo empurra para cima todos os balões da cena.</td></tr>
+      <tr><td><strong>Linha a linha</strong></td><td>Cada balão novo empurra para cima a faixa inteira.</td></tr>
     </tbody>
   </table>
 
   <h3>Tamanho na tela</h3>
-  <p>Cada jogador escolhe o tamanho dos balões no próprio computador, na opção <em>Escala dos balões</em>, em Configurações → TBG:</p>
-  <div class="tbg-guide__grid">
-    <div class="tbg-guide__card"><strong>Fixa na tela</strong><p>O padrão. Os balões ficam do mesmo tamanho em qualquer zoom e não viram formiguinhas quando você afasta o mapa.</p></div>
-    <div class="tbg-guide__card"><strong>Junto com o mapa</strong><p>Os balões crescem e diminuem com o zoom, como se estivessem desenhados no mapa.</p></div>
-  </div>
+  <p>Os balões têm sempre o mesmo tamanho, em qualquer zoom: não viram formiguinhas quando você afasta o mapa nem cobrem a cena quando você chega perto.</p>
 
   <div class="tbg-guide__callout tbg-guide__callout--warn">
     <p><strong>Nenhum balão aparece?</strong> Confira a opção <em>Enable Chat Bubbles</em> do próprio Foundry, em Configurações → Core. Ela é de cada jogador e precisa estar ligada: desligada, nenhum balão aparece para você, mesmo com a barra de conversa e o histórico funcionando normalmente.</p>
   </div>
 
   <h3>Quando o Mestre narra</h3>
-  <p>A narração do Mestre não sai de nenhum token. Ela aparece para todo mundo um pouco acima do meio da tela, num balão com o mesmo formato e o mesmo tamanho dos balões dos jogadores, só que preto e com letras brancas, assinado pelo nome do narrador. Ele sobe devagar e fica pelo menos 30 segundos antes de sumir. Como os balões dos jogadores, fica numa linha só, crescendo para os dois lados a partir do meio da tela.</p>
+  <p>A narração do Mestre não sai de nenhum token. Ela aparece para todo mundo no meio da faixa, na mesma linha onde nascem os outros balões, com o mesmo formato e o mesmo tamanho dos balões dos jogadores, só que preto e com letras brancas, assinado pelo nome do narrador. Ele pula mais devagar que os outros e fica pelo menos 30 segundos quando nada o empurra. Como os balões dos jogadores, fica numa linha só, crescendo para os dois lados.</p>
 
   <figure class="tbg-guide__stage">
     <div class="tbg-bubble tbg-bubble--narration"><span class="tbg-bubble__speaker"><i class="tbg-bubble__portrait fa-solid fa-scroll" inert></i><span class="tbg-bubble__name">{{narratorName}}</span></span> <span class="tbg-bubble__text">A porta range. Do outro lado, só escuridão e cheiro de mofo.</span></div>

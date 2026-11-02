@@ -3,7 +3,7 @@
     "Settings": {
       "enabled": {
         "name": "Enable TBG bubbles",
-        "hint": "Master switch for the bubbles: the ones over the tokens, the speech with no token in the middle of the screen, the sheet action bubble and the typing badge. The narrator bubble has its own switch. The chat bar and the scene history keep working."
+        "hint": "Master switch for the bubbles in the band at the top of the screen (the tokens' speech, speech with no token and the sheet action bubble) and for the typing badge. The narrator bubble has its own switch. The chat bar and the scene history keep working."
       },
       "debug": {
         "name": "Debug logging",
@@ -11,7 +11,7 @@
       },
       "bubbleLayout": {
         "name": "Bubble stacking",
-        "hint": "Free flow: a new bubble only pushes the bubbles it overlaps, so distant groups form their own columns. Line by line: every bubble on the scene moves up.",
+        "hint": "Free flow: a new bubble only pushes the bubbles it touches, so whoever speaks far away gets their own column. Line by line: every new bubble pushes the whole band.",
         "choices": {
           "freeflow": "Free flow",
           "line": "Line by line"
@@ -19,23 +19,15 @@
       },
       "bubbleRiseSpeed": {
         "name": "Rise speed",
-        "hint": "Screen pixels per second that bubbles drift upward, over the tokens and in the middle of the screen. The default, 15, is slow, to leave time to read. Zero keeps them in place until newer bubbles push them."
+        "hint": "Average screen pixels per second that bubbles rise. They rise in hops, one line at a time: at the default, 15, that is about one hop every two seconds. Zero keeps them in place until newer bubbles push them."
       },
       "bubbleRiseLimit": {
-        "name": "Rise limit",
-        "hint": "Screen pixels above the token after which a bubble fades out."
+        "name": "Bubble band height",
+        "hint": "Distance, in pixels, from the top of the screen to the line where bubbles appear. They rise from there to the top and fade out."
       },
       "bubbleMaxLifetime": {
         "name": "Maximum lifetime",
-        "hint": "Seconds before a bubble fades regardless of position, over the tokens and in the middle of the screen. Zero disables the limit."
-      },
-      "bubbleScaling": {
-        "name": "Bubble scale",
-        "hint": "Screen: bubbles keep the same size at any zoom level. World: bubbles scale with the map like the core bubbles.",
-        "choices": {
-          "screen": "Fixed on screen",
-          "world": "Scale with the map"
-        }
+        "hint": "Seconds before a bubble fades wherever it is. Zero disables the limit: a bubble only fades when it passes the top of the screen. The narrator bubble always stays at least 30 seconds."
       },
       "bubblePortrait": {
         "name": "Portrait in bubbles",
@@ -47,15 +39,11 @@
       },
       "usageBubbles": {
         "name": "Sheet action bubbles",
-        "hint": "When someone uses an item, a feature or a roll from their sheet, in any system, a beige bubble appears over the token: \"Kirito used Longsword\". Only the action's name, never the result."
+        "hint": "When someone uses an item, a feature or a roll from their sheet, in any system, a beige bubble appears above the token's position: \"Kirito used Longsword\". Only the action's name, never the result."
       },
       "narrationBanner": {
         "name": "Narrator bubble",
-        "hint": "Every GM narration shows, for everyone, as a black bubble with white text a little above the middle of the screen, in the same format as the players' bubbles, rising slowly and fading after at least 30 seconds. When off, narration only goes to the scene history."
-      },
-      "narrationBannerDuration": {
-        "name": "Minimum time of the middle bubbles",
-        "hint": "Minimum seconds the speech with no token stays in the middle of the screen. It stays at least as long as a bubble over a token takes to rise to the limit; longer texts stay longer, up to one minute. The narrator bubble always stays at least 30 seconds."
+        "hint": "Every GM narration shows, for everyone, as a black bubble with white text in the middle of the bubble band, in the same format as the players' bubbles. It hops more slowly than the others, to stay at least 30 seconds when nothing pushes it. When off, narration only goes to the scene history."
       },
       "narratorName": {
         "name": "Narrator name",

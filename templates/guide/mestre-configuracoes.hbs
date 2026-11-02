@@ -12,18 +12,16 @@
       <tr><th>Opção</th><th>Vale para</th><th>Padrão</th><th>O que faz</th></tr>
     </thead>
     <tbody>
-      <tr><td><em>Ativar balões do TBG</em></td><td>Mundo</td><td>Ligado</td><td>Interruptor geral dos balões: os de cima dos tokens, as falas sem token no meio da tela, o de uso da ficha e o selo de digitação. Desligado, a barra de conversa e o histórico da cena continuam funcionando. O balão do narrador e o tema do chat têm interruptores próprios.</td></tr>
+      <tr><td><em>Ativar balões do TBG</em></td><td>Mundo</td><td>Ligado</td><td>Interruptor geral dos balões da faixa (as falas dos tokens, as falas sem token e o balão de uso da ficha) e do selo de digitação. Desligado, a barra de conversa e o histórico da cena continuam funcionando. O balão do narrador e o tema do chat têm interruptores próprios.</td></tr>
       <tr><td><em>Mostrar quem está digitando</em></td><td>Mundo</td><td>Ligado</td><td>Mostra, para todos, o selo de reticências no canto do token de quem está escrevendo. Ele some ao enviar ou depois de três segundos sem digitar.</td></tr>
-      <tr><td><em>Balão de uso da ficha</em></td><td>Mundo</td><td>Ligado</td><td>Quando alguém usa um item, uma característica ou uma rolagem pela ficha, aparece um balão bege sobre o token: "Kirito usou Espada Longa". Só o nome da ação, nunca o resultado.</td></tr>
-      <tr><td><em>Balão do narrador</em></td><td>Mundo</td><td>Ligado</td><td>Mostra cada narração, para todos, num balão preto de letras brancas um pouco acima do meio da tela, no mesmo formato dos balões dos jogadores, por pelo menos 30 segundos. Desligado, a narração fica só no histórico da cena.</td></tr>
-      <tr><td><em>Tempo mínimo dos balões do meio da tela</em></td><td>Mundo</td><td>6 segundos</td><td>Tempo mínimo das falas sem token no meio da tela, de 3 a 30 segundos. Elas já ficam pelo menos o tempo que um balão sobre o token leva para subir até o limite, uns 21 segundos no padrão; textos longos, até um minuto. O balão do narrador fica sempre pelo menos 30 segundos.</td></tr>
+      <tr><td><em>Balão de uso da ficha</em></td><td>Mundo</td><td>Ligado</td><td>Quando alguém usa um item, uma característica ou uma rolagem pela ficha, aparece um balão bege na direção do token: "Kirito usou Espada Longa". Só o nome da ação, nunca o resultado.</td></tr>
+      <tr><td><em>Balão do narrador</em></td><td>Mundo</td><td>Ligado</td><td>Mostra cada narração, para todos, num balão preto de letras brancas no meio da faixa, no mesmo formato dos balões dos jogadores; ele pula mais devagar, para ficar pelo menos 30 segundos quando nada o empurra. Desligado, a narração fica só no histórico da cena.</td></tr>
       <tr><td><em>Nome do narrador</em></td><td>Mundo</td><td>Vazio</td><td>Nome que assina as narrações. Vazio usa "Narrador". Neste mundo: {{narratorName}}.</td></tr>
-      <tr><td><em>Empilhamento dos balões</em></td><td>Mundo</td><td>Free flow</td><td>Free flow: o balão novo só empurra os que ele encosta, e grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem juntos.</td></tr>
-      <tr><td><em>Velocidade de subida</em></td><td>Mundo</td><td>15</td><td>Quantos pixels por segundo os balões sobem, sobre os tokens e no meio da tela, de 0 a 120. O padrão é devagar, para dar tempo de ler. Zero deixa os balões parados até um novo empurrar.</td></tr>
-      <tr><td><em>Limite de subida</em></td><td>Mundo</td><td>320</td><td>Altura acima do token, de 100 a 800 pixels, a partir da qual o balão some.</td></tr>
-      <tr><td><em>Tempo máximo</em></td><td>Mundo</td><td>0</td><td>Segundos até o balão sumir de qualquer jeito, até 300. Zero desliga esse limite: o balão só some ao passar do <em>Limite de subida</em>.</td></tr>
+      <tr><td><em>Empilhamento dos balões</em></td><td>Mundo</td><td>Free flow</td><td>Free flow: o balão novo só empurra os que ele encosta, e grupos distantes formam colunas próprias. Linha a linha: cada balão novo empurra a faixa inteira.</td></tr>
+      <tr><td><em>Velocidade de subida</em></td><td>Mundo</td><td>15</td><td>Quantos pixels por segundo os balões sobem, em média, de 0 a 120. Eles sobem aos pulos, uma linha por vez: no padrão, mais ou menos um pulo a cada dois segundos. Zero deixa os balões parados até um novo empurrar.</td></tr>
+      <tr><td><em>Altura da faixa dos balões</em></td><td>Mundo</td><td>320</td><td>Distância do topo da tela até a linha onde os balões nascem, de 100 a 800 pixels. Eles sobem dali até o topo e somem.</td></tr>
+      <tr><td><em>Tempo máximo</em></td><td>Mundo</td><td>0</td><td>Segundos até o balão sumir de qualquer jeito, até 300. Zero desliga esse limite: o balão só some ao passar do topo da tela. O do narrador fica sempre pelo menos 30 segundos.</td></tr>
       <tr><td><em>Retrato no balão</em></td><td>Mundo</td><td>Ligado</td><td>Mostra a imagem do token dentro do balão, ao lado do nome.</td></tr>
-      <tr><td><em>Escala dos balões</em></td><td>Cliente</td><td>Fixa na tela</td><td>Fixa na tela: o balão tem o mesmo tamanho em qualquer zoom. Junto com o mapa: cresce e encolhe com o zoom.</td></tr>
       <tr><td><em>Tema do chat</em></td><td>Cliente</td><td>Ligado</td><td>Retrato e cor do autor nos cartões de rolagem do chat lateral. Desligado, volta o visual padrão do Foundry.</td></tr>
       <tr><td><em>Log detalhado</em></td><td>Cliente</td><td>Desligado</td><td>Escreve detalhes extras no console do navegador (<kbd>F12</kbd>). Só serve para investigar problemas.</td></tr>
     </tbody>
@@ -54,12 +52,12 @@
     </thead>
     <tbody>
       <tr><td>Um jogador não vê nenhum balão</td><td><em>Enable Chat Bubbles</em> ligada no computador dele. É a causa mais comum. Confira também se <em>Ativar balões do TBG</em> está ligada.</td></tr>
-      <tr><td>A fala entra no histórico, mas sem balão</td><td>Quem lê precisa estar olhando a mesma cena. A fala de um token escondido só aparece para quem enxerga o token.</td></tr>
+      <tr><td>A fala entra no histórico, mas sem balão</td><td>Quem lê precisa estar olhando a mesma cena. A fala de um token escondido só vira balão para quem enxerga o token.</td></tr>
       <tr><td>A barra de conversa não aparece</td><td>O TBG ativo no mundo e a página recarregada depois de atualizar o módulo. A barra fica no pé da tela, acima da barra de macros e do que ocupa o lugar dela.</td></tr>
-      <tr><td>Os balões ficam cortados no alto da tela</td><td>O zoom: afaste o mapa para sobrar espaço acima dos tokens.</td></tr>
+      <tr><td>Os balões somem rápido demais</td><td>Numa cena agitada, cada fala nova empurra a faixa. Para dar mais tempo, aumente a <em>Altura da faixa dos balões</em> ou diminua a <em>Velocidade de subida</em>.</td></tr>
       <tr><td>Nada do TBG funciona</td><td>O módulo ativo na lista de módulos do mundo (<em>Module Management</em>). No console do navegador (<kbd>F12</kbd>) deve aparecer uma linha começando com <code>TBG |</code> e dizendo que ele está pronto, sem erros em vermelho.</td></tr>
       <tr><td>O selo de digitação não aparece</td><td><em>Mostrar quem está digitando</em> e <em>Ativar balões do TBG</em> ligadas, <em>Enable Chat Bubbles</em> ligada no computador de quem olha e o token selecionado na cena aberta. O selo só aparece enquanto a pessoa digita. Sem token, ou com o Modo Narrador ligado, ele não aparece mesmo.</td></tr>
-      <tr><td>O balão do narrador não aparece</td><td><em>Balão do narrador</em> ligada. Só narração vira balão no meio da tela: Modo Narrador, <code>/n</code> ou <code>= texto =</code>. Ele não depende de cena nem dos balões dos tokens.</td></tr>
+      <tr><td>O balão do narrador não aparece</td><td><em>Balão do narrador</em> ligada. Só narração vira balão do narrador: Modo Narrador, <code>/n</code> ou <code>= texto =</code>. Ele não depende de cena nem dos balões dos tokens.</td></tr>
     </tbody>
   </table>
 

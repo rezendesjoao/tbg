@@ -3,7 +3,7 @@
     "Settings": {
       "enabled": {
         "name": "Ativar balões do TBG",
-        "hint": "Interruptor geral dos balões: os de cima dos tokens, as falas sem token no meio da tela, o de uso da ficha e o selo de digitação. O balão do narrador tem interruptor próprio. A barra de conversa e o histórico da cena continuam funcionando."
+        "hint": "Interruptor geral dos balões da faixa do topo da tela (as falas dos tokens, as falas sem token e o balão de uso da ficha) e do selo de digitação. O balão do narrador tem interruptor próprio. A barra de conversa e o histórico da cena continuam funcionando."
       },
       "debug": {
         "name": "Log detalhado",
@@ -11,7 +11,7 @@
       },
       "bubbleLayout": {
         "name": "Empilhamento dos balões",
-        "hint": "Free flow: o balão novo só empurra os balões que ele sobrepõe, então grupos distantes formam colunas próprias. Linha a linha: todos os balões da cena sobem.",
+        "hint": "Free flow: o balão novo só empurra os balões em que encosta, então quem fala longe forma a própria coluna. Linha a linha: cada balão novo empurra a faixa inteira.",
         "choices": {
           "freeflow": "Free flow",
           "line": "Linha a linha"
@@ -19,23 +19,15 @@
       },
       "bubbleRiseSpeed": {
         "name": "Velocidade de subida",
-        "hint": "Pixels de tela por segundo que os balões sobem, sobre os tokens e no meio da tela. O padrão, 15, é devagar, para dar tempo de ler. Zero deixa parados até um balão novo empurrar."
+        "hint": "Quantos pixels por segundo os balões sobem, em média. Eles sobem aos pulos, uma linha por vez: no padrão, 15, é mais ou menos um pulo a cada dois segundos. Zero deixa os balões parados até um novo empurrar."
       },
       "bubbleRiseLimit": {
-        "name": "Limite de subida",
-        "hint": "Pixels de tela acima do token a partir dos quais o balão some."
+        "name": "Altura da faixa dos balões",
+        "hint": "Distância, em pixels, do topo da tela até a linha onde os balões nascem. Eles sobem dali até o topo e somem."
       },
       "bubbleMaxLifetime": {
         "name": "Tempo máximo",
-        "hint": "Segundos até o balão sumir independentemente da posição, sobre os tokens e no meio da tela. Zero desliga o limite."
-      },
-      "bubbleScaling": {
-        "name": "Escala dos balões",
-        "hint": "Tela: os balões ficam do mesmo tamanho em qualquer zoom. Mapa: os balões escalam junto com o mapa, como os do core.",
-        "choices": {
-          "screen": "Fixa na tela",
-          "world": "Junto com o mapa"
-        }
+        "hint": "Segundos até o balão sumir onde estiver. Zero desliga o limite: o balão só some ao passar do topo da tela. O do narrador fica sempre pelo menos 30 segundos."
       },
       "bubblePortrait": {
         "name": "Retrato no balão",
@@ -47,15 +39,11 @@
       },
       "usageBubbles": {
         "name": "Balão de uso da ficha",
-        "hint": "Quando alguém usa um item, uma característica ou uma rolagem da ficha, em qualquer sistema, aparece um balão bege sobre o token: \"Kirito usou Espada Longa\". Só o nome da ação, nunca o resultado."
+        "hint": "Quando alguém usa um item, uma característica ou uma rolagem da ficha, em qualquer sistema, aparece um balão bege na direção do token: \"Kirito usou Espada Longa\". Só o nome da ação, nunca o resultado."
       },
       "narrationBanner": {
         "name": "Balão do narrador",
-        "hint": "Toda narração do Mestre aparece, para todos, num balão preto de letras brancas um pouco acima do meio da tela, no mesmo formato dos balões dos jogadores, que sobe devagar e some depois de pelo menos 30 segundos. Desligado, a narração fica só no histórico da cena."
-      },
-      "narrationBannerDuration": {
-        "name": "Tempo mínimo dos balões do meio da tela",
-        "hint": "Segundos que as falas sem token ficam, no mínimo, no meio da tela. Elas ficam pelo menos o tempo que um balão sobre o token leva para subir até o limite; textos longos, mais, até um minuto. O balão do narrador fica sempre pelo menos 30 segundos."
+        "hint": "Toda narração do Mestre aparece, para todos, num balão preto de letras brancas no meio da faixa dos balões, no mesmo formato dos balões dos jogadores. Ele pula mais devagar que os outros, para ficar pelo menos 30 segundos quando nada o empurra. Desligado, a narração fica só no histórico da cena."
       },
       "narratorName": {
         "name": "Nome do narrador",

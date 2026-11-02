@@ -1,6 +1,19 @@
 #tbg-bubbles {
-  inset: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% / var(--ui-scale));
+  height: calc(100% / var(--ui-scale));
+  overflow: hidden;
+  transform: scale(var(--ui-scale));
+  transform-origin: 0 0;
+  z-index: var(--z-index-canvas);
+  pointer-events: none;
   text-align: left;
+}
+
+#tbg-typing-indicators {
+  inset: 0;
 }
 
 .tbg-bubble {
@@ -19,14 +32,27 @@
   font-size: var(--tbg-bubble-font-size);
   line-height: var(--tbg-bubble-line-height);
   white-space: nowrap;
-  transform-origin: 0 0;
   opacity: 0;
-  transition: opacity var(--tbg-transition);
+  transition: opacity var(--tbg-transition), transform var(--tbg-bubble-hop);
   will-change: transform;
 }
 
 .tbg-bubble--visible {
   opacity: 1;
+}
+
+.tbg-bubbles--still .tbg-bubble {
+  transition-property: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tbg-bubble {
+    transition-property: opacity;
+  }
+}
+
+body.performance-low .tbg-bubble {
+  transition: none;
 }
 
 .tbg-bubble::before,
