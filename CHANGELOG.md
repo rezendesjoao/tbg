@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.16.2] — 2026-11-05
+
+### Alterado
+- **Verificado para toda a versão 14 do Foundry** (antes, só até a 14.367). Na 14.370 e nas próximas builds da v14, o TBG deixa de aparecer como "não verificado" na lista de módulos. Nenhuma mudança de código: o TBG não usa a única API que a 14.370 alterou.
+
 ## [0.16.1] — 2026-11-02
 
 ### Corrigido
