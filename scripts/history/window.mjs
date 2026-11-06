@@ -15,6 +15,7 @@ const NARRATOR_ICON = "fa-solid fa-scroll";
 const MAX_LINES = 500;
 const BOTTOM_SLACK = 24;
 const REFRESH_MS = 80;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 /** Recortes do histórico: a cena que se está vendo ou, só para o Mestre, todas. */
 const SCOPES = Object.freeze({ SCENE: "scene", ALL: "all" });
@@ -33,7 +34,17 @@ class SceneHistory extends HandlebarsApplicationMixin(ApplicationV2) {
     classes: ["tbg-history"],
     window: { title: "TBG.History.title", icon: ICON, resizable: true },
     position: { width: 400, height: 480, left: 120, top: 110 },
-    actions: { pan: SceneHistory.#onPan, scope: SceneHistory.#onScope, export: SceneHistory.#onExport }
+    actions: {
+      pan: SceneHistory.#onPan,
+      scope: SceneHistory.#onScope,
+      export: SceneHistory.#onExport,
+      select: SceneHistory.#onSelect,
+      pick: SceneHistory.#onPick,
+      pickAll: SceneHistory.#onPickAll,
+      pickDay: SceneHistory.#onPickDay,
+      pickNone: SceneHistory.#onPickNone,
+      erase: SceneHistory.#onErase
+    }
   };
 
   static PARTS = {
@@ -50,6 +61,9 @@ class SceneHistory extends HandlebarsApplicationMixin(ApplicationV2) {
   #texts = new Map();
   #stickToBottom = true;
   #scope = SCOPES.SCENE;
+  #isSelecting = false;
+  #selected = new Set();
+  #lastPicked = null;
 
   refresh = foundry.utils.debounce(() => this.render(), REFRESH_MS);
 
@@ -58,11 +72,16 @@ class SceneHistory extends HandlebarsApplicationMixin(ApplicationV2) {
     const messages = historyMessages(this.#scope);
     const shown = messages.slice(-MAX_LINES);
     this.#forgetTexts(shown);
+    this.#forgetSelection(messages);
     const lines = await Promise.all(shown.map(message => this.#line(message)));
     const isAll = this.#scope === SCOPES.ALL;
     if (isAll) markSceneChanges(lines);
     const title = isAll ? localize("TBG.History.allScenes") : canvas.scene?.name ?? localize("TBG.History.noScene");
-    return { ...context, title, lines, isGM: game.user.isGM, isAll, older: messages.length - shown.length };
+    const count = this.#selected.size;
+    const selection = { count, label: localize("TBG.History.selected", { count }) };
+    const isSelecting = game.user.isGM && this.#isSelecting;
+    const older = messages.length - shown.length;
+    return { ...context, title, lines, isGM: game.user.isGM, isAll, isSelecting, selection, older };
   }
 
   async _preRender(context, options) {
@@ -84,13 +103,14 @@ class SceneHistory extends HandlebarsApplicationMixin(ApplicationV2) {
     return {
       id: message.id,
       kind,
-      time: new Date(message.timestamp).toLocaleTimeString(game.i18n.lang, { hour: "2-digit", minute: "2-digit" }),
+      time: lineTime(message.timestamp),
       sceneName: sceneName(message),
       name: isMaster ? localize("TBG.History.master") : message.alias,
       ...lineArt(message, kind, isMaster),
       note: lineNote(message, kind),
       text: await this.#text(message),
-      tokenId: token?.visible ? token.id : null
+      tokenId: token?.visible ? token.id : null,
+      isSelected: this.#selected.has(message.id)
     };
   }
 
@@ -112,6 +132,26 @@ class SceneHistory extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const id of this.#texts.keys()) if (!ids.has(id)) this.#texts.delete(id);
   }
 
+  /** A seleção só guarda falas que ainda existem no recorte aberto. */
+  #forgetSelection(messages) {
+    const ids = new Set(messages.map(message => message.id));
+    for (const id of this.#selected) if (!ids.has(id)) this.#selected.delete(id);
+  }
+
+  #replaceSelection(messages) {
+    this.#selected = new Set(messages.map(message => message.id));
+    this.#lastPicked = null;
+    this.render();
+  }
+
+  /** Marca tudo entre a última fala clicada e esta, na ordem em que aparecem na janela. */
+  #pickRange(id) {
+    const ids = [...this.element.querySelectorAll(".tbg-history__line")].map(line => line.dataset.messageId);
+    const [from, to] = [ids.indexOf(this.#lastPicked), ids.indexOf(id)].sort((a, b) => a - b);
+    if (from < 0) return void this.#selected.add(id);
+    for (const rangeId of ids.slice(from, to + 1)) this.#selected.add(rangeId);
+  }
+
   /** Clicar numa fala leva o mapa até o token que falou. */
   static #onPan(_event, target) {
     const token = canvas.tokens?.get(target.dataset.tokenId);
@@ -121,7 +161,56 @@ class SceneHistory extends HandlebarsApplicationMixin(ApplicationV2) {
   static #onScope(_event, target) {
     if (!game.user.isGM || target.dataset.scope === this.#scope) return;
     this.#scope = target.dataset.scope;
+    this.#selected.clear();
     this.#stickToBottom = true;
+    this.render();
+  }
+
+  /** Liga e desliga o modo de seleção do Mestre; sair dele esquece o que estava marcado. */
+  static #onSelect() {
+    if (!game.user.isGM) return;
+    this.#isSelecting = !this.#isSelecting;
+    this.#selected.clear();
+    this.#lastPicked = null;
+    this.render();
+  }
+
+  /** Marca ou desmarca a fala; com Shift, marca tudo desde a última fala clicada. */
+  static #onPick(event, target) {
+    const id = target.dataset.messageId;
+    if (event.shiftKey && this.#lastPicked) this.#pickRange(id);
+    else if (this.#selected.has(id)) this.#selected.delete(id);
+    else this.#selected.add(id);
+    this.#lastPicked = id;
+    this.render();
+  }
+
+  /** Todas as falas do recorte, inclusive as antigas que a janela não mostra. */
+  static #onPickAll() {
+    this.#replaceSelection(historyMessages(this.#scope));
+  }
+
+  static #onPickDay() {
+    const since = Date.now() - DAY_MS;
+    this.#replaceSelection(historyMessages(this.#scope).filter(message => message.timestamp >= since));
+  }
+
+  static #onPickNone() {
+    this.#replaceSelection([]);
+  }
+
+  /** Apaga de vez as falas marcadas, depois de confirmar; os outros clientes as perdem pelo próprio Foundry. */
+  static async #onErase() {
+    const ids = [...this.#selected].filter(id => game.messages.has(id));
+    if (!game.user.isGM || !ids.length) return;
+    const isConfirmed = await foundry.applications.api.DialogV2.confirm({
+      window: { title: localize("TBG.History.eraseTitle") },
+      content: `<p>${localize("TBG.History.eraseContent", { count: ids.length })}</p>`,
+      rejectClose: false
+    });
+    if (!isConfirmed) return;
+    await ChatMessage.implementation.deleteDocuments(ids);
+    this.#selected.clear();
     this.render();
   }
 
@@ -147,6 +236,14 @@ function historyMessages(scope) {
   if (game.user.isGM && scope === SCOPES.ALL) return talk;
   const since = game.user.isGM ? 0 : talkSince(canvas.scene);
   return talk.filter(message => isCurrentScene(message) && message.timestamp >= since);
+}
+
+/** A hora da fala; a de outro dia leva a data, para separar de olho as das últimas 24 horas. */
+function lineTime(timestamp) {
+  const date = new Date(timestamp);
+  const time = { hour: "2-digit", minute: "2-digit" };
+  if (date.toDateString() === new Date().toDateString()) return date.toLocaleTimeString(game.i18n.lang, time);
+  return date.toLocaleString(game.i18n.lang, { day: "2-digit", month: "2-digit", ...time });
 }
 
 function sceneName(message) {

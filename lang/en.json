@@ -84,7 +84,15 @@
       "thisScene": "This scene",
       "allScenes": "All scenes",
       "export": "Export as JSON",
-      "older": "{count} older lines are left out; the export has them all."
+      "older": "{count} older lines are left out; the export has them all.",
+      "select": "Select lines to delete",
+      "selected": "{count} selected",
+      "pickDay": "Last 24h",
+      "pickAll": "All",
+      "pickNone": "None",
+      "erase": "Delete",
+      "eraseTitle": "Delete lines from the history?",
+      "eraseContent": "The {count} selected lines will be deleted for good, for everyone. This cannot be undone."
     },
     "Guard": {
       "title": "Speak as a player character?",

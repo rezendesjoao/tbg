@@ -2,6 +2,16 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). Versionamento semântico.
 
+## [0.17.0] — 2026-11-06
+
+O Mestre pode apagar falas do Histórico da cena, uma a uma ou em massa.
+
+### Adicionado
+- **Apagar falas do histórico** (só o Mestre). O botão de seleção, ao lado do de exportar, liga o modo de seleção: cada fala ganha uma caixinha, um clique marca ou desmarca e Shift+clique marca tudo desde a última fala clicada. A faixa de seleção marca de uma vez as *Últimas 24h* ou *Todas* as falas do recorte aberto (esta cena ou todas as cenas, inclusive as antigas que a janela não mostra), e *Apagar* tira as marcadas de vez, para todos, depois de confirmar.
+
+### Alterado
+- No histórico, a fala de outro dia mostra a data junto da hora.
+
 ## [0.16.2] — 2026-11-05
 
 ### Alterado

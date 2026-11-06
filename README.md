@@ -37,7 +37,7 @@ Quem fala sem token na cena ganha o balão no meio da faixa: o **Mestre sem toke
 
 O campo de digitar do chat lateral some: ninguém escreve nele. O chat fica só com a mecânica, as rolagens e os cartões da ficha, e a conversa nem chega a ele (nem nas notificações do canto da tela).
 
-O botão **Histórico da cena**, na barra de ferramentas dos tokens, abre a conversa da cena que você está vendo, da mais antiga à mais nova, com a hora de cada fala: falas, narração, o que foi dito fora do personagem e os sussurros e pensamentos que você pode ver. A janela acompanha a conversa ao vivo e desce sozinha quando já estava no fim; um clique numa fala leva o mapa até quem falou. Na Eternia, o botão fica logo abaixo do Mercado. Nada é apagado: quando o Mestre ativa outra cena, o histórico dos jogadores recomeça; o do Mestre mostra a cena inteira, tem o botão *Todas as cenas* e exporta a conversa em JSON.
+O botão **Histórico da cena**, na barra de ferramentas dos tokens, abre a conversa da cena que você está vendo, da mais antiga à mais nova, com a hora de cada fala: falas, narração, o que foi dito fora do personagem e os sussurros e pensamentos que você pode ver. A janela acompanha a conversa ao vivo e desce sozinha quando já estava no fim; um clique numa fala leva o mapa até quem falou. Na Eternia, o botão fica logo abaixo do Mercado. Nada é apagado: quando o Mestre ativa outra cena, o histórico dos jogadores recomeça; o do Mestre mostra a cena inteira, tem o botão *Todas as cenas* e exporta a conversa em JSON. O Mestre também pode apagar falas: o botão de seleção marca uma a uma (Shift+clique marca um trecho), as das últimas 24 horas ou todas, e *Apagar* as tira de vez, depois de confirmar.
 
 ### Contador de caracteres e digitação
 

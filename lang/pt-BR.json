@@ -84,7 +84,15 @@
       "thisScene": "Esta cena",
       "allScenes": "Todas as cenas",
       "export": "Exportar em JSON",
-      "older": "{count} falas mais antigas ficaram de fora; a exportação traz todas."
+      "older": "{count} falas mais antigas ficaram de fora; a exportação traz todas.",
+      "select": "Selecionar falas para apagar",
+      "selected": "{count} selecionadas",
+      "pickDay": "Últimas 24h",
+      "pickAll": "Todas",
+      "pickNone": "Nenhuma",
+      "erase": "Apagar",
+      "eraseTitle": "Apagar falas do histórico?",
+      "eraseContent": "As {count} falas selecionadas serão apagadas de vez, para todos. Não dá para desfazer."
     },
     "Guard": {
       "title": "Falar por um personagem de jogador?",

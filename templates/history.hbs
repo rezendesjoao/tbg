@@ -4,14 +4,25 @@
     <nav class="tbg-history__tools">
         <button type="button" data-action="scope" data-scope="scene" aria-pressed="{{#if isAll}}false{{else}}true{{/if}}">{{localize "TBG.History.thisScene"}}</button>
         <button type="button" data-action="scope" data-scope="all" aria-pressed="{{#if isAll}}true{{else}}false{{/if}}">{{localize "TBG.History.allScenes"}}</button>
+        <button type="button" class="tbg-history__select" data-action="select" aria-pressed="{{#if isSelecting}}true{{else}}false{{/if}}" data-tooltip="" aria-label="{{localize "TBG.History.select"}}"><i class="fa-solid fa-list-check" inert></i></button>
         <button type="button" class="tbg-history__export" data-action="export" data-tooltip="" aria-label="{{localize "TBG.History.export"}}"><i class="fa-solid fa-file-export" inert></i></button>
     </nav>
+    {{#if isSelecting}}
+    <nav class="tbg-history__selection">
+        <span class="tbg-history__count">{{selection.label}}</span>
+        <button type="button" data-action="pickDay">{{localize "TBG.History.pickDay"}}</button>
+        <button type="button" data-action="pickAll">{{localize "TBG.History.pickAll"}}</button>
+        <button type="button" data-action="pickNone"{{#unless selection.count}} disabled{{/unless}}>{{localize "TBG.History.pickNone"}}</button>
+        <button type="button" class="tbg-history__erase" data-action="erase"{{#unless selection.count}} disabled{{/unless}}><i class="fa-solid fa-trash" inert></i> {{localize "TBG.History.erase"}}</button>
+    </nav>
     {{/if}}
-    <ol class="tbg-history__log">
+    {{/if}}
+    <ol class="tbg-history__log{{#if isSelecting}} tbg-history__log--selecting{{/if}}">
         {{#if older}}<li class="tbg-history__older">{{localize "TBG.History.older" count=older}}</li>{{/if}}
         {{#each lines}}
         {{#if opensScene}}<li class="tbg-history__divider">{{sceneName}}</li>{{/if}}
-        <li class="tbg-history__line tbg-history__line--{{kind}}" data-message-id="{{id}}"{{#if tokenId}} data-action="pan" data-token-id="{{tokenId}}"{{/if}}>
+        <li class="tbg-history__line tbg-history__line--{{kind}}" data-message-id="{{id}}"{{#if ../isSelecting}} data-action="pick" aria-selected="{{#if isSelected}}true{{else}}false{{/if}}"{{else if tokenId}} data-action="pan" data-token-id="{{tokenId}}"{{/if}}>
+            {{#if ../isSelecting}}<i class="tbg-history__check fa-{{#if isSelected}}solid fa-square-check{{else}}regular fa-square{{/if}}" inert></i>{{/if}}
             <time class="tbg-history__time">{{time}}</time>
             {{#if portrait}}<img class="tbg-history__portrait" src="{{portrait}}" alt="">{{else}}<i class="tbg-history__portrait {{icon}}" inert></i>{{/if}}
             <span class="tbg-history__speech"><span class="tbg-history__name">{{name}}</span>{{#if note}} <span class="tbg-history__note">{{note}}</span>{{/if}} <span class="tbg-history__text">{{{text}}}</span></span>

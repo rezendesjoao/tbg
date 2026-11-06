@@ -65,7 +65,7 @@ Os códigos (A1, B3…) são a forma de se referir a cada ideia em issues, commi
 ## Fase 3 — Conforto
 
 - [x] **A8. Histórico de balões da cena** — **M**
-  Janela aberta por um botão na barra de ferramentas dos tokens (na Eternia, logo abaixo do Mercado) com tudo que foi "dito" na cena que se está vendo: hora, retrato, nome, o tipo (sussurro, pensamento, fora do personagem) e a fala, ao vivo e descendo sozinha. Clicar numa linha centra o canvas no token. Ao ativar outra cena, o histórico dos jogadores recomeça; o do Mestre guarda tudo, mostra todas as cenas e se exporta em JSON (pedido do usuário). Entregue na 0.14.0 (01/11/2026), com a conversa apagada a cada troca de cena; desde a 0.15.0 nada é apagado. Filtro, busca e replay seguem como ideias.
+  Janela aberta por um botão na barra de ferramentas dos tokens (na Eternia, logo abaixo do Mercado) com tudo que foi "dito" na cena que se está vendo: hora, retrato, nome, o tipo (sussurro, pensamento, fora do personagem) e a fala, ao vivo e descendo sozinha. Clicar numa linha centra o canvas no token. Ao ativar outra cena, o histórico dos jogadores recomeça; o do Mestre guarda tudo, mostra todas as cenas e se exporta em JSON (pedido do usuário). Entregue na 0.14.0 (01/11/2026), com a conversa apagada a cada troca de cena; desde a 0.15.0 nada é apagado sozinho. Na 0.17.0 (06/11/2026), o Mestre ganhou a seleção para apagar falas, uma a uma, as das últimas 24h ou todas do recorte (pedido do usuário). Filtro, busca e replay seguem como ideias.
   Sobreposição: Scene Specific Messages (v12, só filtro).
 
 - [ ] **C7. Responder / citar** — **P/M**

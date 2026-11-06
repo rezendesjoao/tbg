@@ -29,4 +29,6 @@
   --tbg-history-hover: color-mix(in srgb, currentColor 9%, transparent);
   --tbg-history-narration-bg: rgba(0, 0, 0, 0.78);
   --tbg-history-narration-fg: #ffffff;
+  --tbg-history-selected: color-mix(in srgb, #c03030 16%, transparent);
+  --tbg-history-erase: #c03030;
 }
